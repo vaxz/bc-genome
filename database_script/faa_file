@@ -1,0 +1,122 @@
+#! /bin/bash
+#
+#-----------------------------------------------------------------------
+#
+# Extracting data from a faa file that contains
+# information on proteins : amino acid sequences and accession numbers
+#
+#-----------------------------------------------------------------------
+
+# Ensuring that the file name and the database connection arguments were correctly transmitted
+if [ -z "$1" -a -z "$2" -a -z "$3" -a -z "$4"  ]; then exit 1; fi
+
+# Removing all the star characters (*)
+cat $1 | tr -d '*' > faa_result
+
+#Variables needs to ensure the database connection
+user="$2"
+password="$3"
+database="$4"
+
+# Adding a new line at the end of the file to be sure that all lines are read
+# This is done to counter a drawback from the command line : read
+echo -e "\n" >> faa_result
+
+# Initializing empty variables
+protein_seq=""
+protein_accession_num=""
+exit_value=0
+
+# Reading the file and separating the data from each field in a distinct variable
+while read -r line
+do
+	
+	# ${#line} count the elements in a variable
+	# ${variable:start:count} make a substring from an initial string
+
+	first_element=${line:0:1}
+
+	# Testing if the line is the protein accession number or a part of the amino acid sequence.
+	# The symbol ">" at the beginning of a line allows the difference between each one
+	if [ "$first_element" = ">" ]
+	then
+		# Testing if the variables are not empty to make the SQL queries and to store them in a file
+		if [ -n "$protein_seq" -a -n "$protein_accession_num" ]
+		then
+			if [ ! -f  faa_sql_query_file ]
+			then
+				protein_header="##################################################################################################\n"
+				protein_header+="#\t\t\t\tPROTEIN SQL QUERIES\n"
+				protein_header+="##################################################################################################\n"
+				echo -e $protein_header > faa_sql_query_file
+			fi
+	
+			# Recovering the gene id
+			gene_accession_num=${protein_accession_num:0:$((${#protein_accession_num}-2))}
+			gene_id=$(mysql -D $database -u $user -p$password -se "SELECT id FROM gene WHERE gene_accession='$gene_accession_num'")			
+			db_connection=$?
+			if [ "$db_connection" -ne 0 ]; then exit 2; fi			
+			
+			# Checking if the gene id is empty
+			if [ -z "$gene_id" ]
+			then
+				echo -e "An error occured, there is no gene linked to the protein : $protein_accession_num\n" >> error_file
+				exit_value=3
+			else				
+				query_protein="INSERT INTO \`protein\` (\`protein_gene\`, \`protein_accession\`, \`protein_seq\`) 
+						VALUES ($gene_id, '$protein_accession_num', '$protein_seq');"				
+				echo $query_protein >> faa_sql_query_file
+			fi
+
+			protein_seq=""
+			protein_accession_num=""
+		fi
+		
+		# Getting the protein accession number
+		protein_accession_num=${line:1:$((${#line}-1))}
+	else
+		# Getting the protein sequence
+		protein_seq+=$line
+	fi
+
+done < faa_result
+
+# Testing, after the loop, if the variables are not empty to make the last SQL queries
+if [ -n "$protein_seq" -a -n "$protein_accession_num" ]
+then			
+	if [ ! -f  faa_sql_query_file ]
+	then
+		protein_header="##################################################################################################\n"
+		protein_header+="#\t\t\t\tPROTEIN SQL QUERIES\n"
+		protein_header+="##################################################################################################\n"
+		echo -e $protein_header > faa_sql_query_file
+	fi
+
+	# Recovering the gene id
+	gene_accession_num=${protein_accession_num:0:$((${#protein_accession_num}-2))}
+	gene_id=$(mysql -D $database -u $user -p$password -se "SELECT id FROM gene WHERE gene_accession='$gene_accession_num'")
+	db_connnection=$?
+	if [ "$db_connection" -ne 0 ]; then exit 2; fi			
+	
+	# Checking if the gene id is empty
+	if [ -z "$gene_id" ]
+	then
+		echo -e "An error occured, there is no gene linked to the protein : $protein_accession_num\n"
+		echo $query_protein >> error_file
+		exit_value=3
+	else				
+		query_protein="INSERT INTO \`protein\` (\`protein_gene\`, \`protein_accession\`, \`protein_seq\`) 
+				VALUES ($gene_id, '$protein_accession_num', '$protein_seq');"				
+		echo $query_protein >> faa_sql_query_file
+	fi
+
+	protein_seq=""
+	protein_accession_num=""	
+fi
+
+# Removing the file : faa_result
+rm -r faa_result
+
+exit $exit_value
+
+

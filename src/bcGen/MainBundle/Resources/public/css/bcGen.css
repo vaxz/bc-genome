@@ -1,0 +1,148 @@
+html {
+	height : 100%;
+	width : 100%;
+}
+
+body{
+	overflow-x : hidden;
+	height : inherit;
+	width: inherit;
+}
+
+header {
+	text-align : center;
+	font-family : Arial;
+	background-color : #007A00;
+	margin : -2% 0% 0% -0.6%;
+}
+
+header > h1 {
+	margin-bottom : -1%;	
+}
+
+div.container{
+	margin : -1.5% 8% 0% 8%;
+	padding : 1% 1% 0% 1%;
+	padding-bottom : 2%;
+	min-height : 80%;
+}
+
+div.form {
+	padding-left : 15%;
+	margin-bottom : 3%;
+}
+
+div.form form {
+	display : inline-block;
+	vertical-align : text-top;
+	margin-left : 10%;
+}
+
+div.form button {
+	margin-top: 3%;
+}
+
+div.form > form * {
+	display : block;
+}
+
+div.form input, div.form textarea {
+	border : 1px solid black;
+}
+
+h3.title {
+    margin-left : 21%;
+    margin-bottom : 0%;
+}
+
+div.locus{
+	margin-bottom : 5%;
+}
+
+div.locus > div{
+	display: inline-block;
+	vertical-align:top ;
+}
+
+div.locusTable {
+	border : 2px solid green;
+	border-radius : 20px;
+	margin : 0% 2% 0% 5%;
+    padding : 1% 5% 1% 5%;
+    width : 70%;
+    background-color:white;
+}
+
+div.locusTable > table {
+	display : inline-block;
+	width : 21%;
+	margin : 1% 1% 1% 1%;
+	padding-left: 3%;
+	border : none;
+}
+
+div.locusButton {
+	font-size : 13px;
+}
+
+div.locusButton input {
+	display : inline;
+	height : 25px;
+	width : 25px;
+	padding-top : 0.5%;
+	border: 3px ridge black;
+}
+
+#Bcin {
+	background-color : #4DB870;	
+}
+
+#B051 {
+	background-color : #FFFF70;	
+}
+
+#BC1G {
+	background-color : #A9D4FF;	
+}
+
+#BcT4 {
+	background-color : #B482B4;	
+}
+
+div.category {
+	margin-top : 5%;
+}
+
+div.category > table {
+	border : 2px solid black;
+}
+
+div.category th, div.category td {
+	border : 1px solid black;
+}
+
+div.category td   {
+	text-align : justify;
+}
+
+div.protSeq {
+	text-align : justify;
+	font-family : Courier;
+    border-left : 2px solid black;
+    border-right : 2px solid black;
+    border-bottom : 2px solid black;
+}
+
+span.page{
+	border : 1px outset blue;	
+}
+
+footer {
+	text-align : justify;
+	font-size : 13px;
+	padding-left : 20%;
+    padding-right : 10%;
+    background-color: #007A00;
+    margin : 0% 0% 0% -0.6%;
+    max-width : 100%;
+ }

@@ -1,0 +1,39 @@
+Pour faire le lien pour les publications, on utilise le doi (Digital Object Identifier) qui permet une identification pérenne d'une ressource même si l'URL d'accès change. Le lien sera donc http://dx.doi.org/DOI (en remplaçant DOI).
+
+Pour le lien avec la fiche du gène de référence sur EnsEMBL, le lien sera :
+http://fungi.ensembl.org/Botrytis_cinerea/Gene/Summary?db=core;g=Bcin12g00010
+où Bcin12g00010 est le numéro d'accession du gène de référence.
+
+Source des chromosomes :
+Title : Botrytis_cinerea.ASM15095v2.27
+sourceYear : 2015
+source Author : Ensembl Fungi release 27 - June 2015 © EBI
+innerComDesc : http://fungi.ensembl.org/Botrytis_cinerea/Info/Annotation/
+
+Genomes :
+Botrytis cinerea B05.10 BC1G
+Botrytis cinerea T4 BofuT4
+	source :
+		Genomic analysis of the necrotrophic fungal pathogens Sclerotinia sclerotiorum and Botrytis cinerea.
+		Amselem J et al.
+		2011 
+		10.1371/journal.pgen.1002230
+
+Botrytis cinerea B05.10 B0510
+Botrytis cinerea B05.10 BcT4
+	source :
+		Genome update of Botrytis cinerea strains B05.10 and T4.
+		Staats M, van Kan JA.
+		2012
+		10.1128/EC.00164-12
+
+	
+Les proteines :
+	botrytis_cinerea__b05.10_vankan__1_proteins.faa pour B0510 avec un gene = une proteine 	
+	botrytis_cinerea__b05.10__1_proteins.faa pour BC1G avec un gene = une proteine
+	BofuT4_orfprotall_1.faa pour BofuT4
+	botrytis_cinerea__t4__1_proteins.faa pour BcT4
+
+
+Les genes :
+	

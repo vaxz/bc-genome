@@ -1,0 +1,19 @@
+{% extends "bcGenMainBundle:Main:layout.html.twig" %}
+
+{% block title %}
+    {{ parent() }} - Homepage
+{% endblock %}
+
+{% block header %}
+     {{ parent () }}
+     <h2>Homepage</h2>
+{% endblock %}
+
+{% block  bcGenBundleBody %}
+    
+    <div class="form">
+        {{ render(controller( 'bcGenMainBundle:Main:searchGene' )) }}
+        {{ render(controller( 'bcGenMainBundle:Main:searchGenes' )) }}
+    </div>
+
+{% endblock %}

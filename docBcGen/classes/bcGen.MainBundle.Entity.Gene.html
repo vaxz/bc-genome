@@ -1,0 +1,1749 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+    <meta charset="utf-8"/>
+    <title>API Documentation</title>
+    <meta name="author" content=""/>
+    <meta name="description" content=""/>
+
+    <link href="../css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
+    <link href="../css/font-awesome.min.css" rel="stylesheet">
+    <link href="../css/prism.css" rel="stylesheet" media="all"/>
+    <link href="../css/template.css" rel="stylesheet" media="all"/>
+    
+    <!--[if lt IE 9]>
+    <script src="../js/html5.js"></script>
+    <![endif]-->
+    <script src="../js/jquery-1.11.0.min.js"></script>
+    <script src="../js/ui/1.10.4/jquery-ui.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/jquery.smooth-scroll.js"></script>
+    <script src="../js/prism.min.js"></script>
+    <!-- TODO: Add http://jscrollpane.kelvinluck.com/ to style the scrollbars for browsers not using webkit-->
+    <script type="text/javascript">
+    function loadExternalCodeSnippets() {
+        Array.prototype.slice.call(document.querySelectorAll('pre[data-src]')).forEach(function (pre) {
+            var src = pre.getAttribute('data-src');
+            var extension = (src.match(/\.(\w+)$/) || [, ''])[1];
+            var language = 'php';
+
+            var code = document.createElement('code');
+            code.className = 'language-' + language;
+
+            pre.textContent = '';
+
+            code.textContent = 'Loading…';
+
+            pre.appendChild(code);
+
+            var xhr = new XMLHttpRequest();
+
+            xhr.open('GET', src, true);
+
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4) {
+
+                    if (xhr.status < 400 && xhr.responseText) {
+                        code.textContent = xhr.responseText;
+
+                        Prism.highlightElement(code);
+                    }
+                    else if (xhr.status >= 400) {
+                        code.textContent = '✖ Error ' + xhr.status + ' while fetching file: ' + xhr.statusText;
+                    }
+                    else {
+                        code.textContent = '✖ Error: File does not exist or is empty';
+                    }
+                }
+            };
+
+            xhr.send(null);
+        });
+    }
+
+    $(document).ready(function(){
+        loadExternalCodeSnippets();
+    });
+    $('#source-view').on('shown', function () {
+        loadExternalCodeSnippets();
+    })
+</script>
+
+    <link rel="shortcut icon" href="../images/favicon.ico"/>
+    <link rel="apple-touch-icon" href="../images/apple-touch-icon.png"/>
+    <link rel="apple-touch-icon" sizes="72x72" href="../images/apple-touch-icon-72x72.png"/>
+    <link rel="apple-touch-icon" sizes="114x114" href="../images/apple-touch-icon-114x114.png"/>
+</head>
+<body>
+
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container">
+            <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                <i class="icon-ellipsis-vertical"></i>
+            </a>
+            <a class="brand" href="../index.html">API Documentation</a>
+
+            <div class="nav-collapse">
+                <ul class="nav pull-right">
+                                        <li class="dropdown">
+                        <a href="../index.html" class="dropdown-toggle" data-toggle="dropdown">
+                            API Documentation <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                                                        <li><a href="../namespaces/bcGen.html">\bcGen</a></li>
+                                                    </ul>
+                    </li>
+                                        <li class="dropdown" id="charts-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            Charts <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="../graphs/class.html">
+                                    <i class="icon-list-alt"></i>&#160;Class hierarchy diagram
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="dropdown" id="reports-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            Reports <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="../reports/errors.html">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">10</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="../reports/markers.html">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <i class="icon-list-alt"></i>&#160;Markers <span class="label label-info pull-right">2</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="../reports/deprecated.html">
+                                                                                                            <i class="icon-list-alt"></i>&#160;Deprecated <span class="label label-info pull-right">0</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!--<div class="go_to_top">-->
+    <!--<a href="#___" style="color: inherit">Back to top&#160;&#160;<i class="icon-upload icon-white"></i></a>-->
+    <!--</div>-->
+</div>
+
+<div id="___" class="container-fluid">
+        <section class="row-fluid">
+        <div class="span2 sidebar">
+                                <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-2102506668"></a>
+                                <a href="../namespaces/default.html" style="margin-left: 30px; padding-left: 0">\</a>
+            </div>
+            <div id="namespace-2102506668" class="accordion-body collapse in">
+                <div class="accordion-inner">
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1816839758"></a>
+                                <a href="../namespaces/bcGen.html" style="margin-left: 30px; padding-left: 0">bcGen</a>
+            </div>
+            <div id="namespace-1816839758" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-405872061"></a>
+                                <a href="../namespaces/bcGen.MainBundle.html" style="margin-left: 30px; padding-left: 0">MainBundle</a>
+            </div>
+            <div id="namespace-405872061" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-2012334994"></a>
+                                <a href="../namespaces/bcGen.MainBundle.Controller.html" style="margin-left: 30px; padding-left: 0">Controller</a>
+            </div>
+            <div id="namespace-2012334994" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/bcGen.MainBundle.Controller.MainController.html">MainController</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-135110182"></a>
+                                <a href="../namespaces/bcGen.MainBundle.DependencyInjection.html" style="margin-left: 30px; padding-left: 0">DependencyInjection</a>
+            </div>
+            <div id="namespace-135110182" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/bcGen.MainBundle.DependencyInjection.bcGenMainExtension.html">bcGenMainExtension</a></li>
+                                                    <li class="class"><a href="../classes/bcGen.MainBundle.DependencyInjection.Configuration.html">Configuration</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-669458946"></a>
+                                <a href="../namespaces/bcGen.MainBundle.Entity.html" style="margin-left: 30px; padding-left: 0">Entity</a>
+            </div>
+            <div id="namespace-669458946" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/bcGen.MainBundle.Entity.Annotation.html">Annotation</a></li>
+                                                    <li class="class"><a href="../classes/bcGen.MainBundle.Entity.AnnotationRepository.html">AnnotationRepository</a></li>
+                                                    <li class="class"><a href="../classes/bcGen.MainBundle.Entity.Chromosome.html">Chromosome</a></li>
+                                                    <li class="class"><a href="../classes/bcGen.MainBundle.Entity.ChromosomeRepository.html">ChromosomeRepository</a></li>
+                                                    <li class="class"><a href="../classes/bcGen.MainBundle.Entity.Condition.html">Condition</a></li>
+                                                    <li class="class"><a href="../classes/bcGen.MainBundle.Entity.ConditionRepository.html">ConditionRepository</a></li>
+                                                    <li class="class"><a href="../classes/bcGen.MainBundle.Entity.Gene.html">Gene</a></li>
+                                                    <li class="class"><a href="../classes/bcGen.MainBundle.Entity.GeneCondition.html">GeneCondition</a></li>
+                                                    <li class="class"><a href="../classes/bcGen.MainBundle.Entity.GeneConditionRepository.html">GeneConditionRepository</a></li>
+                                                    <li class="class"><a href="../classes/bcGen.MainBundle.Entity.GeneRepository.html">GeneRepository</a></li>
+                                                    <li class="class"><a href="../classes/bcGen.MainBundle.Entity.Genome.html">Genome</a></li>
+                                                    <li class="class"><a href="../classes/bcGen.MainBundle.Entity.GenomeRepository.html">GenomeRepository</a></li>
+                                                    <li class="class"><a href="../classes/bcGen.MainBundle.Entity.InnerCommunication.html">InnerCommunication</a></li>
+                                                    <li class="class"><a href="../classes/bcGen.MainBundle.Entity.Locus.html">Locus</a></li>
+                                                    <li class="class"><a href="../classes/bcGen.MainBundle.Entity.LocusChromosome.html">LocusChromosome</a></li>
+                                                    <li class="class"><a href="../classes/bcGen.MainBundle.Entity.LocusChromosomeRepository.html">LocusChromosomeRepository</a></li>
+                                                    <li class="class"><a href="../classes/bcGen.MainBundle.Entity.LocusRepository.html">LocusRepository</a></li>
+                                                    <li class="class"><a href="../classes/bcGen.MainBundle.Entity.Protein.html">Protein</a></li>
+                                                    <li class="class"><a href="../classes/bcGen.MainBundle.Entity.ProteinAnnotation.html">ProteinAnnotation</a></li>
+                                                    <li class="class"><a href="../classes/bcGen.MainBundle.Entity.ProteinAnnotationRepository.html">ProteinAnnotationRepository</a></li>
+                                                    <li class="class"><a href="../classes/bcGen.MainBundle.Entity.ProteinRepository.html">ProteinRepository</a></li>
+                                                    <li class="class"><a href="../classes/bcGen.MainBundle.Entity.Publication.html">Publication</a></li>
+                                                    <li class="class"><a href="../classes/bcGen.MainBundle.Entity.Source.html">Source</a></li>
+                                                    <li class="class"><a href="../classes/bcGen.MainBundle.Entity.SourceRepository.html">SourceRepository</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-107523677"></a>
+                                <a href="../namespaces/bcGen.MainBundle.Form.html" style="margin-left: 30px; padding-left: 0">Form</a>
+            </div>
+            <div id="namespace-107523677" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/bcGen.MainBundle.Form.SearchGenesType.html">SearchGenesType</a></li>
+                                                    <li class="class"><a href="../classes/bcGen.MainBundle.Form.SearchGeneType.html">SearchGeneType</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1735066479"></a>
+                                <a href="../namespaces/bcGen.MainBundle.Tests.html" style="margin-left: 30px; padding-left: 0">Tests</a>
+            </div>
+            <div id="namespace-1735066479" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1426067243"></a>
+                                <a href="../namespaces/bcGen.MainBundle.Tests.Controller.html" style="margin-left: 30px; padding-left: 0">Controller</a>
+            </div>
+            <div id="namespace-1426067243" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/bcGen.MainBundle.Tests.Controller.DefaultControllerTest.html">DefaultControllerTest</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/bcGen.MainBundle.bcGenMainBundle.html">bcGenMainBundle</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+        </div>
+    </section>
+    <section class="row-fluid">
+        <div class="span10 offset2">
+            <div class="row-fluid">
+                <div class="span8 content class">
+                    <nav>
+                                                <a href="../namespaces/bcGen.MainBundle.Entity.html">\bcGen\MainBundle\Entity</a> <i class="icon-level-up"></i>
+                                            </nav>
+                    <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal"><i class="icon-code"></i></a>
+
+                    <h1><small>\bcGen\MainBundle\Entity</small>Gene</h1>
+                    <p><em>Class Gene allows the creation of Gene object and correponds to a table in the database : bc_gen_db.</em></p>
+                    <p>It's related to gene characteristics.</p>
+                    
+                                        
+                    <section id="summary">
+                        <h2>Summary</h2>
+                        <section class="row-fluid heading">
+                            <section class="span4">
+                                <a href="#methods">Methods</a>
+                            </section>
+                            <section class="span4">
+                                <a href="#properties">Properties</a>
+                            </section>
+                            <section class="span4">
+                                <a href="#constants">Constants</a>
+                            </section>
+                        </section>
+                        <section class="row-fluid public">
+                            <section class="span4">
+                                                                    <a href="../classes/bcGen.MainBundle.Entity.Gene.html#method___construct" class="">__construct()</a><br />
+                                                                    <a href="../classes/bcGen.MainBundle.Entity.Gene.html#method_getId" class="">getId()</a><br />
+                                                                    <a href="../classes/bcGen.MainBundle.Entity.Gene.html#method_setGeneSeq" class="">setGeneSeq()</a><br />
+                                                                    <a href="../classes/bcGen.MainBundle.Entity.Gene.html#method_getGeneSeq" class="">getGeneSeq()</a><br />
+                                                                    <a href="../classes/bcGen.MainBundle.Entity.Gene.html#method_setGeneRef" class="">setGeneRef()</a><br />
+                                                                    <a href="../classes/bcGen.MainBundle.Entity.Gene.html#method_getGeneRef" class="">getGeneRef()</a><br />
+                                                                    <a href="../classes/bcGen.MainBundle.Entity.Gene.html#method_setGeneAccession" class="">setGeneAccession()</a><br />
+                                                                    <a href="../classes/bcGen.MainBundle.Entity.Gene.html#method_getGeneAccession" class="">getGeneAccession()</a><br />
+                                                                    <a href="../classes/bcGen.MainBundle.Entity.Gene.html#method_setGeneContig" class="">setGeneContig()</a><br />
+                                                                    <a href="../classes/bcGen.MainBundle.Entity.Gene.html#method_getGeneContig" class="">getGeneContig()</a><br />
+                                                                    <a href="../classes/bcGen.MainBundle.Entity.Gene.html#method_addGeneAnnotations" class="">addGeneAnnotations()</a><br />
+                                                                    <a href="../classes/bcGen.MainBundle.Entity.Gene.html#method_removeGeneAnnotations" class="">removeGeneAnnotations()</a><br />
+                                                                    <a href="../classes/bcGen.MainBundle.Entity.Gene.html#method_getGeneAnnotations" class="">getGeneAnnotations()</a><br />
+                                                                    <a href="../classes/bcGen.MainBundle.Entity.Gene.html#method_setGeneGenome" class="">setGeneGenome()</a><br />
+                                                                    <a href="../classes/bcGen.MainBundle.Entity.Gene.html#method_getGeneGenome" class="">getGeneGenome()</a><br />
+                                                                    <a href="../classes/bcGen.MainBundle.Entity.Gene.html#method_setGeneLocus" class="">setGeneLocus()</a><br />
+                                                                    <a href="../classes/bcGen.MainBundle.Entity.Gene.html#method_getGeneLocus" class="">getGeneLocus()</a><br />
+                                                                    <a href="../classes/bcGen.MainBundle.Entity.Gene.html#method_addGeneSources" class="">addGeneSources()</a><br />
+                                                                    <a href="../classes/bcGen.MainBundle.Entity.Gene.html#method_removeGeneSources" class="">removeGeneSources()</a><br />
+                                                                    <a href="../classes/bcGen.MainBundle.Entity.Gene.html#method_getGeneSources" class="">getGeneSources()</a><br />
+                                                                    <a href="../classes/bcGen.MainBundle.Entity.Gene.html#method_addGeneProteins" class="">addGeneProteins()</a><br />
+                                                                    <a href="../classes/bcGen.MainBundle.Entity.Gene.html#method_removeGeneProteins" class="">removeGeneProteins()</a><br />
+                                                                    <a href="../classes/bcGen.MainBundle.Entity.Gene.html#method_getGeneProteins" class="">getGeneProteins()</a><br />
+                                                                    <a href="../classes/bcGen.MainBundle.Entity.Gene.html#method_geneAccessionComp" class="">geneAccessionComp()</a><br />
+                                                            </section>
+                            <section class="span4">
+                                                                    <em>No public properties found</em>
+                                                            </section>
+                            <section class="span4">
+                                                                    <em>No constants found</em>
+                                                            </section>
+                        </section>
+                        <section class="row-fluid protected">
+                            <section class="span4">
+                                                                    <em>No protected methods found</em>
+                                                            </section>
+                            <section class="span4">
+                                                                    <em>No protected properties found</em>
+                                                            </section>
+                            <section class="span4">
+                                <em>N/A</em>
+                            </section>
+                        </section>
+                        <section class="row-fluid private">
+                            <section class="span4">
+                                                                    <em>No private methods found</em>
+                                                            </section>
+                            <section class="span4">
+                                                                    <a href="../classes/bcGen.MainBundle.Entity.Gene.html#property_id" class="">$id</a><br />
+                                                                    <a href="../classes/bcGen.MainBundle.Entity.Gene.html#property_geneAccession" class="">$geneAccession</a><br />
+                                                                    <a href="../classes/bcGen.MainBundle.Entity.Gene.html#property_geneContig" class="">$geneContig</a><br />
+                                                                    <a href="../classes/bcGen.MainBundle.Entity.Gene.html#property_geneSeq" class="">$geneSeq</a><br />
+                                                                    <a href="../classes/bcGen.MainBundle.Entity.Gene.html#property_geneRef" class="">$geneRef</a><br />
+                                                                    <a href="../classes/bcGen.MainBundle.Entity.Gene.html#property_geneAnnotations" class="">$geneAnnotations</a><br />
+                                                                    <a href="../classes/bcGen.MainBundle.Entity.Gene.html#property_geneGenome" class="">$geneGenome</a><br />
+                                                                    <a href="../classes/bcGen.MainBundle.Entity.Gene.html#property_geneLocus" class="">$geneLocus</a><br />
+                                                                    <a href="../classes/bcGen.MainBundle.Entity.Gene.html#property_geneSources" class="">$geneSources</a><br />
+                                                                    <a href="../classes/bcGen.MainBundle.Entity.Gene.html#property_geneProteins" class="">$geneProteins</a><br />
+                                                            </section>
+                            <section class="span4">
+                                <em>N/A</em>
+                            </section>
+                        </section>
+                    </section>
+                </div>
+                <aside class="span4 detailsbar">
+                                        
+                    
+                    <dl>
+                        <dt>File</dt>
+                            <dd><a href="../files/Entity.Gene.html"><div class="path-wrapper">Entity/Gene.php</div></a></dd>
+                                                <dt>Package</dt>
+                            <dd><div class="namespace-wrapper">Default</div></dd>
+                                                <dt>Class hierarchy</dt>
+                            <dd class="hierarchy">
+                                                                                                                                                                    <div class="namespace-wrapper">\bcGen\MainBundle\Entity\Gene</div>
+                            </dd>
+
+                        
+                        
+                        
+                                                                            <dt>See also</dt>
+                                                                                    <dd><a href=""><div class="namespace-wrapper">Doctrine documentation on the class ArrayCollection</div></a></dd>
+                                                        <dd><a href=""><div class="namespace-wrapper">Class Source</div></a></dd>
+                                                        <dd><a href=""><div class="namespace-wrapper">Class Genome</div></a></dd>
+                                                        <dd><a href=""><div class="namespace-wrapper">Class Locus</div></a></dd>
+                                                        <dd><a href=""><div class="namespace-wrapper">Class Annotation</div></a></dd>
+                                                        <dd><a href=""><div class="namespace-wrapper">Class Protein</div></a></dd>
+                                                    
+                                                                        </dl>
+                    <h2>Tags</h2>
+                    <table class="table table-condensed">
+                                            <tr>
+                            <th>
+                                author
+                            </th>
+                            <td>
+                                                                    <p>Isabelle Gonçalves</p>
+                                                                    <p>Xavier Sottiaux</p>
+                                                            </td>
+                        </tr>
+                                            <tr>
+                            <th>
+                                version
+                            </th>
+                            <td>
+                                                                    <p>0.1.0</p>
+                                                            </td>
+                        </tr>
+                                            <tr>
+                            <th>
+                                ORM\Table
+                            </th>
+                            <td>
+                                                                    <p>( name=&quot;gene&quot; )</p>
+                                                            </td>
+                        </tr>
+                                            <tr>
+                            <th>
+                                ORM\Entity
+                            </th>
+                            <td>
+                                                                    <p>(repositoryClass=&quot;bcGen\MainBundle\Entity\GeneRepository&quot;)</p>
+                                                            </td>
+                        </tr>
+                                        </table>
+                </aside>
+            </div>
+
+                        
+                                    <a id="properties" name="properties"></a>
+            <div class="row-fluid">
+                <div class="span8 content class">
+                    <h2>Properties</h2>
+                </div>
+                <aside class="span4 detailsbar"></aside>
+            </div>
+
+                                                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_id" name="property_id" class="anchor"></a>
+            <article class="property">
+                <h3 class="private ">$id</h3>
+                <pre class="signature">$id : integer</pre>
+                <p><em>id is a number which identifies a Gene object
+It&#039;s worth the chromosome number</em></p>
+                
+
+                                <h4>Type</h4>
+                integer
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr>
+                        <th>
+                            ORM\Column
+                        </th>
+                        <td>
+                                                            <p>(name=&quot;id&quot;, type=&quot;integer&quot;)</p>
+                                                    </td>
+                    </tr>
+                                    <tr>
+                        <th>
+                            ORM\Id
+                        </th>
+                        <td>
+                                                            
+                                                    </td>
+                    </tr>
+                                    <tr>
+                        <th>
+                            ORM\GeneratedValue
+                        </th>
+                        <td>
+                                                            <p>(strategy=&quot;AUTO&quot;)</p>
+                                                    </td>
+                    </tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_geneAccession" name="property_geneAccession" class="anchor"></a>
+            <article class="property">
+                <h3 class="private ">$geneAccession</h3>
+                <pre class="signature">$geneAccession : string</pre>
+                <p><em>$geneAccession is the code name of a Gene object</em></p>
+                
+
+                                <h4>Type</h4>
+                string
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr>
+                        <th>
+                            ORM\Column
+                        </th>
+                        <td>
+                                                            <p>(name=&quot;gene_accession&quot;, type=&quot;string&quot;, length=255, nullable=TRUE)</p>
+                                                    </td>
+                    </tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_geneContig" name="property_geneContig" class="anchor"></a>
+            <article class="property">
+                <h3 class="private ">$geneContig</h3>
+                <pre class="signature">$geneContig : integer</pre>
+                <p><em></em></p>
+                
+
+                                <h4>Type</h4>
+                integer
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr>
+                        <th>
+                            todo
+                        </th>
+                        <td>
+                                                            <p>ask for information to describe this attribute</p>
+                                                    </td>
+                    </tr>
+                                    <tr>
+                        <th>
+                            ORM\Column
+                        </th>
+                        <td>
+                                                            <p>(name=&quot;gene_contig&quot;, type=&quot;integer&quot;, nullable=TRUE)</p>
+                                                    </td>
+                    </tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_geneSeq" name="property_geneSeq" class="anchor"></a>
+            <article class="property">
+                <h3 class="private ">$geneSeq</h3>
+                <pre class="signature">$geneSeq : string</pre>
+                <p><em>geneSeq is the DNA sequence of a Gene object</em></p>
+                
+
+                                <h4>Type</h4>
+                string
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr>
+                        <th>
+                            ORM\Column
+                        </th>
+                        <td>
+                                                            <p>(name=&quot;gene_seq&quot;, type=&quot;text&quot;, nullable=TRUE)</p>
+                                                    </td>
+                    </tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_geneRef" name="property_geneRef" class="anchor"></a>
+            <article class="property">
+                <h3 class="private ">$geneRef</h3>
+                <pre class="signature">$geneRef : boolean</pre>
+                <p><em>geneRef indicates if the current Gene object is a reference</em></p>
+                
+
+                                <h4>Type</h4>
+                boolean
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr>
+                        <th>
+                            ORM\Column
+                        </th>
+                        <td>
+                                                            <p>(name=&quot;gene_ref&quot;, type=&quot;boolean&quot;, nullable=TRUE)</p>
+                                                    </td>
+                    </tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_geneAnnotations" name="property_geneAnnotations" class="anchor"></a>
+            <article class="property">
+                <h3 class="private ">$geneAnnotations</h3>
+                <pre class="signature">$geneAnnotations : \Doctrine\Common\Collections\ArrayCollection</pre>
+                <p><em>geneAnnotations gathers all the references of Annotation objects linked to the current Gene object</em></p>
+                
+
+                                <h4>Type</h4>
+                \Doctrine\Common\Collections\ArrayCollection
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                                            <dt>See also</dt>
+                                                                <dd><a href="http://www.doctrine-project.org/api/common/2.5/class-Doctrine.Common.Collections.ArrayCollection.html"><span class="namespace-wrapper">Doctrine documentation on the class ArrayCollection</span></a></dd>
+                                            <dd><a href="../classes/bcGen.MainBundle.Entity.Annotation.html"><span class="namespace-wrapper">Class Annotation</span></a></dd>
+                                                                </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr>
+                        <th>
+                            ORM\ManyToMany
+                        </th>
+                        <td>
+                                                            <p>( targetEntity=&quot;bcGen\MainBundle\Entity\Annotation&quot; )</p>
+                                                    </td>
+                    </tr>
+                                    <tr>
+                        <th>
+                            ORM\JoinColumn
+                        </th>
+                        <td>
+                                                            <p>( name=&quot;gene_annotation&quot;, nullable=TRUE )</p>
+                                                    </td>
+                    </tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_geneGenome" name="property_geneGenome" class="anchor"></a>
+            <article class="property">
+                <h3 class="private ">$geneGenome</h3>
+                <pre class="signature">$geneGenome : integer</pre>
+                <p><em>geneGenome contains the Genome object reference linked to the current Gene object</em></p>
+                
+
+                                <h4>Type</h4>
+                integer
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                                            <dt>See also</dt>
+                                                                <dd><a href="../classes/bcGen.MainBundle.Entity.Genome.html"><span class="namespace-wrapper">Class Genome</span></a></dd>
+                                                                </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr>
+                        <th>
+                            ORM\ManyToOne
+                        </th>
+                        <td>
+                                                            <p>( targetEntity=&quot;bcGen\MainBundle\Entity\Genome&quot; )</p>
+                                                    </td>
+                    </tr>
+                                    <tr>
+                        <th>
+                            ORM\JoinColumn
+                        </th>
+                        <td>
+                                                            <p>( name=&quot;gene_genome&quot;, nullable=TRUE )</p>
+                                                    </td>
+                    </tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_geneLocus" name="property_geneLocus" class="anchor"></a>
+            <article class="property">
+                <h3 class="private ">$geneLocus</h3>
+                <pre class="signature">$geneLocus : integer</pre>
+                <p><em>geneLocus contains the Locus object reference linked to the current Gene object</em></p>
+                
+
+                                <h4>Type</h4>
+                integer
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                                            <dt>See also</dt>
+                                                                <dd><a href="../classes/bcGen.MainBundle.Entity.Locus.html"><span class="namespace-wrapper">Class Locus</span></a></dd>
+                                                                </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr>
+                        <th>
+                            ORM\ManyToOne
+                        </th>
+                        <td>
+                                                            <p>( targetEntity=&quot;bcGen\MainBundle\Entity\Locus&quot;, inversedBy=&quot;locusGenes&quot; )</p>
+                                                    </td>
+                    </tr>
+                                    <tr>
+                        <th>
+                            ORM\JoinColumn
+                        </th>
+                        <td>
+                                                            <p>( name=&quot;gene_locus&quot;, nullable=TRUE )</p>
+                                                    </td>
+                    </tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_geneSources" name="property_geneSources" class="anchor"></a>
+            <article class="property">
+                <h3 class="private ">$geneSources</h3>
+                <pre class="signature">$geneSources : \Doctrine\Common\Collections\ArrayCollection</pre>
+                <p><em>geneSources gathers all the references of Source objects linked to the current Gene object</em></p>
+                
+
+                                <h4>Type</h4>
+                \Doctrine\Common\Collections\ArrayCollection
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                                            <dt>See also</dt>
+                                                                <dd><a href="http://www.doctrine-project.org/api/common/2.5/class-Doctrine.Common.Collections.ArrayCollection.html"><span class="namespace-wrapper">Doctrine documentation on the class ArrayCollection</span></a></dd>
+                                            <dd><a href="../classes/bcGen.MainBundle.Entity.Source.html"><span class="namespace-wrapper">Class Source</span></a></dd>
+                                                                </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr>
+                        <th>
+                            ORM\ManyToMany
+                        </th>
+                        <td>
+                                                            <p>( targetEntity=&quot;bcGen\MainBundle\Entity\Source&quot; )</p>
+                                                    </td>
+                    </tr>
+                                    <tr>
+                        <th>
+                            ORM\JoinColumn
+                        </th>
+                        <td>
+                                                            <p>( name=&quot;gene_source&quot;, nullable=TRUE )</p>
+                                                    </td>
+                    </tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_geneProteins" name="property_geneProteins" class="anchor"></a>
+            <article class="property">
+                <h3 class="private ">$geneProteins</h3>
+                <pre class="signature">$geneProteins : \Doctrine\Common\Collections\ArrayCollection</pre>
+                <p><em>geneProteins gathers all the references of Protein objects linked to the current Gene object</em></p>
+                
+
+                                <h4>Type</h4>
+                \Doctrine\Common\Collections\ArrayCollection
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                                            <dt>See also</dt>
+                                                                <dd><a href="http://www.doctrine-project.org/api/common/2.5/class-Doctrine.Common.Collections.ArrayCollection.html"><span class="namespace-wrapper">Doctrine documentation on the class ArrayCollection</span></a></dd>
+                                            <dd><a href="../classes/bcGen.MainBundle.Entity.Protein.html"><span class="namespace-wrapper">Class Protein</span></a></dd>
+                                                                </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr>
+                        <th>
+                            ORM\OneToMany
+                        </th>
+                        <td>
+                                                            <p>( targetEntity=&quot;bcGen\MainBundle\Entity\Protein&quot;, mappedBy=&quot;proteinGene&quot; )</p>
+                                                    </td>
+                    </tr>
+                            </table>
+        </aside>
+    </div>
+
+                            
+                                    <a id="methods" name="methods"></a>
+            <div class="row-fluid">
+                <div class="span8 content class"><h2>Methods</h2></div>
+                <aside class="span4 detailsbar"></aside>
+            </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method___construct" name="method___construct" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">__construct()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">__construct() </pre>
+                <p><em>Constructor initializes the ArrayCollections : geneAnnotations and geneSources.</em></p>
+                
+
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getId" name="method_getId" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getId()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getId() : integer</pre>
+                <p><em>Get the id value of a Gene object</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    integer
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_setGeneSeq" name="method_setGeneSeq" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">setGeneSeq()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">setGeneSeq(string  <span class="argument">$geneSeq</span>) : \bcGen\MainBundle\Entity\Gene</pre>
+                <p><em>Set the geneSeq value of a Gene Object</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$geneSeq </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    <a href="../classes/bcGen.MainBundle.Entity.Gene.html">\bcGen\MainBundle\Entity\Gene</a>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getGeneSeq" name="method_getGeneSeq" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getGeneSeq()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getGeneSeq() : string</pre>
+                <p><em>Get the geneSeq value of a Gene Object</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    string
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_setGeneRef" name="method_setGeneRef" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">setGeneRef()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">setGeneRef(boolean  <span class="argument">$geneRef</span>) : \bcGen\MainBundle\Entity\Gene</pre>
+                <p><em>Set the geneRef value of a Gene Object</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>boolean</td>
+                                <td>$geneRef </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    <a href="../classes/bcGen.MainBundle.Entity.Gene.html">\bcGen\MainBundle\Entity\Gene</a>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getGeneRef" name="method_getGeneRef" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getGeneRef()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getGeneRef() : boolean</pre>
+                <p><em>Get the geneRef value of a Gene Object</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    boolean
+                                            &mdash; <p>O if the Gene Object is a reference gene
+1 if the Gene Object is not a reference gene</p>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_setGeneAccession" name="method_setGeneAccession" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">setGeneAccession()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">setGeneAccession(string  <span class="argument">$geneAccession</span>) : \bcGen\MainBundle\Entity\Gene</pre>
+                <p><em>Set the geneAccession value of a Gene Object</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$geneAccession </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    <a href="../classes/bcGen.MainBundle.Entity.Gene.html">\bcGen\MainBundle\Entity\Gene</a>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getGeneAccession" name="method_getGeneAccession" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getGeneAccession()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getGeneAccession() : string</pre>
+                <p><em>Get the geneAccession value of a Gene Object</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    string
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_setGeneContig" name="method_setGeneContig" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">setGeneContig()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">setGeneContig(integer  <span class="argument">$geneContig</span>) : \bcGen\MainBundle\Entity\Gene</pre>
+                <p><em>Set the geneContig value of a Gene Object</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>integer</td>
+                                <td>$geneContig </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    <a href="../classes/bcGen.MainBundle.Entity.Gene.html">\bcGen\MainBundle\Entity\Gene</a>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getGeneContig" name="method_getGeneContig" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getGeneContig()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getGeneContig() : integer</pre>
+                <p><em>Get the geneContig value of a Gene Object</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    integer
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_addGeneAnnotations" name="method_addGeneAnnotations" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">addGeneAnnotations()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">addGeneAnnotations(\bcGen\MainBundle\Entity\Annotation  <span class="argument">$annotation</span>) : \bcGen\MainBundle\Entity\Gene</pre>
+                <p><em>Add an Annotation object reference to geneAnnotations</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td><a href="../classes/bcGen.MainBundle.Entity.Annotation.html">\bcGen\MainBundle\Entity\Annotation</a></td>
+                                <td>$annotation </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    <a href="../classes/bcGen.MainBundle.Entity.Gene.html">\bcGen\MainBundle\Entity\Gene</a>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                                            <dt>See also</dt>
+                                                                <dd><a href="http://www.doctrine-project.org/api/common/2.5/class-Doctrine.Common.Collections.ArrayCollection.html"><span class="namespace-wrapper">Doctrine documentation on the class ArrayCollection</span></a></dd>
+                                                                </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_removeGeneAnnotations" name="method_removeGeneAnnotations" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">removeGeneAnnotations()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">removeGeneAnnotations(\bcGen\MainBundle\Entity\Annotation  <span class="argument">$annotation</span>) </pre>
+                <p><em>Remove an Annotation object reference from geneAnnotations</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td><a href="../classes/bcGen.MainBundle.Entity.Annotation.html">\bcGen\MainBundle\Entity\Annotation</a></td>
+                                <td>$annotation </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                                            <dt>See also</dt>
+                                                                <dd><a href="http://www.doctrine-project.org/api/common/2.5/class-Doctrine.Common.Collections.ArrayCollection.html"><span class="namespace-wrapper">Doctrine documentation on the class ArrayCollection</span></a></dd>
+                                                                                                <dt>Uses</dt>
+                                                                <dd>\Doctrine\Common\Collections\ArrayCollection::removeElement()</dd>
+                                                </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getGeneAnnotations" name="method_getGeneAnnotations" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getGeneAnnotations()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getGeneAnnotations() : \Doctrine\Common\Collections\Collection</pre>
+                <p><em>Get the ArrayCollection : geneAnnotations</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    \Doctrine\Common\Collections\Collection
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                                            <dt>See also</dt>
+                                                                <dd><a href="http://www.doctrine-project.org/api/common/2.5/class-Doctrine.Common.Collections.ArrayCollection.html"><span class="namespace-wrapper">Doctrine documentation on the class ArrayCollection</span></a></dd>
+                                                                </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_setGeneGenome" name="method_setGeneGenome" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">setGeneGenome()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">setGeneGenome(\bcGen\MainBundle\Entity\Genome  <span class="argument">$genome</span>) : \bcGen\MainBundle\Entity\Gene</pre>
+                <p><em>Set the geneGenome value of a Gene Object</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td><a href="../classes/bcGen.MainBundle.Entity.Genome.html">\bcGen\MainBundle\Entity\Genome</a></td>
+                                <td>$genome </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    <a href="../classes/bcGen.MainBundle.Entity.Gene.html">\bcGen\MainBundle\Entity\Gene</a>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getGeneGenome" name="method_getGeneGenome" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getGeneGenome()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getGeneGenome() : \bcGen\MainBundle\Entity\Genome</pre>
+                <p><em>Get the geneGenome value of a Gene Object</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    <a href="../classes/bcGen.MainBundle.Entity.Genome.html">\bcGen\MainBundle\Entity\Genome</a>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_setGeneLocus" name="method_setGeneLocus" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">setGeneLocus()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">setGeneLocus(\bcGen\MainBundle\Entity\Locus  <span class="argument">$locus</span>) : \bcGen\MainBundle\Entity\Gene</pre>
+                <p><em>Set the geneLocus value of a Gene Object</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td><a href="../classes/bcGen.MainBundle.Entity.Locus.html">\bcGen\MainBundle\Entity\Locus</a></td>
+                                <td>$locus </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    <a href="../classes/bcGen.MainBundle.Entity.Gene.html">\bcGen\MainBundle\Entity\Gene</a>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getGeneLocus" name="method_getGeneLocus" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getGeneLocus()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getGeneLocus() : \bcGen\MainBundle\Entity\Locus</pre>
+                <p><em>Get the geneLocus value of a Gene Object</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    <a href="../classes/bcGen.MainBundle.Entity.Locus.html">\bcGen\MainBundle\Entity\Locus</a>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_addGeneSources" name="method_addGeneSources" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">addGeneSources()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">addGeneSources(\bcGen\MainBundle\Entity\Source  <span class="argument">$source</span>) : \bcGen\MainBundle\Entity\Gene</pre>
+                <p><em>Add a Source object reference to geneSources</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td><a href="../classes/bcGen.MainBundle.Entity.Source.html">\bcGen\MainBundle\Entity\Source</a></td>
+                                <td>$source </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    <a href="../classes/bcGen.MainBundle.Entity.Gene.html">\bcGen\MainBundle\Entity\Gene</a>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                                            <dt>See also</dt>
+                                                                <dd><a href="http://www.doctrine-project.org/api/common/2.5/class-Doctrine.Common.Collections.ArrayCollection.html"><span class="namespace-wrapper">Doctrine documentation on the class ArrayCollection</span></a></dd>
+                                                                </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_removeGeneSources" name="method_removeGeneSources" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">removeGeneSources()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">removeGeneSources(\bcGen\MainBundle\Entity\Source  <span class="argument">$source</span>) </pre>
+                <p><em>Remove a Source object reference from geneSources</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td><a href="../classes/bcGen.MainBundle.Entity.Source.html">\bcGen\MainBundle\Entity\Source</a></td>
+                                <td>$source </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                                            <dt>See also</dt>
+                                                                <dd><a href="http://www.doctrine-project.org/api/common/2.5/class-Doctrine.Common.Collections.ArrayCollection.html"><span class="namespace-wrapper">Doctrine documentation on the class ArrayCollection</span></a></dd>
+                                                                                                <dt>Uses</dt>
+                                                                <dd>\Doctrine\Common\Collections\ArrayCollection::removeElement()</dd>
+                                                </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getGeneSources" name="method_getGeneSources" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getGeneSources()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getGeneSources() : \Doctrine\Common\Collections\Collection</pre>
+                <p><em>Get the ArrayCollection : geneSources</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    \Doctrine\Common\Collections\Collection
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                                            <dt>See also</dt>
+                                                                <dd><a href="http://www.doctrine-project.org/api/common/2.5/class-Doctrine.Common.Collections.ArrayCollection.html"><span class="namespace-wrapper">Doctrine documentation on the class ArrayCollection</span></a></dd>
+                                                                </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_addGeneProteins" name="method_addGeneProteins" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">addGeneProteins()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">addGeneProteins(\bcGen\MainBundle\Entity\Protein  <span class="argument">$protein</span>) : \bcGen\MainBundle\Entity\Gene</pre>
+                <p><em>Add a protein object reference to geneProteins</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td><a href="../classes/bcGen.MainBundle.Entity.Protein.html">\bcGen\MainBundle\Entity\Protein</a></td>
+                                <td>$protein </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    <a href="../classes/bcGen.MainBundle.Entity.Gene.html">\bcGen\MainBundle\Entity\Gene</a>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                                            <dt>See also</dt>
+                                                                <dd><a href="http://www.doctrine-project.org/api/common/2.5/class-Doctrine.Common.Collections.ArrayCollection.html"><span class="namespace-wrapper">Doctrine documentation on the class ArrayCollection</span></a></dd>
+                                                                                                <dt>Uses</dt>
+                                                                <dd>\bcGen\MainBundle\Entity\Protein::setProteinGene()</dd>
+                                                </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_removeGeneProteins" name="method_removeGeneProteins" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">removeGeneProteins()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">removeGeneProteins(\bcGen\MainBundle\Entity\Protein  <span class="argument">$protein</span>) </pre>
+                <p><em>Remove a protein object reference to geneProteins</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td><a href="../classes/bcGen.MainBundle.Entity.Protein.html">\bcGen\MainBundle\Entity\Protein</a></td>
+                                <td>$protein </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                                            <dt>See also</dt>
+                                                                <dd><a href="http://www.doctrine-project.org/api/common/2.5/class-Doctrine.Common.Collections.ArrayCollection.html"><span class="namespace-wrapper">Doctrine documentation on the class ArrayCollection</span></a></dd>
+                                                                                                <dt>Uses</dt>
+                                                                <dd>\Doctrine\Common\Collections\ArrayCollection::removeElement()</dd>
+                                            <dd>\bcGen\MainBundle\Entity\Protein::setProteinGene()</dd>
+                                                </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getGeneProteins" name="method_getGeneProteins" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getGeneProteins()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getGeneProteins() : \Doctrine\Common\Collections\Collection</pre>
+                <p><em>Get the ArrayCollection : geneProteins</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    \Doctrine\Common\Collections\Collection
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                                            <dt>See also</dt>
+                                                                <dd><a href="http://www.doctrine-project.org/api/common/2.5/class-Doctrine.Common.Collections.ArrayCollection.html"><span class="namespace-wrapper">Doctrine documentation on the class ArrayCollection</span></a></dd>
+                                                                </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_geneAccessionComp" name="method_geneAccessionComp" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">geneAccessionComp()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">geneAccessionComp(\bcGen\MainBundle\Entity\Gene  <span class="argument">$gene1</span>, \bcGen\MainBundle\Entity\Gene  <span class="argument">$gene2</span>) : integer</pre>
+                <p><em>This method compares 2 Genes objects according to their accessionNum.</em></p>
+                <p>Only the first four characters are used.
+The order choosen is : BCIN &gt; B0510 &gt; BC1G &gt; BCT4 &gt; BOFU</p>
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td><a href="../classes/bcGen.MainBundle.Entity.Gene.html">\bcGen\MainBundle\Entity\Gene</a></td>
+                                <td>$gene1 </td>
+                                <td></td>
+                            </tr>
+                                                    <tr>
+                                <td><a href="../classes/bcGen.MainBundle.Entity.Gene.html">\bcGen\MainBundle\Entity\Gene</a></td>
+                                <td>$gene2 </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    integer
+                                            &mdash; <p>0 if the 2 Gene objects are the same
+1 if gene1 is superior to gene2
+-1 if gene1 is inferior to gene2</p>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                            <span class="label label-info">static</span>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                                                    </div>
+    </section>
+
+    <div id="source-view" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="source-view-label" aria-hidden="true">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h3 id="source-view-label">Gene.php</h3>
+        </div>
+        <div class="modal-body">
+            <pre data-src="../files/Entity/Gene.php.txt" class="language-php line-numbers"></pre>
+        </div>
+    </div>
+
+    <footer class="row-fluid">
+        <section class="span10 offset2">
+            <section class="row-fluid">
+                <section class="span10 offset1">
+                    <section class="row-fluid footer-sections">
+                        <section class="span4">
+                                                        <h1><i class="icon-code"></i></h1>
+                            <div>
+                                <ul>
+                                                                            <li><a href="../namespaces/bcGen.html">\bcGen</a></li>
+                                                                    </ul>
+                            </div>
+                        </section>
+                        <section class="span4">
+                                                        <h1><i class="icon-bar-chart"></i></h1>
+                            <div>
+                                <ul>
+                                    <li><a href="../graphs/class.html">Class Hierarchy Diagram</a></li>
+                                </ul>
+                            </div>
+                        </section>
+                        <section class="span4">
+                                                        <h1><i class="icon-pushpin"></i></h1>
+                            <div>
+                                <ul>
+                                    <li><a href="../reports/errors.html">Errors</a></li>
+                                    <li><a href="../reports/markers.html">Markers</a></li>
+                                </ul>
+                            </div>
+                        </section>
+                    </section>
+                </section>
+            </section>
+            <section class="row-fluid">
+                <section class="span10 offset1">
+                    <hr />
+                    Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor </a> and authored
+                    on August 20th, 2015 at 13:27.
+                </section>
+            </section>
+        </section>
+    </footer>
+</div>
+
+</body>
+</html>

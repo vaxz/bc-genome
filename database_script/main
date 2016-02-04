@@ -1,0 +1,140 @@
+#! /bin/bash
+#
+#-------------------------------------------------------------
+#
+# This script checks if the unique argument is correct and
+# allows to run those one : csv_file, fasta_file and faa_file
+#
+#-------------------------------------------------------------
+
+#Needed variables to ensure the database connection
+user="root"
+password="root"
+database="bc_gen_db"
+
+# Testing the number of arguments
+# Initializing a boolean variable used to check if the number of argument is correct
+nb_argument=1
+
+if [  $# -eq 0 ]
+then
+	echo "There is no argument"
+	nb_argument=0
+
+elif [ $# -gt 1 ]
+then
+	echo "The number of arguments is incorrect"
+	nb_argument=0
+fi
+
+# If nb_argument value is worth 0, a message about how to use the script will be generated
+if [ "$nb_argument" -eq 0 ]
+then
+
+	echo "You just need to specify one argument corresponding to the desired chromosome number"
+	echo "example : \"sh $0 18\""
+	exit 1
+
+fi
+
+# Checking that the files linked to the chromosome (faa, fasta and csv) exist
+faa_file="$1.faa"
+fasta_file="$1.fasta"
+csv_file="$1.csv"
+files_exist=1
+
+if [ ! -f  "$faa_file" ]; then echo "The file : $faa_file doesn't exist"; files_exist=0 ;fi
+if [ ! -f  "$fasta_file" ]; then echo "The file : $fasta_file doesn't exist"; files_exist=0 ;fi
+if [ ! -f  "$csv_file" ]; then echo "The file : $csv_file doesn't exist"; files_exist=0 ;fi
+if [ "$files_exist" -eq 0 ]; then exit 1 ;fi
+
+# Running the csv_file script
+csv_header="##################################################################################################\n"
+csv_header+="#\t\t\t\tCSV ERRORS\n"
+csv_header+="##################################################################################################\n"
+echo -e $csv_header > error_file
+sh csv_file $csv_file 2>>error_file
+csv_result=$?
+case $csv_result in
+	0) echo "The file $csv_file has been treated correctly";;
+	1) echo "The file name $csv_file hasn't been transmitted to csv_file script";;
+	*) echo "The file $csv_file hasn't been treated correctly"; exit 1;;
+esac
+
+# Loading the database with the queries made by the csv_file script and check the result
+gene_locus_chromosome_header="\n\n##################################################################################################\n"
+gene_locus_chromosome_header+="#\t\t\t\t GENE LOCUS CHROMOSOME QUERIES ERRORS\n"
+gene_locus_chromosome_header+="##################################################################################################\n"
+echo -e $gene_locus_chromosome_header >> error_file
+$(mysql -D $database -u $user -p$password <csv_sql_query_file 2>>error_file)
+query_result=$?
+if [ "$query_result" -ne 0 ];
+then 
+	echo "Something wrong has happened with the database."
+	echo "First, check the user, password and database variables in the script also verify if the database exists."
+	echo "Then, check error_file"
+	exit 1
+fi
+
+# Running the fasta_file script
+fasta_header="\n\n##################################################################################################\n"
+fasta_header+="#\t\t\t\t FASTA ERRORS\n"
+fasta_header+="##################################################################################################\n"
+echo -e $fasta_header >> error_file
+sh ./fasta_file $fasta_file 2>>error_file
+fasta_result=$?
+case $fasta_result in
+	0) echo "The file $fasta_file has been treated correctly";;
+	1) echo "The file name $csv_file hasn't been transmitted to fasta_file script";;
+	*) echo "The file $fasta_file hasn't been treated correctly"; exit 1;;
+esac
+
+# Loading the database with the queries made by the fasta_file script and check the result
+chromosome_DNA_header="\n\n##################################################################################################\n"
+chromosome_DNA_header+="#\t\t\t\t CHROMOSOME DNA QUERIES ERRORS\n"
+chromosome_DNA_header+="##################################################################################################\n"
+echo -e $chromosome_DNA_header >> error_file
+$(mysql -D $database -u $user -p$password <fasta_sql_query_file 2>>error_file)
+query_result=$?
+if [ "$query_result" -ne 0 ]
+then 
+	echo "Something wrong has happened with the database"
+	echo "First, check the user, password and database variables in the script also verify if the database exists"
+	echo "Then, check error_file"
+	exit 1
+fi
+
+# Running the faa_file script
+faa_header="\n\n##################################################################################################\n"
+faa_header+="#\t\t\t\t FAA ERRORS\n"
+faa_header+="##################################################################################################\n"
+echo -e $faa_header >> error_file
+sh ./faa_file $faa_file $user $password $database  2>>error_file
+faa_result=$?
+case $faa_result in
+	0) echo "The file $faa_file has been treated correctly";;
+	1) echo "The file name $csv_file and the database connection arguments have not been transmitted to faa_file script";;
+	2) echo "The query toward the database to get the gene id has failed";;
+	3) echo "Some queries did not work. Some proteins are not linked to a gene, check the error_file";;
+	*) echo "The file $faa_file hasn't been treated correctly"; exit 1;;
+esac
+
+# Loading the database with the queries from the faa_file script and check the result
+protein_header="\n\n##################################################################################################\n"
+protein_header+="#\t\t\t\t PROTEIN QUERIES ERRORS\n"
+protein_header+="##################################################################################################\n"
+echo -e $protein_header >> error_file
+$(mysql -D $database -u $user -p$password <faa_sql_query_file 2>>error_file)
+query_result=$?
+if [ "$query_result" -ne 0 ]
+then 
+	echo "Something wrong has happened with the database"
+	echo "First, check the user, password and database variables in the script also verify if the database exists"
+	echo "Then, check error_file"
+	exit 1
+fi
+
+rm csv_sql_query_file fasta_sql_query_file faa_sql_query_file
+
+exit 0
+

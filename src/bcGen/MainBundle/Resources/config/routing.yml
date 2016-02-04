@@ -1,0 +1,15 @@
+bc_gen_main_homepage:
+    path:     /homepage
+    defaults: { _controller: bcGenMainBundle:Main:homepage }
+
+bc_gen_main_detailed_display:
+    path:     /detailed_display
+    defaults: { _controller: bcGenMainBundle:Main:detailedDisplay }
+    
+bc_gen_main_locus_display:
+    path:     /locus_display
+    defaults: { _controller: bcGenMainBundle:Main:locusDisplay }
+
+bc_gen_main_neighborhood_display:
+    path:     /neighborhood_display
+    defaults: { _controller: bcGenMainBundle:Main:neighborhoodDisplay }

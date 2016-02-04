@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+    <meta charset="utf-8"/>
+    <title>API Documentation</title>
+    <meta name="author" content=""/>
+    <meta name="description" content=""/>
+
+    <link href="../css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
+    <link href="../css/font-awesome.min.css" rel="stylesheet">
+    <link href="../css/prism.css" rel="stylesheet" media="all"/>
+    <link href="../css/template.css" rel="stylesheet" media="all"/>
+    
+    <!--[if lt IE 9]>
+    <script src="../js/html5.js"></script>
+    <![endif]-->
+    <script src="../js/jquery-1.11.0.min.js"></script>
+    <script src="../js/ui/1.10.4/jquery-ui.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/jquery.smooth-scroll.js"></script>
+    <script src="../js/prism.min.js"></script>
+    <!-- TODO: Add http://jscrollpane.kelvinluck.com/ to style the scrollbars for browsers not using webkit-->
+    <script type="text/javascript">
+    function loadExternalCodeSnippets() {
+        Array.prototype.slice.call(document.querySelectorAll('pre[data-src]')).forEach(function (pre) {
+            var src = pre.getAttribute('data-src');
+            var extension = (src.match(/\.(\w+)$/) || [, ''])[1];
+            var language = 'php';
+
+            var code = document.createElement('code');
+            code.className = 'language-' + language;
+
+            pre.textContent = '';
+
+            code.textContent = 'Loading…';
+
+            pre.appendChild(code);
+
+            var xhr = new XMLHttpRequest();
+
+            xhr.open('GET', src, true);
+
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4) {
+
+                    if (xhr.status < 400 && xhr.responseText) {
+                        code.textContent = xhr.responseText;
+
+                        Prism.highlightElement(code);
+                    }
+                    else if (xhr.status >= 400) {
+                        code.textContent = '✖ Error ' + xhr.status + ' while fetching file: ' + xhr.statusText;
+                    }
+                    else {
+                        code.textContent = '✖ Error: File does not exist or is empty';
+                    }
+                }
+            };
+
+            xhr.send(null);
+        });
+    }
+
+    $(document).ready(function(){
+        loadExternalCodeSnippets();
+    });
+    $('#source-view').on('shown', function () {
+        loadExternalCodeSnippets();
+    })
+</script>
+
+    <link rel="shortcut icon" href="../images/favicon.ico"/>
+    <link rel="apple-touch-icon" href="../images/apple-touch-icon.png"/>
+    <link rel="apple-touch-icon" sizes="72x72" href="../images/apple-touch-icon-72x72.png"/>
+    <link rel="apple-touch-icon" sizes="114x114" href="../images/apple-touch-icon-114x114.png"/>
+</head>
+<body>
+
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container">
+            <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                <i class="icon-ellipsis-vertical"></i>
+            </a>
+            <a class="brand" href="../index.html">API Documentation</a>
+
+            <div class="nav-collapse">
+                <ul class="nav pull-right">
+                                        <li class="dropdown">
+                        <a href="../index.html" class="dropdown-toggle" data-toggle="dropdown">
+                            API Documentation <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                                                        <li><a href="../namespaces/bcGen.html">\bcGen</a></li>
+                                                    </ul>
+                    </li>
+                                        <li class="dropdown" id="charts-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            Charts <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="../graphs/class.html">
+                                    <i class="icon-list-alt"></i>&#160;Class hierarchy diagram
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="dropdown" id="reports-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            Reports <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="../reports/errors.html">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">10</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="../reports/markers.html">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <i class="icon-list-alt"></i>&#160;Markers <span class="label label-info pull-right">2</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="../reports/deprecated.html">
+                                                                                                            <i class="icon-list-alt"></i>&#160;Deprecated <span class="label label-info pull-right">0</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!--<div class="go_to_top">-->
+    <!--<a href="#___" style="color: inherit">Back to top&#160;&#160;<i class="icon-upload icon-white"></i></a>-->
+    <!--</div>-->
+</div>
+
+<div id="___" class="container-fluid">
+        <section class="row-fluid">
+        <div class="span2 sidebar">
+                                <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-1721232537"></a>
+                                <a href="../namespaces/default.html" style="margin-left: 30px; padding-left: 0">\</a>
+            </div>
+            <div id="namespace-1721232537" class="accordion-body collapse in">
+                <div class="accordion-inner">
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-2090222986"></a>
+                                <a href="../namespaces/bcGen.html" style="margin-left: 30px; padding-left: 0">bcGen</a>
+            </div>
+            <div id="namespace-2090222986" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-569493815"></a>
+                                <a href="../namespaces/bcGen.MainBundle.html" style="margin-left: 30px; padding-left: 0">MainBundle</a>
+            </div>
+            <div id="namespace-569493815" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1871280395"></a>
+                                <a href="../namespaces/bcGen.MainBundle.Controller.html" style="margin-left: 30px; padding-left: 0">Controller</a>
+            </div>
+            <div id="namespace-1871280395" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/bcGen.MainBundle.Controller.MainController.html">MainController</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-2083967281"></a>
+                                <a href="../namespaces/bcGen.MainBundle.DependencyInjection.html" style="margin-left: 30px; padding-left: 0">DependencyInjection</a>
+            </div>
+            <div id="namespace-2083967281" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/bcGen.MainBundle.DependencyInjection.bcGenMainExtension.html">bcGenMainExtension</a></li>
+                                                    <li class="class"><a href="../classes/bcGen.MainBundle.DependencyInjection.Configuration.html">Configuration</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-540444218"></a>
+                                <a href="../namespaces/bcGen.MainBundle.Entity.html" style="margin-left: 30px; padding-left: 0">Entity</a>
+            </div>
+            <div id="namespace-540444218" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/bcGen.MainBundle.Entity.Annotation.html">Annotation</a></li>
+                                                    <li class="class"><a href="../classes/bcGen.MainBundle.Entity.AnnotationRepository.html">AnnotationRepository</a></li>
+                                                    <li class="class"><a href="../classes/bcGen.MainBundle.Entity.Chromosome.html">Chromosome</a></li>
+                                                    <li class="class"><a href="../classes/bcGen.MainBundle.Entity.ChromosomeRepository.html">ChromosomeRepository</a></li>
+                                                    <li class="class"><a href="../classes/bcGen.MainBundle.Entity.Condition.html">Condition</a></li>
+                                                    <li class="class"><a href="../classes/bcGen.MainBundle.Entity.ConditionRepository.html">ConditionRepository</a></li>
+                                                    <li class="class"><a href="../classes/bcGen.MainBundle.Entity.Gene.html">Gene</a></li>
+                                                    <li class="class"><a href="../classes/bcGen.MainBundle.Entity.GeneCondition.html">GeneCondition</a></li>
+                                                    <li class="class"><a href="../classes/bcGen.MainBundle.Entity.GeneConditionRepository.html">GeneConditionRepository</a></li>
+                                                    <li class="class"><a href="../classes/bcGen.MainBundle.Entity.GeneRepository.html">GeneRepository</a></li>
+                                                    <li class="class"><a href="../classes/bcGen.MainBundle.Entity.Genome.html">Genome</a></li>
+                                                    <li class="class"><a href="../classes/bcGen.MainBundle.Entity.GenomeRepository.html">GenomeRepository</a></li>
+                                                    <li class="class"><a href="../classes/bcGen.MainBundle.Entity.InnerCommunication.html">InnerCommunication</a></li>
+                                                    <li class="class"><a href="../classes/bcGen.MainBundle.Entity.Locus.html">Locus</a></li>
+                                                    <li class="class"><a href="../classes/bcGen.MainBundle.Entity.LocusChromosome.html">LocusChromosome</a></li>
+                                                    <li class="class"><a href="../classes/bcGen.MainBundle.Entity.LocusChromosomeRepository.html">LocusChromosomeRepository</a></li>
+                                                    <li class="class"><a href="../classes/bcGen.MainBundle.Entity.LocusRepository.html">LocusRepository</a></li>
+                                                    <li class="class"><a href="../classes/bcGen.MainBundle.Entity.Protein.html">Protein</a></li>
+                                                    <li class="class"><a href="../classes/bcGen.MainBundle.Entity.ProteinAnnotation.html">ProteinAnnotation</a></li>
+                                                    <li class="class"><a href="../classes/bcGen.MainBundle.Entity.ProteinAnnotationRepository.html">ProteinAnnotationRepository</a></li>
+                                                    <li class="class"><a href="../classes/bcGen.MainBundle.Entity.ProteinRepository.html">ProteinRepository</a></li>
+                                                    <li class="class"><a href="../classes/bcGen.MainBundle.Entity.Publication.html">Publication</a></li>
+                                                    <li class="class"><a href="../classes/bcGen.MainBundle.Entity.Source.html">Source</a></li>
+                                                    <li class="class"><a href="../classes/bcGen.MainBundle.Entity.SourceRepository.html">SourceRepository</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1860160732"></a>
+                                <a href="../namespaces/bcGen.MainBundle.Form.html" style="margin-left: 30px; padding-left: 0">Form</a>
+            </div>
+            <div id="namespace-1860160732" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/bcGen.MainBundle.Form.SearchGenesType.html">SearchGenesType</a></li>
+                                                    <li class="class"><a href="../classes/bcGen.MainBundle.Form.SearchGeneType.html">SearchGeneType</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-648977615"></a>
+                                <a href="../namespaces/bcGen.MainBundle.Tests.html" style="margin-left: 30px; padding-left: 0">Tests</a>
+            </div>
+            <div id="namespace-648977615" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1822505745"></a>
+                                <a href="../namespaces/bcGen.MainBundle.Tests.Controller.html" style="margin-left: 30px; padding-left: 0">Controller</a>
+            </div>
+            <div id="namespace-1822505745" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/bcGen.MainBundle.Tests.Controller.DefaultControllerTest.html">DefaultControllerTest</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/bcGen.MainBundle.bcGenMainBundle.html">bcGenMainBundle</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+        </div>
+    </section>
+    <section class="row-fluid">
+        <div class="span10 offset2">
+            <div class="row-fluid">
+                <div class="span8 content class">
+                    <nav>
+                                                <a href="../namespaces/bcGen.MainBundle.Controller.html">\bcGen\MainBundle\Controller</a> <i class="icon-level-up"></i>
+                                            </nav>
+                    <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal"><i class="icon-code"></i></a>
+
+                    <h1><small>\bcGen\MainBundle\Controller</small>MainController</h1>
+                    <p><em>MainController class gathers all the methods that manage the following pages of the web site :
+homepage, detailed display, locus display and gene neighbourhood.</em></p>
+                    
+                    
+                                        
+                    <section id="summary">
+                        <h2>Summary</h2>
+                        <section class="row-fluid heading">
+                            <section class="span4">
+                                <a href="#methods">Methods</a>
+                            </section>
+                            <section class="span4">
+                                <a href="#properties">Properties</a>
+                            </section>
+                            <section class="span4">
+                                <a href="#constants">Constants</a>
+                            </section>
+                        </section>
+                        <section class="row-fluid public">
+                            <section class="span4">
+                                                                    <a href="../classes/bcGen.MainBundle.Controller.MainController.html#method_homepageAction" class="">homepageAction()</a><br />
+                                                                    <a href="../classes/bcGen.MainBundle.Controller.MainController.html#method_detailedDisplayAction" class="">detailedDisplayAction()</a><br />
+                                                                    <a href="../classes/bcGen.MainBundle.Controller.MainController.html#method_locusDisplayAction" class="">locusDisplayAction()</a><br />
+                                                                    <a href="../classes/bcGen.MainBundle.Controller.MainController.html#method_searchGeneAction" class="">searchGeneAction()</a><br />
+                                                                    <a href="../classes/bcGen.MainBundle.Controller.MainController.html#method_searchGenesAction" class="">searchGenesAction()</a><br />
+                                                                    <a href="../classes/bcGen.MainBundle.Controller.MainController.html#method_neighborhoodDisplayAction" class="">neighborhoodDisplayAction()</a><br />
+                                                            </section>
+                            <section class="span4">
+                                                                    <em>No public properties found</em>
+                                                            </section>
+                            <section class="span4">
+                                                                    <em>No constants found</em>
+                                                            </section>
+                        </section>
+                        <section class="row-fluid protected">
+                            <section class="span4">
+                                                                    <em>No protected methods found</em>
+                                                            </section>
+                            <section class="span4">
+                                                                    <em>No protected properties found</em>
+                                                            </section>
+                            <section class="span4">
+                                <em>N/A</em>
+                            </section>
+                        </section>
+                        <section class="row-fluid private">
+                            <section class="span4">
+                                                                    <a href="../classes/bcGen.MainBundle.Controller.MainController.html#method_recoverRepository" class="">recoverRepository()</a><br />
+                                                                    <a href="../classes/bcGen.MainBundle.Controller.MainController.html#method_databaseDetailedSearch" class="">databaseDetailedSearch()</a><br />
+                                                                    <a href="../classes/bcGen.MainBundle.Controller.MainController.html#method_databaseLocusSearch" class="">databaseLocusSearch()</a><br />
+                                                            </section>
+                            <section class="span4">
+                                                                    <em>No private properties found</em>
+                                                            </section>
+                            <section class="span4">
+                                <em>N/A</em>
+                            </section>
+                        </section>
+                    </section>
+                </div>
+                <aside class="span4 detailsbar">
+                                        
+                    
+                    <dl>
+                        <dt>File</dt>
+                            <dd><a href="../files/Controller.MainController.html"><div class="path-wrapper">Controller/MainController.php</div></a></dd>
+                                                <dt>Package</dt>
+                            <dd><div class="namespace-wrapper">Default</div></dd>
+                                                <dt>Class hierarchy</dt>
+                            <dd class="hierarchy">
+                                                                                                                                                                                                                                                                                                
+                                        <div class="namespace-wrapper">\Symfony\Bundle\FrameworkBundle\Controller\Controller</div>
+                                                                                                    <div class="namespace-wrapper">\bcGen\MainBundle\Controller\MainController</div>
+                            </dd>
+
+                        
+                        
+                        
+                                                                            <dt>See also</dt>
+                                                                                    <dd><a href=""><div class="namespace-wrapper">Symfony documentation on the Controller class</div></a></dd>
+                                                        <dd><a href=""><div class="namespace-wrapper">Symfony documentation on the Response class</div></a></dd>
+                                                        <dd><a href=""><div class="namespace-wrapper">Symfony documentation on the Request class</div></a></dd>
+                                                        <dd><a href=""><div class="namespace-wrapper">Doctrine documentation on the class ArrayCollection</div></a></dd>
+                                                        <dd><a href=""><div class="namespace-wrapper">Class Gene</div></a></dd>
+                                                        <dd><a href=""><div class="namespace-wrapper">Class GeneRepository</div></a></dd>
+                                                        <dd><a href=""><div class="namespace-wrapper">Class Locus</div></a></dd>
+                                                        <dd><a href=""><div class="namespace-wrapper">Class LocusRepository</div></a></dd>
+                                                        <dd><a href=""><div class="namespace-wrapper">Class LocusChromosome</div></a></dd>
+                                                        <dd><a href=""><div class="namespace-wrapper">Class LocusChromosomeRepository</div></a></dd>
+                                                        <dd><a href=""><div class="namespace-wrapper">Class Chromosome</div></a></dd>
+                                                        <dd><a href=""><div class="namespace-wrapper">Class ChromosomeRepository</div></a></dd>
+                                                        <dd><a href=""><div class="namespace-wrapper">Class SearchGeneType</div></a></dd>
+                                                        <dd><a href=""><div class="namespace-wrapper">Class SearchGenesType</div></a></dd>
+                                                    
+                                                                        </dl>
+                    <h2>Tags</h2>
+                    <table class="table table-condensed">
+                                            <tr>
+                            <th>
+                                author
+                            </th>
+                            <td>
+                                                                    <p>Isabelle Gonçalves</p>
+                                                                    <p>Xavier Sottiaux</p>
+                                                            </td>
+                        </tr>
+                                            <tr>
+                            <th>
+                                version
+                            </th>
+                            <td>
+                                                                    <p>0.1.0</p>
+                                                            </td>
+                        </tr>
+                                        </table>
+                </aside>
+            </div>
+
+                        
+                        
+                                    <a id="methods" name="methods"></a>
+            <div class="row-fluid">
+                <div class="span8 content class"><h2>Methods</h2></div>
+                <aside class="span4 detailsbar"></aside>
+            </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_homepageAction" name="method_homepageAction" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">homepageAction()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">homepageAction() : \bcGen\MainBundle\Controller\Symfony\Component\HttpFoundation\Response</pre>
+                <p><em>This method ensures the homepage display</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    \bcGen\MainBundle\Controller\Symfony\Component\HttpFoundation\Response
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_detailedDisplayAction" name="method_detailedDisplayAction" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">detailedDisplayAction()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">detailedDisplayAction() : \bcGen\MainBundle\Controller\Symfony\Component\HttpFoundation\Response</pre>
+                <p><em>This method ensures the detailed display</em></p>
+                
+
+                
+                                    <h4>Throws</h4>
+                    <dl>
+                                                    <dt>\bcGen\MainBundle\Controller\createNotFoundException</dt>
+                            <dd><p>if the method request is not POST</p></dd>
+                                                                    </dl>
+                
+                                    <h4>Returns</h4>
+                    \bcGen\MainBundle\Controller\Symfony\Component\HttpFoundation\Response
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_locusDisplayAction" name="method_locusDisplayAction" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">locusDisplayAction()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">locusDisplayAction() : \bcGen\MainBundle\Controller\Symfony\Component\HttpFoundation\Response</pre>
+                <p><em>This method ensures the locus display</em></p>
+                
+
+                
+                                    <h4>Throws</h4>
+                    <dl>
+                                                    <dt>\bcGen\MainBundle\Controller\createNotFoundException</dt>
+                            <dd><p>if the method request is not GET or
+the search variable is empty ($_GET['bcgen_mainbundle_search_genes']['search'])</p></dd>
+                                                                    </dl>
+                
+                                    <h4>Returns</h4>
+                    \bcGen\MainBundle\Controller\Symfony\Component\HttpFoundation\Response
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_searchGeneAction" name="method_searchGeneAction" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">searchGeneAction()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">searchGeneAction() : \bcGen\MainBundle\Controller\Symfony\Component\HttpFoundation\Response</pre>
+                <p><em>This method ensures the display of a searchGeneForm</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    \bcGen\MainBundle\Controller\Symfony\Component\HttpFoundation\Response
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                                            <dt>See also</dt>
+                                                                <dd><a href="../classes/bcGen.MainBundle.Form.SearchGeneType.html"><span class="namespace-wrapper">Class SearchGeneType</span></a></dd>
+                                                                </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_searchGenesAction" name="method_searchGenesAction" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">searchGenesAction()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">searchGenesAction() : \bcGen\MainBundle\Controller\Symfony\Component\HttpFoundation\Response</pre>
+                <p><em>This method ensures the display of a searchGenesForm</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    \bcGen\MainBundle\Controller\Symfony\Component\HttpFoundation\Response
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                                            <dt>See also</dt>
+                                                                <dd><a href="../classes/bcGen.MainBundle.Form.SearchGenesType.html"><span class="namespace-wrapper">Class SearchGenesType</span></a></dd>
+                                                                </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_neighborhoodDisplayAction" name="method_neighborhoodDisplayAction" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">neighborhoodDisplayAction()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">neighborhoodDisplayAction() : \bcGen\MainBundle\Controller\Symfony\Component\HttpFoundation\Response</pre>
+                <p><em>This method ensures the display of the gene neighborhood</em></p>
+                
+
+                
+                                    <h4>Throws</h4>
+                    <dl>
+                                                    <dt>\bcGen\MainBundle\Controller\createNotFoundException</dt>
+                            <dd><p>if the method request is not GET or if one of the following variables is empty :
+chromosomeId ( $_GET['chromosomeId'] )
+locusId      ( $_GET['locusId'] )</p></dd>
+                                                                    </dl>
+                
+                                    <h4>Returns</h4>
+                    \bcGen\MainBundle\Controller\Symfony\Component\HttpFoundation\Response
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                                            <dt>See also</dt>
+                                                                <dd><a href="../classes/bcGen.MainBundle.Entity.Locus.html"><span class="namespace-wrapper">Class Locus</span></a></dd>
+                                            <dd><a href="../classes/bcGen.MainBundle.Entity.LocusRepository.html"><span class="namespace-wrapper">Class LocusRepository</span></a></dd>
+                                                                                                <dt>Uses</dt>
+                                                                <dd>\bcGen\MainBundle\Entity\LocusRepository::findAllLocusFromChromosomeId()</dd>
+                                            <dd>\bcGen\MainBundle\Entity\LocusRepository::countLocus()</dd>
+                                                </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_recoverRepository" name="method_recoverRepository" class="anchor"></a>
+            <article class="method">
+                <h3 class="private ">recoverRepository()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">recoverRepository(  <span class="argument">$nomRepository</span>) : \bcGen\MainBundle\Controller\Doctrine\ORM\EntityRepository</pre>
+                <p><em>This method allows to get the required repository from its name
+This method is equivalent to a shortcut</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td></td>
+                                <td>$nomRepository </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    \bcGen\MainBundle\Controller\Doctrine\ORM\EntityRepository
+                                            &mdash; <p>The repository for an entity class</p>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                                            <dt>See also</dt>
+                                                                <dd><a href="http://api.symfony.com/2.7/Symfony/Bundle/FrameworkBundle/Controller/Controller.html"><span class="namespace-wrapper">Symfony documentation on the Controller class</span></a></dd>
+                                            <dd><a href="http://api.symfony.com/2.7/Symfony/Bundle/DoctrineBundle/Registry.html"><span class="namespace-wrapper">Symfony documentation on the Registry class
+The method getManager() is not described in the Symfony documentation</span></a></dd>
+                                            <dd><a href="http://www.doctrine-project.org/api/orm/2.5/class-Doctrine.ORM.EntityManager.html"><span class="namespace-wrapper">Doctrine Documentation on the EntityManager class</span></a></dd>
+                                                                                                <dt>Uses</dt>
+                                                                <dd>Controller::getDoctrine()</dd>
+                                            <dd>Registry::getManager()</dd>
+                                            <dd>EntityManager::getRepository()</dd>
+                                                </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_databaseDetailedSearch" name="method_databaseDetailedSearch" class="anchor"></a>
+            <article class="method">
+                <h3 class="private ">databaseDetailedSearch()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">databaseDetailedSearch(  <span class="argument">$accessionNum</span>) : array</pre>
+                <p><em>This method to gather all the information from a string supposed to be the accession number
+of defined Gene object</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td></td>
+                                <td>$accessionNum </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                                    <h4>Throws</h4>
+                    <dl>
+                                                    <dt>\bcGen\MainBundle\Controller\createNotFoundException</dt>
+                            <dd><p>if no gene, locus, locusChromosome, chromosome object is found</p></dd>
+                                                                    </dl>
+                
+                                    <h4>Returns</h4>
+                    array
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                                            <dt>See also</dt>
+                                                                <dd><a href="../classes/bcGen.MainBundle.Entity.Gene.html"><span class="namespace-wrapper">Class Gene</span></a></dd>
+                                            <dd><a href="../classes/bcGen.MainBundle.Entity.GeneRepository.html"><span class="namespace-wrapper">Class GeneRepository</span></a></dd>
+                                            <dd><a href="../classes/bcGen.MainBundle.Entity.Locus.html"><span class="namespace-wrapper">Class Locus</span></a></dd>
+                                            <dd><a href="../classes/bcGen.MainBundle.Entity.LocusRepository.html"><span class="namespace-wrapper">Class LocusRepository</span></a></dd>
+                                            <dd><a href="../classes/bcGen.MainBundle.Entity.LocusChromosome.html"><span class="namespace-wrapper">Class LocusChromosome</span></a></dd>
+                                            <dd><a href="../classes/bcGen.MainBundle.Entity.LocusChromosomeRepository.html"><span class="namespace-wrapper">Class LocusChromosomeRepository</span></a></dd>
+                                            <dd><a href="../classes/bcGen.MainBundle.Entity.Chromosome.html"><span class="namespace-wrapper">Class Chromosome</span></a></dd>
+                                            <dd><a href="../classes/bcGen.MainBundle.Entity.ChromosomeRepository.html"><span class="namespace-wrapper">Class ChromosomeRepository</span></a></dd>
+                                                                                                <dt>Uses</dt>
+                                                                <dd>\bcGen\MainBundle\Entity\GeneRepository::findOneLocusFromAccessionNum()</dd>
+                                            <dd>\bcGen\MainBundle\Entity\GeneRepository::findOneLocusChromosomeFromAccessionNum()</dd>
+                                            <dd>\bcGen\MainBundle\Entity\GeneRepository::findOneChromosomeFromAccessionNum()</dd>
+                                                </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_databaseLocusSearch" name="method_databaseLocusSearch" class="anchor"></a>
+            <article class="method">
+                <h3 class="private ">databaseLocusSearch()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">databaseLocusSearch(  <span class="argument">$accessionNum</span>) : array</pre>
+                <p><em>This method to gather all the information from a string supposed to be the accession number
+of defined Gene object</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td></td>
+                                <td>$accessionNum </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                                    <h4>Throws</h4>
+                    <dl>
+                                                    <dt>\bcGen\MainBundle\Controller\createNotFoundException</dt>
+                            <dd><p>if no gene, locus, locusChromosome, chromosome object is found</p></dd>
+                                                                    </dl>
+                
+                                    <h4>Returns</h4>
+                    array
+                                            &mdash; <p>It contains the results of the</p>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                                            <dt>See also</dt>
+                                                                <dd><a href="../classes/bcGen.MainBundle.Entity.Gene.html"><span class="namespace-wrapper">Class Gene</span></a></dd>
+                                            <dd><a href="../classes/bcGen.MainBundle.Entity.GeneRepository.html"><span class="namespace-wrapper">Class GeneRepository</span></a></dd>
+                                            <dd><a href="../classes/bcGen.MainBundle.Entity.Locus.html"><span class="namespace-wrapper">Class Locus</span></a></dd>
+                                            <dd><a href="../classes/bcGen.MainBundle.Entity.LocusRepository.html"><span class="namespace-wrapper">Class LocusRepository</span></a></dd>
+                                            <dd><a href="../classes/bcGen.MainBundle.Entity.LocusChromosome.html"><span class="namespace-wrapper">Class LocusChromosome</span></a></dd>
+                                            <dd><a href="../classes/bcGen.MainBundle.Entity.LocusChromosomeRepository.html"><span class="namespace-wrapper">Class LocusChromosomeRepository</span></a></dd>
+                                            <dd><a href="../classes/bcGen.MainBundle.Entity.Chromosome.html"><span class="namespace-wrapper">Class Chromosome</span></a></dd>
+                                            <dd><a href="../classes/bcGen.MainBundle.Entity.ChromosomeRepository.html"><span class="namespace-wrapper">Class ChromosomeRepository</span></a></dd>
+                                                                                                <dt>Uses</dt>
+                                                                <dd>\bcGen\MainBundle\Entity\GeneRepository::findOneLocusFromAccessionNum()</dd>
+                                            <dd>\bcGen\MainBundle\Entity\GeneRepository::findOneLocusChromosomeFromAccessionNum()</dd>
+                                            <dd>\bcGen\MainBundle\Entity\GeneRepository::findOneChromosomeFromAccessionNum()</dd>
+                                                </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    </div>
+    </section>
+
+    <div id="source-view" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="source-view-label" aria-hidden="true">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h3 id="source-view-label">MainController.php</h3>
+        </div>
+        <div class="modal-body">
+            <pre data-src="../files/Controller/MainController.php.txt" class="language-php line-numbers"></pre>
+        </div>
+    </div>
+
+    <footer class="row-fluid">
+        <section class="span10 offset2">
+            <section class="row-fluid">
+                <section class="span10 offset1">
+                    <section class="row-fluid footer-sections">
+                        <section class="span4">
+                                                        <h1><i class="icon-code"></i></h1>
+                            <div>
+                                <ul>
+                                                                            <li><a href="../namespaces/bcGen.html">\bcGen</a></li>
+                                                                    </ul>
+                            </div>
+                        </section>
+                        <section class="span4">
+                                                        <h1><i class="icon-bar-chart"></i></h1>
+                            <div>
+                                <ul>
+                                    <li><a href="../graphs/class.html">Class Hierarchy Diagram</a></li>
+                                </ul>
+                            </div>
+                        </section>
+                        <section class="span4">
+                                                        <h1><i class="icon-pushpin"></i></h1>
+                            <div>
+                                <ul>
+                                    <li><a href="../reports/errors.html">Errors</a></li>
+                                    <li><a href="../reports/markers.html">Markers</a></li>
+                                </ul>
+                            </div>
+                        </section>
+                    </section>
+                </section>
+            </section>
+            <section class="row-fluid">
+                <section class="span10 offset1">
+                    <hr />
+                    Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor </a> and authored
+                    on August 20th, 2015 at 13:27.
+                </section>
+            </section>
+        </section>
+    </footer>
+</div>
+
+</body>
+</html>

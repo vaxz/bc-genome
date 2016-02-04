@@ -1,0 +1,12 @@
+{% extends "::layout.html.twig" %}
+
+{% block title %}
+    {{ parent() }}
+    {# parent() permet de récupérer le contenu du block issu du layout parent #}
+{% endblock %}
+
+{% block body %}
+     {# On définit un nouveau bloc que les vues du bundle pourront remplir #}
+     {% block bcGenBundleBody %}
+     {% endblock %}
+{% endblock %}

@@ -1,0 +1,174 @@
+#! /bin/bash
+#
+#-------------------------------------------------------------
+#
+# Extracting data from a csv file that contains
+# information on locus, genes and chromosomes
+#
+#-------------------------------------------------------------
+
+# Ensuring that the file name was correctly transmitted
+# Removing all the space characters
+if [ -z "$1" ]; then exit 1; fi
+cat $1 | tr -d ' ' > csv_result
+
+# Adding a new line at the end of the file to be sure that all lines are read
+# This is done to counter a drawback from the command line : read
+echo -e "\n" >> csv_result
+
+# Initializing variables
+old_chromosome=0
+first_line=1
+
+# Reading the file and separating the data from each field in a distinct variable
+# With the command-line : read, 
+while IFS=';' read -r num_locus gene_Bcin gene_B0510 contig_B0510 gene_BC1G contig_BC1G comment gene_BcT4 contig_BcT4 BOFU chromosome brin position
+do
+
+	# Avoiding the treatment of the first and last lines which generate useless error messages
+	# The first line contains only the field names
+	# The last line is empty
+	if [ "$first_line" -eq 1 ]; then first_line=0; continue; fi
+	if [ -z "$num_locus" ]; then break; fi
+
+	# Constructing the SQL queries
+	if [ "$num_locus" -gt 0 -a "$chromosome" -gt 0 ]
+	then		
+		# Generating the insert query for the chromosome entity
+		# Avoiding repeating several times the same insert query
+		if [ "$chromosome" -ne "$old_chromosome" ]
+		then
+			old_chromosome=$chromosome
+			query_chromosome="INSERT INTO \`chromosome\` (\`id\`, \`chromosome_source\`, \`chromosome_seq\`) VALUES ($chromosome, NULL, NULL);"
+		fi		
+
+		# Generating a locus id which integrates the chromosome number ($chromosome)
+		# example : chromosome=17, num_locus=1 => locus_id=17*10000+1=170001
+		locus_id=$(($chromosome*10000+$num_locus))
+
+		# Generating the insert query for the locus
+		if [ -z "$comment" ]; then comment="NULL"; fi
+		query_locus="INSERT INTO \`locus\` (\`id\`, \`gene_name\`, \`locus_desc\`) VALUES ($locus_id, NULL, '$comment');"
+		
+		# Generating the insert queries for the gene entities
+		if [ -n "$gene_Bcin" ]
+		then
+			#Bcin is considered as the reference gene so gene_ref is always at 1, on the opposite, the other genes have a value of 0
+			query_gene1="INSERT INTO \`gene\` (\`gene_genome\`, \`gene_locus\`, \`gene_accession\`, \`gene_contig\`, \`gene_seq\`, \`gene_ref\`) 
+					VALUES (NULL, $locus_id, '$gene_Bcin', NULL, NULL, 1);"
+		fi
+
+		if [ -n "$gene_B0510" ]
+		then
+			if [ -z "$contig_B0510" ]; then contig_B0510="NULL"; fi
+			query_gene2="INSERT INTO \`gene\` (\`gene_genome\`, \`gene_locus\`, \`gene_accession\`, \`gene_contig\`, \`gene_seq\`, \`gene_ref\`) 
+					VALUES (NULL, $locus_id, '$gene_B0510', $contig_B0510, NULL, 0);"
+		fi
+		
+		if [ -n "$gene_BC1G" ]
+		then
+			if [ -z "$contig_BC1G" ]; then contig_BC1G="NULL"; fi
+			query_gene3="INSERT INTO \`gene\` (\`gene_genome\`, \`gene_locus\`, \`gene_accession\`, \`gene_contig\`, \`gene_seq\`, \`gene_ref\`) 
+					VALUES (NULL, $locus_id, '$gene_BC1G', $contig_BC1G, NULL, 0);"
+		fi
+
+		if [ -n "$gene_BcT4" ]
+		then
+			if [ -z "$contig_BcT4" ]; then contig_BC1G="NULL"; fi
+			query_gene4="INSERT INTO \`gene\` (\`gene_genome\`, \`gene_locus\`, \`gene_accession\`, \`gene_contig\`, \`gene_seq\`, \`gene_ref\`) 
+					VALUES (NULL, $locus_id, '$gene_BcT4', $contig_BcT4, NULL, 0);"
+		fi
+
+		if [ -n "$BOFU" ]
+		then
+			query_gene5="INSERT INTO \`gene\` (\`gene_genome\`, \`gene_locus\`, \`gene_accession\`, \`gene_contig\`, \`gene_seq\`, \`gene_ref\`) 
+					VALUES (NULL, $locus_id, '$BOFU', NULL, NULL, 0);"
+		fi
+
+		# Generating the insert query for the locus chromsome entity
+		if [ -z "$position" ]; then position="NULL"; fi
+		if [ -z "$brin" ]; then brin="NULL"			
+		elif [ "$brin" -eq -1 ]; then brin=0
+		elif [ "$brin" -eq 1 ]; then brin=1; fi
+		query_locus_chromosome="INSERT INTO \`locus_chromosome\` (\`locus_chromosome_fk_locus\`, \`locus_chromosome_fk_chromosome\`, 
+					\`position_locus_bp\`, \`direct_strand\`) VALUES ($locus_id, $chromosome, $position, $brin);"
+
+	fi
+
+	# Making the SQL files
+	if [ ! -f  locus_sql_query_file ]
+	then
+		locus_header="##################################################################################################\n"
+		locus_header+="#\t\t\t\tLOCUS SQL QUERIES\n"
+		locus_header+="##################################################################################################\n"
+		echo -e $locus_header > locus_sql_query_file
+	fi
+
+	if [ ! -f gene_sql_query_file ]
+	then
+		gene_header="##################################################################################################\n"
+		gene_header+="#\t\t\t\tGENE SQL QUERIES\n"
+		gene_header+="##################################################################################################\n"
+		echo -e $gene_header > gene_sql_query_file
+	fi
+
+	if [ ! -f  chromosome_sql_query_file ]
+	then
+		chromosome_header="##################################################################################################\n"
+		chromosome_header+="#\t\t\t\tCHROMOSOME SQL QUERIES\n"
+		chromosome_header+="##################################################################################################\n"
+		echo -e $chromosome_header > chromosome_sql_query_file
+	fi
+
+	if [ ! -f locus_chromosome_sql_query_file ]
+	then
+		locus_chromosome_header="##################################################################################################\n"
+		locus_chromosome_header+="#\t\t\t\tLOCUS CHROMOSOME SQL QUERIES\n"
+		locus_chromosome_header+="##################################################################################################\n"
+		echo -e $locus_chromosome_header > locus_chromosome_sql_query_file
+	fi
+
+	if [ -n "$query_locus" ]; then echo $query_locus >> locus_sql_query_file; fi
+	if [ -n "$query_gene1" ]; then echo $query_gene1 >> gene_sql_query_file; fi
+	if [ -n "$query_gene2" ]; then echo $query_gene2 >> gene_sql_query_file; fi
+	if [ -n "$query_gene3" ]; then echo $query_gene3 >> gene_sql_query_file; fi
+	if [ -n "$query_gene4" ]; then echo $query_gene4 >> gene_sql_query_file; fi
+	if [ -n "$query_gene5" ]; then echo $query_gene5 >> gene_sql_query_file; fi
+	if [ -n "$query_chromosome" ]; then echo $query_chromosome >> chromosome_sql_query_file; fi
+	if [ -n "$query_locus_chromosome" ]; then echo $query_locus_chromosome >> locus_chromosome_sql_query_file; fi
+
+	# Purging the variables
+	num_locus=""
+	gene_Bcin=""
+	gene_B0510=""
+	contig_B0510=""
+	gene_BC1G=""
+	contig_BC1G=""
+	comment=""
+	gene_BcT4=""
+	contig_BcT4=""
+	BOFU=""
+	chromosome=""
+	brin=""
+	position=""
+	query_locus=""
+	query_gene1=""
+	query_gene2=""
+	query_gene3=""
+	query_gene4=""
+	query_chromosome=""
+	query_locus_chromosome=""
+
+done < csv_result
+
+# Gathering all the data in a unique file
+echo -e "\n\n" >> chromosome_sql_query_file
+cat locus_sql_query_file >> chromosome_sql_query_file
+echo -e "\n\n" >> chromosome_sql_query_file
+cat locus_chromosome_sql_query_file >> chromosome_sql_query_file
+echo -e "\n\n" >> chromosome_sql_query_file
+cat gene_sql_query_file >> chromosome_sql_query_file
+rm locus_sql_query_file locus_chromosome_sql_query_file gene_sql_query_file csv_result
+mv chromosome_sql_query_file csv_sql_query_file
+
+exit 0

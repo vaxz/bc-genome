@@ -1,0 +1,16 @@
+READ ME
+
+4 scripts are used to get all the present data in those kinds of files : csv, faa and fasta.
+
+"csv_file" recovers information on loci, genes and chromosomes in the csv files
+In each csv file, the following fields must be presents:
+num_locus;gene_Ref;gene_B0510;contig_B0510;gene_BC1G;contig_BC1G;locusDesc;gene_BcT4;contig_BcT4;BOFU;chromosome;directStrand;positionLocusBp
+
+"fasta_file" recovers information on chromosomes (DNA sequences, chromosome numbers) in the fasta files
+In thi script "Bcin" is considered as the reference gene.
+
+"faa_file" recovers information on proteins (amino acid sequences, protein accession numbers) in the faa files
+
+"main" is employed to launch the other scripts, to load the database and to manage the returned error values
+This script contains the database connection variables. So , if necessary, change them.
+This script needs only one argument : the chromosome number, example : sh ./main 18

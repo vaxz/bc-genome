@@ -1,0 +1,20 @@
+{# Defining the following variables in the controller : detailed, neighborhood #}
+{# Defining the following variables in the template that includes this view or in the controller : geneNum, chromosomeId #}
+{# If you use the template locus.html.twig, do not define geneNum #}
+
+<div class="locusButton">
+	{% if detailed == 1 and geneNum is not empty  %}
+	    <form action="{{ path('bc_gen_main_detailed_display') }}" method="POST" >
+	        <input type="hidden" name="geneNum" value={{ geneNum }}>
+	        <input type="image" src={{ asset('bundles/bcgenmain/images/loop.jpe') }} alt="Details"> Details
+	    </form>
+	{% endif %}
+	
+	{% if neighborhood == 1 and chromosomeId is not empty and locus.id is not empty %}
+	    <form action="{{ path('bc_gen_main_neighborhood_display') }}" method="GET" >
+	        <input type="hidden" name="chromosomeId" value={{ chromosomeId }}>
+	        <input type="hidden" name="locusId" value={{ locus.id }}>
+	        <input type="image" src={{ asset('bundles/bcgenmain/images/chromosome.png') }} alt="Neighborhood"> Neighborhood 
+	    </form>
+	{% endif %}
+</div>
