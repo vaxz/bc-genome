@@ -18,7 +18,8 @@ use Doctrine\ORM\Mapping as ORM;
  * @author Xavier Sottiaux
  * @version 0.1.0 0.1.0
  *
- * @see http://www.doctrine-project.org/api/common/2.5/class-Doctrine.Common.Collections.ArrayCollection.html Doctrine documentation on the class ArrayCollection
+ * @see http://www.doctrine-project.org/api/common/2.5/class-Doctrine.Common.Collections.ArrayCollection.html
+ * Doctrine documentation on the class ArrayCollection
  * @see \bcGen\MainBundle\Entity\Source Class Source
  * @see \bcGen\MainBundle\Entity\Genome Class Genome
  * @see \bcGen\MainBundle\Entity\Locus Class Locus
@@ -129,7 +130,7 @@ class Gene
 	 private $geneProteins;
 	 
 	/**
-     * Constructor initializes the ArrayCollections : geneAnnotations and geneSources.
+     * Constructor of the class Gene initializes the ArrayCollections : geneAnnotations and geneSources.
      */
     public function __construct()
     {
@@ -155,7 +156,6 @@ class Gene
     public function setGeneSeq($geneSeq)
     {
         $this->geneSeq = $geneSeq;
-
         return $this;
     }
 

@@ -3,7 +3,7 @@
  * Zend Framework (http://framework.zend.com/)
  *
  * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright Copyright (c) 2005-2016 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
@@ -160,7 +160,7 @@ class MemcachedResourceManager
         // merge and add servers (with persistence id servers could be added already)
         $servers = array_udiff($resource['servers'], $memc->getServerList(), [$this, 'compareServers']);
         if ($servers) {
-            $memc->addServers($servers);
+            $memc->addServers(array_values(array_map('array_values', $servers)));
         }
 
         // buffer and return

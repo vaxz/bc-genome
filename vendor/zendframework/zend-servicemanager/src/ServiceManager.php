@@ -9,9 +9,7 @@
 
 namespace Zend\ServiceManager;
 
-use Interop\Container\ContainerInterface;
-
-class ServiceManager implements ServiceLocatorInterface, ContainerInterface
+class ServiceManager implements ServiceLocatorInterface
 {
     /**@#+
      * Constants
@@ -276,9 +274,10 @@ class ServiceManager implements ServiceLocatorInterface, ContainerInterface
         $cName = $this->canonicalizeName($name);
 
         if (!($factory instanceof FactoryInterface || is_string($factory) || is_callable($factory))) {
-            throw new Exception\InvalidArgumentException(
-                'Provided abstract factory must be the class name of an abstract factory or an instance of an AbstractFactoryInterface.'
-            );
+            throw new Exception\InvalidArgumentException(sprintf(
+                'Provided factory must be the class name of a factory, callable or an instance of "%s".',
+                FactoryInterface::class
+            ));
         }
 
         if ($this->has([$cName, $name], false)) {
@@ -417,8 +416,7 @@ class ServiceManager implements ServiceLocatorInterface, ContainerInterface
     {
         $cName = $this->canonicalizeName($name);
 
-        if (
-            !isset($this->invokableClasses[$cName])
+        if (!isset($this->invokableClasses[$cName])
             && !isset($this->factories[$cName])
             && !$this->canCreateFromAbstractFactory($cName, $name)
         ) {
@@ -477,7 +475,7 @@ class ServiceManager implements ServiceLocatorInterface, ContainerInterface
             }
 
             $stack[$cName] = $cName;
-            $cName = $this->aliases[$cName];
+            $cName = $this->aliases[$this->canonicalizeName($cName)];
         }
 
         return $cName;
@@ -504,7 +502,8 @@ class ServiceManager implements ServiceLocatorInterface, ContainerInterface
 
         if ($this->hasAlias($cName)) {
             $isAlias = true;
-            $cName = $this->resolveAlias($cName);
+            $name = $this->resolveAlias($cName);
+            $cName = $this->canonicalizeName($name);
         }
 
         $instance = null;
@@ -523,8 +522,7 @@ class ServiceManager implements ServiceLocatorInterface, ContainerInterface
 
         if (!$instance) {
             $this->checkNestedContextStart($cName);
-            if (
-                isset($this->invokableClasses[$cName])
+            if (isset($this->invokableClasses[$cName])
                 || isset($this->factories[$cName])
                 || isset($this->aliases[$cName])
                 || $this->canCreateFromAbstractFactory($cName, $name)
@@ -561,8 +559,7 @@ class ServiceManager implements ServiceLocatorInterface, ContainerInterface
             ));
         }
 
-        if (
-            ($this->shareByDefault && !isset($this->shared[$cName]))
+        if (($this->shareByDefault && !isset($this->shared[$cName]))
             || (isset($this->shared[$cName]) && $this->shared[$cName] === true)
         ) {
             $this->instances[$cName] = $instance;
@@ -792,7 +789,7 @@ class ServiceManager implements ServiceLocatorInterface, ContainerInterface
     protected function checkForCircularAliasReference($alias, $nameOrAlias)
     {
         $aliases = $this->aliases;
-        $aliases[$alias] = $nameOrAlias;
+        $aliases[$alias] = $this->canonicalizeName($nameOrAlias);
         $stack = [];
 
         while (isset($aliases[$alias])) {
@@ -807,7 +804,7 @@ class ServiceManager implements ServiceLocatorInterface, ContainerInterface
             }
 
             $stack[$alias] = $alias;
-            $alias = $aliases[$alias];
+            $alias = $this->canonicalizeName($aliases[$alias]);
         }
 
         return $this;
@@ -827,7 +824,6 @@ class ServiceManager implements ServiceLocatorInterface, ContainerInterface
         }
 
         $cAlias = $this->canonicalizeName($alias);
-        $nameOrAlias = $this->canonicalizeName($nameOrAlias);
 
         if ($alias == '' || $nameOrAlias == '') {
             throw new Exception\InvalidServiceNameException('Invalid service name alias');

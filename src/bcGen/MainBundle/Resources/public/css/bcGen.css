@@ -1,31 +1,54 @@
-html {
-	height : 100%;
-	width : 100%;
-}
+html { height : 100%; width : 100%; }
 
 body{
 	overflow-x : hidden;
 	height : inherit;
 	width: inherit;
+	display: block;
 }
-
+/*****************************************************************************************************************/
+												/*HEADER*/
+/*****************************************************************************************************************/
 header {
+	width: inherit;
+	position : fixed;
+	margin : -1% 0% 0% -0.6%;
+	padding : 0% 0% 0% 0%;
+	/*height : 0%;*/ 
 	text-align : center;
 	font-family : Arial;
-	background-color : #007A00;
-	margin : -2% 0% 0% -0.6%;
+	background-color : #ddffcc;
 }
 
-header > h1 {
-	margin-bottom : -1%;	
+header h1, h2 { display: inline; }
+
+#menu a {
+	
 }
 
-div.container{
-	margin : -1.5% 8% 0% 8%;
-	padding : 1% 1% 0% 1%;
-	padding-bottom : 2%;
-	min-height : 80%;
+/*****************************************************************************************************************/
+												/*FOOTER*/
+/*****************************************************************************************************************/
+
+footer {
+	text-align : justify;
+	font-size : 13px;
+	padding-left : 20%;
+    padding-right : 10%;
+    background-color: #ccffb3;
+    margin : 0% 0% 0% -0.6%;
+    max-width : 100%;
+ }
+
+/*****************************************************************************************************************/
+												/*MAIN*/
+/*****************************************************************************************************************/
+
+#main {
+	padding : 10% 0% 0% 0%;
 }
+
+#leftside, #rightside { display: none; }
 
 div.form {
 	padding-left : 15%;
@@ -136,13 +159,3 @@ div.protSeq {
 span.page{
 	border : 1px outset blue;	
 }
-
-footer {
-	text-align : justify;
-	font-size : 13px;
-	padding-left : 20%;
-    padding-right : 10%;
-    background-color: #007A00;
-    margin : 0% 0% 0% -0.6%;
-    max-width : 100%;
- }

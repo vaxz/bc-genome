@@ -1,0 +1,80 @@
+ {# Defining the following variables in the template that includes this view #}
+ {# chromosomeId, locus, onlyOneGene #}
+	       
+<h3 class="title">
+         {% if chromosomeId is empty %} No chromosome found
+         {% else %} Chromosome number: {{ chromosomeId }}
+         {% endif %}
+         {# The locus number must be modified as follows, see class Gene  #}
+         {% if locus is empty %} No Locus found
+         {% else %}  Locus number : {{ locus.id%10000 }}
+         {% endif %}       
+         {# Locus details : {{ locus.locusDesc }}, Gene name : {{ locus.geneName }} #}     
+</h3>
+
+<div class="locus">
+      <div class="locusTable">
+	        {% set geneNum = '' %}
+	        {% set tmpName = '' %}
+	        {% set minKey = 0 %}
+	        {% set maxKey = 0 %}
+	        {% set nameArray = ['Bcin','B051','BC1G','BcT4'] %}
+	        {% for gene in locus.locusGenes %}
+	        
+	             {% set stringArray = gene.geneAccession|split('', 4) %}
+	              
+		         {% for key, name in nameArray if name == stringArray[0] %}
+		             {% set maxKey = key %}
+		         {% endfor %}
+		         
+		         {% for key, name in nameArray %}
+		             {% if minKey < key and key <= maxKey %}
+		                 <table><tbody>
+			             <tr><td></td></tr>
+			             </tbody></table>
+		             {% endif %}
+			         {% if loop.last %} {% set minKey = maxKey + 1 %} {% endif %}        
+		         {% endfor %}		            
+			 
+			 	 {% if loop.first %}
+			 	       {% set tmpName = stringArray[0] %}
+			           <table id={{ tmpName }}><tbody>
+			     {% endif %}			                   	             
+	             
+	             {% if tmpName != stringArray[0] %}
+	                    </tbody></table>
+	                    {% set tmpName = stringArray[0] %} 
+	                    <table id={{ tmpName }}><tbody>
+	             {% endif %}
+	             			          
+	             {% if gene.geneRef == 1 %}
+	             {# Do not split the URL on 2 lines otherwise the link will not work #}
+	                    <tr><td><a href="http://fungi.ensembl.org/Botrytis_cinerea/Gene/Summary?g={{ gene.geneAccession }}">{{ gene.geneAccession }}
+	                    </a></td></tr>
+	             {% else %}
+	                    <tr><td>{{ gene.geneAccession }}</td></tr>
+	             {% endif %}
+	             
+	             {% if loop.last %}
+	                   </tbody></table>
+	                   {% set geneNum = gene.geneAccession %}
+	             {% endif %}
+	         {% else %}
+	         {# In the controller, the method detailedDisplayAction can lead to find only one gene #}
+	         {# This case is handled with this part #}
+	             {% set tmpArray = onlyOneGene.geneAccession|split('', 4) %}
+	             <table id={{ tmpArray[0] }}><tbody>
+	                          
+	             {% if onlyOneGene.geneRef == 1 %}
+	             {# Do not split the next URL on 2 lines otherwise the link will not work #}
+	                    <tr><td><a href="http://fungi.ensembl.org/Botrytis_cinerea/Gene/Summary?g={{ onlyOneGene.geneAccession }}">{{ onlyOneGene.geneAccession }}
+	                    </a></td></tr>
+	             {% else %}
+	                    <tr><td>{{ onlyOneGene.geneAccession }}</td></tr>
+	             {% endif %}
+	             
+	             </tbody></table>                
+	        {% endfor %}
+	   </div>        
+       {% include( 'bcGenMainBundle:Main:module_locusButton.html.twig' ) %}
+</div>

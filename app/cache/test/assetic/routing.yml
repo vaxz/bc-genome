@@ -1,0 +1,5 @@
+_assetic:
+    resource: .
+    type: assetic
+_app:
+    resource: /home/vaxz/public_html/p0003590-bc-genome/app/config/routing_dev.yml

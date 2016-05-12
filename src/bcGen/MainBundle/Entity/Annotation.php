@@ -10,6 +10,7 @@
 namespace bcGen\MainBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use InvalidArgumentException;
 /**
  * Annotation class allows the creation of Annotation object and correponds to a table in the database : bc_gen_db.
  * It's related to features and functions linked to genes or proteins.
@@ -82,13 +83,12 @@ class Annotation
 	 private $annotationSources;
 	 
 	/**
-     * Constructor initializes the ArrayCollection : annotationSources.
+     * Constructor of the class Annotation initializes the ArrayCollection : annotationSources.
      */
-    public function __construct()
+    public function __construct( )
     {
         $this->annotationSources = new \Doctrine\Common\Collections\ArrayCollection();
     }
-
 
     /**
      * Get the id value of an Annotation object
@@ -173,15 +173,15 @@ class Annotation
     {
     	$tmp = strtolower($annotationType);
 		
-        if( preg_match('#^protein$#', $annotationType) || preg_match('#^gene$#', $annotationType) )
+        if( preg_match('#^protein$#', $tmp) || preg_match('#^gene$#', $tmp) )
 		{
 			$this->annotationType = $tmp;
             return $this;
 		}
 		else
 		{
-			throw new InvalidArgumentException( '$annotationtype must be one of these types : gene or protein
-			                                     not'.$annotationType );
+			throw new InvalidArgumentException( '$annotationtype must be one of these types : 
+												gene or protein, not '.$annotationType );
 		}
     }
 

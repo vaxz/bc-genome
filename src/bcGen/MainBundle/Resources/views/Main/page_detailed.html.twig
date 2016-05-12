@@ -1,0 +1,85 @@
+{% extends "bcGenMainBundle:Main:layout.html.twig" %}
+
+{% block title %}
+    {{ parent() }} - Detailed display
+{% endblock %}
+
+{% block header %}
+     {{ parent () }}
+     <h2>Detailed display</h2>
+{% endblock %}
+
+{% block bcGenBundleBody %}
+    
+    <p> Searched gene : {{ result['accessionNum'] }} </p>    
+    
+    {% if result['chromosome'] is empty %} {% set chromosomeId = 0 %}
+    {% else %} {% set chromosomeId = result['chromosome'].id %}
+    {% endif %}
+    
+    {% if result['locus'] is empty %} {% set locus='' %}
+    {% else %} {% set locus=result['locus'] %}
+    {% endif %}
+    
+    {% set onlyOneGene=result['onlyOneGene'] %}
+    
+    {% include( 'bcGenMainBundle:Main:page_locus.html.twig' ) %}
+        
+    <div class="category">
+       <table>
+       <thead><tr>
+           <th style="width:15%">Gene accession number</th><th style="width:10%">Gene contig</th>
+           <th style="width:75%">Gene sequence</th>
+       </tr></thead>
+       <tbody>
+       {% for gene in result['locus'].locusGenes %}
+           {% set stringArray = gene.geneAccession|split('', 4) %}
+           <tr>
+              <td id={{ stringArray[0] }}>{{ gene.geneAccession }}</td>
+              <td style="text-align:center">{{ gene.geneContig }}</td>
+              <td>{{ gene.geneSeq }}</td>
+           </tr>              
+       {% endfor %}
+       </tbody></table>
+    </div>
+   
+    <div class="category">
+       <table>
+       <thead><tr>
+           <th style="width:15%">Gene accession number</th><th style="width:90%">Genome description</th>
+       </tr></thead>
+       <tbody>
+       {% for gene in result['locus'].locusGenes %}
+           {% set stringArray = gene.geneAccession|split('', 4) %}
+           <tr>
+              <td id={{ stringArray[0] }}>{{ gene.geneAccession }}</td>
+              {%if gene.geneGenome is not null %} 
+                    <td>{{ gene.geneGenome.genomeDesc }}</td>
+              {% else %}
+                    <td> No genome is linked to the gene </td>
+              {% endif %}  
+           </tr>              
+       {% endfor %}
+       </tbody></table>
+    </div>
+   
+     <div class="category">
+	       <table style="width:100%"><thead><tr>
+	           <th>Protein sequence</th>
+	       </tr></thead></table>
+	                  
+	       <div class="protSeq">
+	       {% for gene in result['locus'].locusGenes %}
+	          {% for protein in gene.geneProteins  %}
+	             >{{ protein.proteinAccession }} {{ "\n"|nl2br }}
+	             {% set array = protein.proteinSeq|split('', 60) %}
+	             {% for l in array %}
+	                 {{ l }} {{ "\n"|nl2br }}
+	                 {% if loop.last %} {{ "\n"|nl2br }} {% endif %}
+	             {% endfor %}
+	           {% endfor %}             
+	       {% endfor %}
+	       </div> 
+    </div>
+
+{% endblock %}

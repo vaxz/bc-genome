@@ -1,12 +1,34 @@
 {% extends "::layout.html.twig" %}
 
 {% block title %}
+	{# parent() gets the content from the parent layout block  #}
     {{ parent() }}
-    {# parent() permet de récupérer le contenu du block issu du layout parent #}
+{% endblock %}
+
+{% block header %}
+    {{ parent() }}
+    {# A new block is defined in order to fill it in #}
+    {% block bcGenBundleHeader %}
+    {% endblock %} 
+    <nav id="menu">
+        <a href="">Connexion</a>
+        <a href="">Accueil</a>
+        <a href="">Fichier CSV</a>
+        <a href="">Upstream</a>
+    </nav>    
 {% endblock %}
 
 {% block body %}
-     {# On définit un nouveau bloc que les vues du bundle pourront remplir #}
      {% block bcGenBundleBody %}
      {% endblock %}
+{% endblock %}
+
+{% block leftside %}
+	{% block bcGenBundleLSide %}
+    {% endblock %}	
+{% endblock %}
+
+{% block rightside %}
+	{% block bcGenBundleRSide %}
+    {% endblock %}	
 {% endblock %}

@@ -3,7 +3,7 @@
  * Zend Framework (http://framework.zend.com/)
  *
  * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright Copyright (c) 2005-2016 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
@@ -328,7 +328,16 @@ class Filesystem extends AbstractAdapter implements
         $glob = new GlobIterator($path, $flags);
 
         foreach ($glob as $pathname) {
-            $diff = array_diff($tags, explode("\n", $this->getFileContent($pathname)));
+            try {
+                $diff = array_diff($tags, explode("\n", $this->getFileContent($pathname)));
+            } catch (Exception\RuntimeException $exception) {
+                // ignore missing files because of possible raise conditions
+                // e.g. another process already deleted that item
+                if (!file_exists($pathname)) {
+                    continue;
+                }
+                throw $exception;
+            }
 
             $rem  = false;
             if ($disjunction && count($diff) < $tagCount) {
@@ -1275,36 +1284,6 @@ class Filesystem extends AbstractAdapter implements
     }
 
     /**
-     * Read info file
-     *
-     * @param  string  $file
-     * @param  bool $nonBlocking Don't block script if file is locked
-     * @param  bool $wouldblock  The optional argument is set to TRUE if the lock would block
-     * @return array|bool The info array or false if file wasn't found
-     * @throws Exception\RuntimeException
-     */
-    protected function readInfoFile($file, $nonBlocking = false, & $wouldblock = null)
-    {
-        if (!file_exists($file)) {
-            return false;
-        }
-
-        $content = $this->getFileContent($file, $nonBlocking, $wouldblock);
-        if ($nonBlocking && $wouldblock) {
-            return false;
-        }
-
-        ErrorHandler::start();
-        $ifo = unserialize($content);
-        $err = ErrorHandler::stop();
-        if (!is_array($ifo)) {
-            throw new Exception\RuntimeException("Corrupted info file '{$file}'", 0, $err);
-        }
-
-        return $ifo;
-    }
-
-    /**
      * Read a complete file
      *
      * @param  string  $file        File complete path
@@ -1405,7 +1384,7 @@ class Filesystem extends AbstractAdapter implements
             // build-in mkdir function is enough
 
             $umask = ($umask !== false) ? umask($umask) : false;
-            $res   = mkdir($pathname, ($perm !== false) ? $perm : 0777, true);
+            $res   = mkdir($pathname, ($perm !== false) ? $perm : 0775, true);
 
             if ($umask !== false) {
                 umask($umask);
@@ -1421,7 +1400,7 @@ class Filesystem extends AbstractAdapter implements
                     return;
                 }
 
-                $oct = ($perm === false) ? '777' : decoct($perm);
+                $oct = ($perm === false) ? '775' : decoct($perm);
                 throw new Exception\RuntimeException("mkdir('{$pathname}', 0{$oct}, true) failed", 0, $err);
             }
 
@@ -1453,7 +1432,7 @@ class Filesystem extends AbstractAdapter implements
 
                 // create a single directory, set and reset umask immediately
                 $umask = ($umask !== false) ? umask($umask) : false;
-                $res   = mkdir($path, ($perm === false) ? 0777 : $perm, false);
+                $res   = mkdir($path, ($perm === false) ? 0775 : $perm, false);
                 if ($umask !== false) {
                     umask($umask);
                 }
@@ -1466,7 +1445,7 @@ class Filesystem extends AbstractAdapter implements
                         continue;
                     }
 
-                    $oct = ($perm === false) ? '777' : decoct($perm);
+                    $oct = ($perm === false) ? '775' : decoct($perm);
                     ErrorHandler::stop();
                     throw new Exception\RuntimeException(
                         "mkdir('{$path}', 0{$oct}, false) failed"

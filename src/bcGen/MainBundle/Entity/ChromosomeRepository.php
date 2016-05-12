@@ -63,7 +63,7 @@ class ChromosomeRepository extends EntityRepository
 		      ->andWhere( 'g.geneAccession = :geneAccession' )
 			  ->setParameter( 'geneAccession', $geneAccession );
 			  	
-        return $query->getQuery()->getScalarResult();
+        return $query->getQuery()->getSingleScalarResult();
 	}
 	
 	

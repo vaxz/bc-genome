@@ -65,7 +65,7 @@ class Condition
 	 private $conditionSources;
 	 
 	/**
-     * Constructor initializes the ArrayCollection : conditionSources.
+     * Constructor of the class Condition initializes the ArrayCollection : conditionSources.
 	 * 
      */
      public function __construct()

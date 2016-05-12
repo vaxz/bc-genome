@@ -70,7 +70,7 @@ class Locus
 	 private $locusGenes;
 	 
    /**
-     * Constructor initializes the ArrayCollections : locusGenes.
+     * Constructor of the class Locus initializes the ArrayCollection : locusGenes.
      */
     public function __construct()
     {

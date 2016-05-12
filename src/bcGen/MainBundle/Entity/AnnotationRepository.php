@@ -26,4 +26,5 @@ use Doctrine\ORM\EntityRepository;
  */
 class AnnotationRepository extends EntityRepository
 {
+	
 }

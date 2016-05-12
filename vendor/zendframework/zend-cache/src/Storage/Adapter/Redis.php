@@ -3,7 +3,7 @@
  * Zend Framework (http://framework.zend.com/)
  *
  * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright Copyright (c) 2005-2016 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
@@ -13,6 +13,7 @@ use Redis as RedisResource;
 use RedisException as RedisResourceException;
 use stdClass;
 use Traversable;
+use Zend\Cache\Storage\ClearByNamespaceInterface;
 use Zend\Cache\Storage\ClearByPrefixInterface;
 use Zend\Cache\Exception;
 use Zend\Cache\Storage\Capabilities;
@@ -20,6 +21,7 @@ use Zend\Cache\Storage\FlushableInterface;
 use Zend\Cache\Storage\TotalSpaceCapableInterface;
 
 class Redis extends AbstractAdapter implements
+    ClearByNamespaceInterface,
     ClearByPrefixInterface,
     FlushableInterface,
     TotalSpaceCapableInterface
@@ -221,12 +223,13 @@ class Redis extends AbstractAdapter implements
      */
     protected function internalSetItem(& $normalizedKey, & $value)
     {
-        $redis = $this->getRedisResource();
-        $ttl = $this->getOptions()->getTtl();
+        $redis   = $this->getRedisResource();
+        $options = $this->getOptions();
+        $ttl     = $options->getTtl();
 
         try {
             if ($ttl) {
-                if ($this->resourceManager->getMajorVersion($this->resourceId) < 2) {
+                if ($options->getResourceManager()->getMajorVersion($options->getResourceId()) < 2) {
                     throw new Exception\UnsupportedMethodCallException("To use ttl you need version >= 2.0.0");
                 }
                 $success = $redis->setex($this->namespacePrefix . $normalizedKey, $ttl, $value);
@@ -250,8 +253,9 @@ class Redis extends AbstractAdapter implements
      */
     protected function internalSetItems(array & $normalizedKeyValuePairs)
     {
-        $redis = $this->getRedisResource();
-        $ttl   = $this->getOptions()->getTtl();
+        $redis   = $this->getRedisResource();
+        $options = $this->getOptions();
+        $ttl     = $options->getTtl();
 
         $namespacedKeyValuePairs = [];
         foreach ($normalizedKeyValuePairs as $normalizedKey => $value) {
@@ -260,7 +264,7 @@ class Redis extends AbstractAdapter implements
         try {
             if ($ttl > 0) {
                 //check if ttl is supported
-                if ($this->resourceManager->getMajorVersion($this->resourceId) < 2) {
+                if ($options->getResourceManager()->getMajorVersion($options->getResourceId()) < 2) {
                     throw new Exception\UnsupportedMethodCallException("To use ttl you need version >= 2.0.0");
                 }
                 //mSet does not allow ttl, so use transaction
@@ -292,9 +296,29 @@ class Redis extends AbstractAdapter implements
      */
     protected function internalAddItem(& $normalizedKey, & $value)
     {
-        $redis = $this->getRedisResource();
+        $redis   = $this->getRedisResource();
+        $options = $this->getOptions();
+        $ttl     = $options->getTtl();
+
         try {
-            return $redis->setnx($this->namespacePrefix . $normalizedKey, $value);
+            if ($ttl) {
+                if ($options->getResourceManager()->getMajorVersion($options->getResourceId()) < 2) {
+                    throw new Exception\UnsupportedMethodCallException("To use ttl you need version >= 2.0.0");
+                }
+
+                /**
+                 * To ensure expected behaviour, we stick with the "setnx" method.
+                 * This means we only set the ttl after the key/value has been successfully set.
+                 */
+                $success = $redis->setnx($this->namespacePrefix . $normalizedKey, $value);
+                if ($success) {
+                    $redis->expire($this->namespacePrefix . $normalizedKey, $ttl);
+                }
+            } else {
+                $success = $redis->setnx($this->namespacePrefix . $normalizedKey, $value);
+            }
+
+            return $success;
         } catch (RedisResourceException $e) {
             throw new Exception\RuntimeException($redis->getLastError(), $e->getCode(), $e);
         }
@@ -389,6 +413,31 @@ class Redis extends AbstractAdapter implements
         }
     }
 
+    /* ClearByNamespaceInterface */
+
+    /**
+     * Remove items of given namespace
+     *
+     * @param string $namespace
+     * @return bool
+     */
+    public function clearByNamespace($namespace)
+    {
+        $redis = $this->getRedisResource();
+
+        $namespace = (string) $namespace;
+        if ($namespace === '') {
+            throw new Exception\InvalidArgumentException('No namespace given');
+        }
+
+        $options = $this->getOptions();
+        $prefix  = $namespace . $options->getNamespaceSeparator();
+
+        $redis->delete($redis->keys($prefix . '*'));
+
+        return true;
+    }
+
     /* ClearByPrefixInterface */
 
     /**
@@ -424,7 +473,7 @@ class Redis extends AbstractAdapter implements
      */
     public function getTotalSpace()
     {
-        $redis  = $this->getRedisResource();
+        $redis = $this->getRedisResource();
         try {
             $info = $redis->info();
         } catch (RedisResourceException $e) {
@@ -446,13 +495,12 @@ class Redis extends AbstractAdapter implements
         if ($this->capabilities === null) {
             $this->capabilityMarker = new stdClass();
 
-            $redisVersion = $this->resourceManager->getMajorVersion($this->resourceId);
-            $minTtl = version_compare($redisVersion, '2', '<') ? 0 : 1;
-            $supportedMetadata = version_compare($redisVersion, '2', '>=') ? ['ttl'] : [];
+            $options      = $this->getOptions();
+            $redisVersion = $options->getResourceManager()->getMajorVersion($options->getResourceId());
+            $minTtl       = version_compare($redisVersion, '2', '<') ? 0 : 1;
+            $supportedMetadata = $redisVersion >= 2 ? ['ttl'] : [];
 
-            //without serialization redis supports only strings for simple
-            //get/set methods
-            $this->capabilities     = new Capabilities(
+            $this->capabilities = new Capabilities(
                 $this,
                 $this->capabilityMarker,
                 [

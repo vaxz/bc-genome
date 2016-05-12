@@ -3,7 +3,7 @@
  * Zend Framework (http://framework.zend.com/)
  *
  * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright Copyright (c) 2005-2016 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
@@ -300,14 +300,14 @@ class CaptureCache extends AbstractPattern
             // build-in mkdir function is enough
 
             $umask = ($umask !== false) ? umask($umask) : false;
-            $res   = mkdir($pathname, ($perm !== false) ? $perm : 0777, true);
+            $res   = mkdir($pathname, ($perm !== false) ? $perm : 0775, true);
 
             if ($umask !== false) {
                 umask($umask);
             }
 
             if (!$res) {
-                $oct = ($perm === false) ? '777' : decoct($perm);
+                $oct = ($perm === false) ? '775' : decoct($perm);
                 $err = ErrorHandler::stop();
                 throw new Exception\RuntimeException("mkdir('{$pathname}', 0{$oct}, true) failed", 0, $err);
             }
@@ -340,13 +340,13 @@ class CaptureCache extends AbstractPattern
 
                 // create a single directory, set and reset umask immediately
                 $umask = ($umask !== false) ? umask($umask) : false;
-                $res   = mkdir($path, ($perm === false) ? 0777 : $perm, false);
+                $res   = mkdir($path, ($perm === false) ? 0775 : $perm, false);
                 if ($umask !== false) {
                     umask($umask);
                 }
 
                 if (!$res) {
-                    $oct = ($perm === false) ? '777' : decoct($perm);
+                    $oct = ($perm === false) ? '775' : decoct($perm);
                     ErrorHandler::stop();
                     throw new Exception\RuntimeException(
                         "mkdir('{$path}', 0{$oct}, false) failed"

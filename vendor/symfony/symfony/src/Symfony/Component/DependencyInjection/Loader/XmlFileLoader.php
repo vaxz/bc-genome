@@ -93,8 +93,9 @@ class XmlFileLoader extends FileLoader
             return;
         }
 
+        $defaultDirectory = dirname($file);
         foreach ($imports as $import) {
-            $this->setCurrentDir(dirname($file));
+            $this->setCurrentDir($defaultDirectory);
             $this->import($import->getAttribute('resource'), null, (bool) XmlUtils::phpize($import->getAttribute('ignore-errors')), $file);
         }
     }
@@ -230,6 +231,10 @@ class XmlFileLoader extends FileLoader
                 $parameters[$name] = XmlUtils::phpize($node->nodeValue);
             }
 
+            if ('' === $tag->getAttribute('name')) {
+                throw new InvalidArgumentException(sprintf('The tag name for service "%s" in %s must be a non-empty string.', (string) $service->getAttribute('id'), $file));
+            }
+
             $definition->addTag($tag->getAttribute('name'), $parameters);
         }
 
@@ -297,11 +302,7 @@ class XmlFileLoader extends FileLoader
                 // give it a unique name
                 $id = sprintf('%s_%d', hash('sha256', $file), ++$count);
                 $node->setAttribute('id', $id);
-
-                if ($services = $this->getChildren($node, 'service')) {
-                    $definitions[$id] = array($node, $file, true);
-                    $services[0]->setAttribute('id', $id);
-                }
+                $definitions[$id] = array($node, $file, true);
             }
         }
 
