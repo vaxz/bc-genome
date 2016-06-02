@@ -1,0 +1,970 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+    <meta charset="utf-8"/>
+    <title>API Documentation</title>
+    <meta name="author" content=""/>
+    <meta name="description" content=""/>
+
+    <link href="../css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
+    <link href="../css/font-awesome.min.css" rel="stylesheet">
+    <link href="../css/prism.css" rel="stylesheet" media="all"/>
+    <link href="../css/template.css" rel="stylesheet" media="all"/>
+    
+    <!--[if lt IE 9]>
+    <script src="../js/html5.js"></script>
+    <![endif]-->
+    <script src="../js/jquery-1.11.0.min.js"></script>
+    <script src="../js/ui/1.10.4/jquery-ui.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/jquery.smooth-scroll.js"></script>
+    <script src="../js/prism.min.js"></script>
+    <!-- TODO: Add http://jscrollpane.kelvinluck.com/ to style the scrollbars for browsers not using webkit-->
+    <script type="text/javascript">
+    function loadExternalCodeSnippets() {
+        Array.prototype.slice.call(document.querySelectorAll('pre[data-src]')).forEach(function (pre) {
+            var src = pre.getAttribute('data-src');
+            var extension = (src.match(/\.(\w+)$/) || [, ''])[1];
+            var language = 'php';
+
+            var code = document.createElement('code');
+            code.className = 'language-' + language;
+
+            pre.textContent = '';
+
+            code.textContent = 'Loading…';
+
+            pre.appendChild(code);
+
+            var xhr = new XMLHttpRequest();
+
+            xhr.open('GET', src, true);
+
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4) {
+
+                    if (xhr.status < 400 && xhr.responseText) {
+                        code.textContent = xhr.responseText;
+
+                        Prism.highlightElement(code);
+                    }
+                    else if (xhr.status >= 400) {
+                        code.textContent = '✖ Error ' + xhr.status + ' while fetching file: ' + xhr.statusText;
+                    }
+                    else {
+                        code.textContent = '✖ Error: File does not exist or is empty';
+                    }
+                }
+            };
+
+            xhr.send(null);
+        });
+    }
+
+    $(document).ready(function(){
+        loadExternalCodeSnippets();
+    });
+    $('#source-view').on('shown', function () {
+        loadExternalCodeSnippets();
+    })
+</script>
+
+    <link rel="shortcut icon" href="../images/favicon.ico"/>
+    <link rel="apple-touch-icon" href="../images/apple-touch-icon.png"/>
+    <link rel="apple-touch-icon" sizes="72x72" href="../images/apple-touch-icon-72x72.png"/>
+    <link rel="apple-touch-icon" sizes="114x114" href="../images/apple-touch-icon-114x114.png"/>
+</head>
+<body>
+
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container">
+            <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                <i class="icon-ellipsis-vertical"></i>
+            </a>
+            <a class="brand" href="../index.html">API Documentation</a>
+
+            <div class="nav-collapse">
+                <ul class="nav pull-right">
+                                        <li class="dropdown">
+                        <a href="../index.html" class="dropdown-toggle" data-toggle="dropdown">
+                            API Documentation <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                                                        <li><a href="../namespaces/bcGen.html">\bcGen</a></li>
+                                                    </ul>
+                    </li>
+                                        <li class="dropdown" id="charts-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            Charts <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="../graphs/class.html">
+                                    <i class="icon-list-alt"></i>&#160;Class hierarchy diagram
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="dropdown" id="reports-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            Reports <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="../reports/errors.html">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">38</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="../reports/markers.html">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <i class="icon-list-alt"></i>&#160;Markers <span class="label label-info pull-right">2</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="../reports/deprecated.html">
+                                                                                                            <i class="icon-list-alt"></i>&#160;Deprecated <span class="label label-info pull-right">0</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!--<div class="go_to_top">-->
+    <!--<a href="#___" style="color: inherit">Back to top&#160;&#160;<i class="icon-upload icon-white"></i></a>-->
+    <!--</div>-->
+</div>
+
+<div id="___" class="container-fluid">
+        <section class="row-fluid">
+        <div class="span2 sidebar">
+                                <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-1627350298"></a>
+                                <a href="../namespaces/default.html" style="margin-left: 30px; padding-left: 0">\</a>
+            </div>
+            <div id="namespace-1627350298" class="accordion-body collapse in">
+                <div class="accordion-inner">
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1189918670"></a>
+                                <a href="../namespaces/bcGen.html" style="margin-left: 30px; padding-left: 0">bcGen</a>
+            </div>
+            <div id="namespace-1189918670" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1590766036"></a>
+                                <a href="../namespaces/bcGen.MainBundle.html" style="margin-left: 30px; padding-left: 0">MainBundle</a>
+            </div>
+            <div id="namespace-1590766036" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-735696760"></a>
+                                <a href="../namespaces/bcGen.MainBundle.Controller.html" style="margin-left: 30px; padding-left: 0">Controller</a>
+            </div>
+            <div id="namespace-735696760" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/bcGen.MainBundle.Controller.MainController.html">MainController</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-349563125"></a>
+                                <a href="../namespaces/bcGen.MainBundle.DependencyInjection.html" style="margin-left: 30px; padding-left: 0">DependencyInjection</a>
+            </div>
+            <div id="namespace-349563125" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/bcGen.MainBundle.DependencyInjection.bcGenMainExtension.html">bcGenMainExtension</a></li>
+                                                    <li class="class"><a href="../classes/bcGen.MainBundle.DependencyInjection.Configuration.html">Configuration</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-221225671"></a>
+                                <a href="../namespaces/bcGen.MainBundle.Entity.html" style="margin-left: 30px; padding-left: 0">Entity</a>
+            </div>
+            <div id="namespace-221225671" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/bcGen.MainBundle.Entity.Annotation.html">Annotation</a></li>
+                                                    <li class="class"><a href="../classes/bcGen.MainBundle.Entity.AnnotationRepository.html">AnnotationRepository</a></li>
+                                                    <li class="class"><a href="../classes/bcGen.MainBundle.Entity.Chromosome.html">Chromosome</a></li>
+                                                    <li class="class"><a href="../classes/bcGen.MainBundle.Entity.ChromosomeRepository.html">ChromosomeRepository</a></li>
+                                                    <li class="class"><a href="../classes/bcGen.MainBundle.Entity.Condition.html">Condition</a></li>
+                                                    <li class="class"><a href="../classes/bcGen.MainBundle.Entity.ConditionRepository.html">ConditionRepository</a></li>
+                                                    <li class="class"><a href="../classes/bcGen.MainBundle.Entity.Gene.html">Gene</a></li>
+                                                    <li class="class"><a href="../classes/bcGen.MainBundle.Entity.GeneCondition.html">GeneCondition</a></li>
+                                                    <li class="class"><a href="../classes/bcGen.MainBundle.Entity.GeneConditionRepository.html">GeneConditionRepository</a></li>
+                                                    <li class="class"><a href="../classes/bcGen.MainBundle.Entity.GeneRepository.html">GeneRepository</a></li>
+                                                    <li class="class"><a href="../classes/bcGen.MainBundle.Entity.Genome.html">Genome</a></li>
+                                                    <li class="class"><a href="../classes/bcGen.MainBundle.Entity.GenomeRepository.html">GenomeRepository</a></li>
+                                                    <li class="class"><a href="../classes/bcGen.MainBundle.Entity.InnerCommunication.html">InnerCommunication</a></li>
+                                                    <li class="class"><a href="../classes/bcGen.MainBundle.Entity.Locus.html">Locus</a></li>
+                                                    <li class="class"><a href="../classes/bcGen.MainBundle.Entity.LocusChromosome.html">LocusChromosome</a></li>
+                                                    <li class="class"><a href="../classes/bcGen.MainBundle.Entity.LocusChromosomeRepository.html">LocusChromosomeRepository</a></li>
+                                                    <li class="class"><a href="../classes/bcGen.MainBundle.Entity.LocusRepository.html">LocusRepository</a></li>
+                                                    <li class="class"><a href="../classes/bcGen.MainBundle.Entity.Protein.html">Protein</a></li>
+                                                    <li class="class"><a href="../classes/bcGen.MainBundle.Entity.ProteinAnnotation.html">ProteinAnnotation</a></li>
+                                                    <li class="class"><a href="../classes/bcGen.MainBundle.Entity.ProteinAnnotationRepository.html">ProteinAnnotationRepository</a></li>
+                                                    <li class="class"><a href="../classes/bcGen.MainBundle.Entity.ProteinRepository.html">ProteinRepository</a></li>
+                                                    <li class="class"><a href="../classes/bcGen.MainBundle.Entity.Publication.html">Publication</a></li>
+                                                    <li class="class"><a href="../classes/bcGen.MainBundle.Entity.Source.html">Source</a></li>
+                                                    <li class="class"><a href="../classes/bcGen.MainBundle.Entity.SourceRepository.html">SourceRepository</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-797056388"></a>
+                                <a href="../namespaces/bcGen.MainBundle.Form.html" style="margin-left: 30px; padding-left: 0">Form</a>
+            </div>
+            <div id="namespace-797056388" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/bcGen.MainBundle.Form.SearchGenesType.html">SearchGenesType</a></li>
+                                                    <li class="class"><a href="../classes/bcGen.MainBundle.Form.SearchGeneType.html">SearchGeneType</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-895437218"></a>
+                                <a href="../namespaces/bcGen.MainBundle.Tests.html" style="margin-left: 30px; padding-left: 0">Tests</a>
+            </div>
+            <div id="namespace-895437218" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-828874019"></a>
+                                <a href="../namespaces/bcGen.MainBundle.Tests.Controller.html" style="margin-left: 30px; padding-left: 0">Controller</a>
+            </div>
+            <div id="namespace-828874019" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/bcGen.MainBundle.Tests.Controller.DefaultControllerTest.html">DefaultControllerTest</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-660500278"></a>
+                                <a href="../namespaces/bcGen.MainBundle.Tests.Entity.html" style="margin-left: 30px; padding-left: 0">Entity</a>
+            </div>
+            <div id="namespace-660500278" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/bcGen.MainBundle.Tests.Entity.AnnotationTest.html">AnnotationTest</a></li>
+                                                    <li class="class"><a href="../classes/bcGen.MainBundle.Tests.Entity.ChromosomeRepositoryTest.html">ChromosomeRepositoryTest</a></li>
+                                                    <li class="class"><a href="../classes/bcGen.MainBundle.Tests.Entity.ChromosomeTest.html">ChromosomeTest</a></li>
+                                                    <li class="class"><a href="../classes/bcGen.MainBundle.Tests.Entity.GeneConditionTest.html">GeneConditionTest</a></li>
+                                                    <li class="class"><a href="../classes/bcGen.MainBundle.Tests.Entity.GeneTest.html">GeneTest</a></li>
+                                                    <li class="class"><a href="../classes/bcGen.MainBundle.Tests.Entity.GeneTest.html">GeneTest</a></li>
+                                                    <li class="class"><a href="../classes/bcGen.MainBundle.Tests.Entity.GenomeTest.html">GenomeTest</a></li>
+                                                    <li class="class"><a href="../classes/bcGen.MainBundle.Tests.Entity.InnerCommunicationTest.html">InnerCommunicationTest</a></li>
+                                                    <li class="class"><a href="../classes/bcGen.MainBundle.Tests.Entity.LocusTest.html">LocusTest</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/bcGen.MainBundle.bcGenMainBundle.html">bcGenMainBundle</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+        </div>
+    </section>
+    <section class="row-fluid">
+        <div class="span10 offset2">
+            <div class="row-fluid">
+                <div class="span8 content class">
+                    <nav>
+                                                <a href="../namespaces/bcGen.MainBundle.Entity.html">\bcGen\MainBundle\Entity</a> <i class="icon-level-up"></i>
+                                            </nav>
+                    <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal"><i class="icon-code"></i></a>
+
+                    <h1><small>\bcGen\MainBundle\Entity</small>GeneCondition</h1>
+                    <p><em>GeneCondition class allows the creation of GeneCondition object and correponds to a table in the database : bc_gen_db.</em></p>
+                    <p>It ensures the link between Gene and Condition entities and gives information on experimental expression results</p>
+                    
+                                        
+                    <section id="summary">
+                        <h2>Summary</h2>
+                        <section class="row-fluid heading">
+                            <section class="span4">
+                                <a href="#methods">Methods</a>
+                            </section>
+                            <section class="span4">
+                                <a href="#properties">Properties</a>
+                            </section>
+                            <section class="span4">
+                                <a href="#constants">Constants</a>
+                            </section>
+                        </section>
+                        <section class="row-fluid public">
+                            <section class="span4">
+                                                                    <a href="../classes/bcGen.MainBundle.Entity.GeneCondition.html#method_setExpressionRatio" class="">setExpressionRatio()</a><br />
+                                                                    <a href="../classes/bcGen.MainBundle.Entity.GeneCondition.html#method_getExpressionRatio" class="">getExpressionRatio()</a><br />
+                                                                    <a href="../classes/bcGen.MainBundle.Entity.GeneCondition.html#method_setExpressionValue" class="">setExpressionValue()</a><br />
+                                                                    <a href="../classes/bcGen.MainBundle.Entity.GeneCondition.html#method_getExpressionValue" class="">getExpressionValue()</a><br />
+                                                                    <a href="../classes/bcGen.MainBundle.Entity.GeneCondition.html#method_setGeneConditionFKGene" class="">setGeneConditionFKGene()</a><br />
+                                                                    <a href="../classes/bcGen.MainBundle.Entity.GeneCondition.html#method_getGeneConditionFKGene" class="">getGeneConditionFKGene()</a><br />
+                                                                    <a href="../classes/bcGen.MainBundle.Entity.GeneCondition.html#method_setGeneConditionFkCondition" class="">setGeneConditionFkCondition()</a><br />
+                                                                    <a href="../classes/bcGen.MainBundle.Entity.GeneCondition.html#method_getGeneConditionFkCondition" class="">getGeneConditionFkCondition()</a><br />
+                                                            </section>
+                            <section class="span4">
+                                                                    <em>No public properties found</em>
+                                                            </section>
+                            <section class="span4">
+                                                                    <em>No constants found</em>
+                                                            </section>
+                        </section>
+                        <section class="row-fluid protected">
+                            <section class="span4">
+                                                                    <em>No protected methods found</em>
+                                                            </section>
+                            <section class="span4">
+                                                                    <em>No protected properties found</em>
+                                                            </section>
+                            <section class="span4">
+                                <em>N/A</em>
+                            </section>
+                        </section>
+                        <section class="row-fluid private">
+                            <section class="span4">
+                                                                    <em>No private methods found</em>
+                                                            </section>
+                            <section class="span4">
+                                                                    <a href="../classes/bcGen.MainBundle.Entity.GeneCondition.html#property_geneConditionFKGene" class="">$geneConditionFKGene</a><br />
+                                                                    <a href="../classes/bcGen.MainBundle.Entity.GeneCondition.html#property_geneConditionFkCondition" class="">$geneConditionFkCondition</a><br />
+                                                                    <a href="../classes/bcGen.MainBundle.Entity.GeneCondition.html#property_expressionRatio" class="">$expressionRatio</a><br />
+                                                                    <a href="../classes/bcGen.MainBundle.Entity.GeneCondition.html#property_expressionValue" class="">$expressionValue</a><br />
+                                                            </section>
+                            <section class="span4">
+                                <em>N/A</em>
+                            </section>
+                        </section>
+                    </section>
+                </div>
+                <aside class="span4 detailsbar">
+                                        
+                    
+                    <dl>
+                        <dt>File</dt>
+                            <dd><a href="../files/Entity.GeneCondition.html"><div class="path-wrapper">Entity/GeneCondition.php</div></a></dd>
+                                                <dt>Package</dt>
+                            <dd><div class="namespace-wrapper">Default</div></dd>
+                                                <dt>Class hierarchy</dt>
+                            <dd class="hierarchy">
+                                                                                                                                                                    <div class="namespace-wrapper">\bcGen\MainBundle\Entity\GeneCondition</div>
+                            </dd>
+
+                        
+                        
+                        
+                                                                            <dt>See also</dt>
+                                                                                    <dd><a href=""><div class="namespace-wrapper">Class Gene</div></a></dd>
+                                                        <dd><a href=""><div class="namespace-wrapper">Class Condition</div></a></dd>
+                                                    
+                                                                        </dl>
+                    <h2>Tags</h2>
+                    <table class="table table-condensed">
+                                            <tr>
+                            <th>
+                                author
+                            </th>
+                            <td>
+                                                                    <p>Isabelle Gonçalves</p>
+                                                                    <p>Xavier Sottiaux</p>
+                                                            </td>
+                        </tr>
+                                            <tr>
+                            <th>
+                                ORM\Table
+                            </th>
+                            <td>
+                                                                    <p>(name=&quot;gene_condition&quot;)</p>
+                                                            </td>
+                        </tr>
+                                            <tr>
+                            <th>
+                                ORM\Entity
+                            </th>
+                            <td>
+                                                                    <p>(repositoryClass=&quot;bcGen\MainBundle\Entity\GeneConditionRepository&quot;)</p>
+                                                            </td>
+                        </tr>
+                                        </table>
+                </aside>
+            </div>
+
+                        
+                                    <a id="properties" name="properties"></a>
+            <div class="row-fluid">
+                <div class="span8 content class">
+                    <h2>Properties</h2>
+                </div>
+                <aside class="span4 detailsbar"></aside>
+            </div>
+
+                                                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_geneConditionFKGene" name="property_geneConditionFKGene" class="anchor"></a>
+            <article class="property">
+                <h3 class="private ">$geneConditionFKGene</h3>
+                <pre class="signature">$geneConditionFKGene : integer</pre>
+                <p><em>geneConditionFKGene is the gene id associated to a GeneCondition object</em></p>
+                
+
+                                <h4>Type</h4>
+                integer
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                                            <dt>See also</dt>
+                                                                <dd><a href="../classes/bcGen.MainBundle.Entity.Gene.html"><span class="namespace-wrapper">Class Gene</span></a></dd>
+                                                                </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr>
+                        <th>
+                            ORM\Id
+                        </th>
+                        <td>
+                                                            
+                                                    </td>
+                    </tr>
+                                    <tr>
+                        <th>
+                            ORM\ManyToOne
+                        </th>
+                        <td>
+                                                            <p>( targetEntity=&quot;bcGen\MainBundle\Entity\Gene&quot;)</p>
+                                                    </td>
+                    </tr>
+                                    <tr>
+                        <th>
+                            ORM\JoinColumn
+                        </th>
+                        <td>
+                                                            <p>( name=&quot;gene_cond_fk_gene&quot;, nullable=TRUE )</p>
+                                                    </td>
+                    </tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_geneConditionFkCondition" name="property_geneConditionFkCondition" class="anchor"></a>
+            <article class="property">
+                <h3 class="private ">$geneConditionFkCondition</h3>
+                <pre class="signature">$geneConditionFkCondition : integer</pre>
+                <p><em>geneConditionFkCondition is the condition id associated to a GeneCondition object</em></p>
+                
+
+                                <h4>Type</h4>
+                integer
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                                            <dt>See also</dt>
+                                                                <dd><a href="../classes/bcGen.MainBundle.Entity.Condition.html"><span class="namespace-wrapper">Class Condition</span></a></dd>
+                                                                </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr>
+                        <th>
+                            ORM\Id
+                        </th>
+                        <td>
+                                                            
+                                                    </td>
+                    </tr>
+                                    <tr>
+                        <th>
+                            ORM\ManyToOne
+                        </th>
+                        <td>
+                                                            <p>( targetEntity=&quot;bcGen\MainBundle\Entity\Condition&quot; )</p>
+                                                    </td>
+                    </tr>
+                                    <tr>
+                        <th>
+                            ORM\JoinColumn
+                        </th>
+                        <td>
+                                                            <p>( name=&quot;gene_cond_fk_condition&quot;, nullable=TRUE )</p>
+                                                    </td>
+                    </tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_expressionRatio" name="property_expressionRatio" class="anchor"></a>
+            <article class="property">
+                <h3 class="private ">$expressionRatio</h3>
+                <pre class="signature">$expressionRatio : float</pre>
+                <p><em>expressionRatio is an index number about gene expression within a specific condition</em></p>
+                
+
+                                <h4>Type</h4>
+                float
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr>
+                        <th>
+                            ORM\Column
+                        </th>
+                        <td>
+                                                            <p>(name=&quot;expressionRatio&quot;, type=&quot;float&quot;, nullable=TRUE)</p>
+                                                    </td>
+                    </tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_expressionValue" name="property_expressionValue" class="anchor"></a>
+            <article class="property">
+                <h3 class="private ">$expressionValue</h3>
+                <pre class="signature">$expressionValue : float</pre>
+                <p><em>expressionValue is a number about gene expression within a specific condition</em></p>
+                
+
+                                <h4>Type</h4>
+                float
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr>
+                        <th>
+                            ORM\Column
+                        </th>
+                        <td>
+                                                            <p>(name=&quot;expressionValue&quot;, type=&quot;float&quot;, nullable=TRUE)</p>
+                                                    </td>
+                    </tr>
+                            </table>
+        </aside>
+    </div>
+
+                            
+                                    <a id="methods" name="methods"></a>
+            <div class="row-fluid">
+                <div class="span8 content class"><h2>Methods</h2></div>
+                <aside class="span4 detailsbar"></aside>
+            </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_setExpressionRatio" name="method_setExpressionRatio" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">setExpressionRatio()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">setExpressionRatio(float  <span class="argument">$expressionRatio</span>) : \bcGen\MainBundle\Entity\GeneCondition</pre>
+                <p><em>Set the expressionRatio value of a GeneCondition object</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>float</td>
+                                <td>$expressionRatio </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    <a href="../classes/bcGen.MainBundle.Entity.GeneCondition.html">\bcGen\MainBundle\Entity\GeneCondition</a>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getExpressionRatio" name="method_getExpressionRatio" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getExpressionRatio()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getExpressionRatio() : float</pre>
+                <p><em>Get the expressionRatio value of a GeneCondition object</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    float
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_setExpressionValue" name="method_setExpressionValue" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">setExpressionValue()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">setExpressionValue(float  <span class="argument">$expressionValue</span>) : \bcGen\MainBundle\Entity\GeneCondition</pre>
+                <p><em>Set the expressionValue value of a GeneCondition object</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>float</td>
+                                <td>$expressionValue </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    <a href="../classes/bcGen.MainBundle.Entity.GeneCondition.html">\bcGen\MainBundle\Entity\GeneCondition</a>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getExpressionValue" name="method_getExpressionValue" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getExpressionValue()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getExpressionValue() : float</pre>
+                <p><em>Get the expressionValue value of a GeneCondition object</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    float
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_setGeneConditionFKGene" name="method_setGeneConditionFKGene" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">setGeneConditionFKGene()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">setGeneConditionFKGene(\bcGen\MainBundle\Entity\Gene  <span class="argument">$gene</span>) : \bcGen\MainBundle\Entity\GeneCondition</pre>
+                <p><em>Set the geneConditionFKGene value of a GeneCondition object</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td><a href="../classes/bcGen.MainBundle.Entity.Gene.html">\bcGen\MainBundle\Entity\Gene</a></td>
+                                <td>$gene </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    <a href="../classes/bcGen.MainBundle.Entity.GeneCondition.html">\bcGen\MainBundle\Entity\GeneCondition</a>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getGeneConditionFKGene" name="method_getGeneConditionFKGene" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getGeneConditionFKGene()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getGeneConditionFKGene() : \bcGen\MainBundle\Entity\Gene</pre>
+                <p><em>Get the geneConditionFKGene value of a GeneCondition object</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    <a href="../classes/bcGen.MainBundle.Entity.Gene.html">\bcGen\MainBundle\Entity\Gene</a>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_setGeneConditionFkCondition" name="method_setGeneConditionFkCondition" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">setGeneConditionFkCondition()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">setGeneConditionFkCondition(\bcGen\MainBundle\Entity\Condition  <span class="argument">$condition</span>) : \bcGen\MainBundle\Entity\GeneCondition</pre>
+                <p><em>Set the geneConditionFkCondition value of a GeneCondition object</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td><a href="../classes/bcGen.MainBundle.Entity.Condition.html">\bcGen\MainBundle\Entity\Condition</a></td>
+                                <td>$condition </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    <a href="../classes/bcGen.MainBundle.Entity.GeneCondition.html">\bcGen\MainBundle\Entity\GeneCondition</a>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getGeneConditionFkCondition" name="method_getGeneConditionFkCondition" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getGeneConditionFkCondition()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getGeneConditionFkCondition() : \bcGen\MainBundle\Entity\Condition</pre>
+                <p><em>Get the geneConditionFkCondition value of a GeneCondition object</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    <a href="../classes/bcGen.MainBundle.Entity.Condition.html">\bcGen\MainBundle\Entity\Condition</a>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                                                    </div>
+    </section>
+
+    <div id="source-view" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="source-view-label" aria-hidden="true">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h3 id="source-view-label">GeneCondition.php</h3>
+        </div>
+        <div class="modal-body">
+            <pre data-src="../files/Entity/GeneCondition.php.txt" class="language-php line-numbers"></pre>
+        </div>
+    </div>
+
+    <footer class="row-fluid">
+        <section class="span10 offset2">
+            <section class="row-fluid">
+                <section class="span10 offset1">
+                    <section class="row-fluid footer-sections">
+                        <section class="span4">
+                                                        <h1><i class="icon-code"></i></h1>
+                            <div>
+                                <ul>
+                                                                            <li><a href="../namespaces/bcGen.html">\bcGen</a></li>
+                                                                    </ul>
+                            </div>
+                        </section>
+                        <section class="span4">
+                                                        <h1><i class="icon-bar-chart"></i></h1>
+                            <div>
+                                <ul>
+                                    <li><a href="../graphs/class.html">Class Hierarchy Diagram</a></li>
+                                </ul>
+                            </div>
+                        </section>
+                        <section class="span4">
+                                                        <h1><i class="icon-pushpin"></i></h1>
+                            <div>
+                                <ul>
+                                    <li><a href="../reports/errors.html">Errors</a></li>
+                                    <li><a href="../reports/markers.html">Markers</a></li>
+                                </ul>
+                            </div>
+                        </section>
+                    </section>
+                </section>
+            </section>
+            <section class="row-fluid">
+                <section class="span10 offset1">
+                    <hr />
+                    Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor </a> and authored
+                    on May 21st, 2016 at 15:37.
+                </section>
+            </section>
+        </section>
+    </footer>
+</div>
+
+</body>
+</html>

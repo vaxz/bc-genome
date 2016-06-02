@@ -1,0 +1,182 @@
+<?php
+/**
+ * GeneConditionTest.php
+ *
+ * @copyright --------
+ * @license   --------
+ * @link      --------
+ *
+ */
+namespace bcGen\MainBundle\Tests\Entity;
+
+use bcGen\MainBundle\Entity\Gene;
+use bcGen\MainBundle\Entity\Condition;
+use bcGen\MainBundle\Entity\GeneCondition;
+
+/**
+ * GeneConditionTest class gathers all the unit tests linked to the GeneCondition class.
+ *
+ * @link https://phpunit.de/manual/current/en/index.html This link gives details on how to use PHPunit
+ * 
+ * @see \bcGen\MainBundle\Entity\GeneCondition         Class GeneCondition
+ * @see \bcGen\MainBundle\Entity\Gene                  Class Gene
+ * @see \bcGen\MainBundle\Entity\Condition             Class Condition
+ *
+ * @author Xavier Sottiaux
+ * @version 0.1.0 0.1.0
+ *
+ */
+class GeneConditionTest extends \PHPUnit_Framework_TestCase {
+	
+	/**
+	 *
+	 * @var PHPUnit_Framework_MockObject_MockObject $stubedGene
+	 */
+	private $stubedGene;
+	
+	/**
+	 *
+	 * @var \bcGen\MainBundle\Entity\GeneCondition $geneCondition
+	 */
+	private $geneCondition;
+	
+	/**
+	 *
+	 * @var \bcGen\MainBundle\Entity\Condition $condition
+	 */
+	private $condition;
+	
+	/**
+	 *
+	 * @var \bcGen\MainBundle\Entity\Gene $gene
+	 */
+	private $gene;
+	
+	/**
+	 *
+	 * {@inheritDoc}
+	 *
+	 * @uses PHPUnit_Framework_TestCase::setUp()
+	 * @uses PHPUnit_Framework_TestCase::getMock()
+	 */
+	public function setUp() {
+		$this->stubedGeneCondition = $this->getMock ( "bcGen\MainBundle\Entity\GeneCondition" );
+		$this->geneCondition = new GeneCondition();
+		$this->condition = new Condition();
+		$this->gene = new Gene();
+	}
+	
+	/**
+	 *
+	 * {@inheritDoc}
+	 *
+	 * @uses PHPUnit_Framework_TestCase::tearDown()
+	 */
+	public function tearDown() {
+		$this->stubedGeneCondition = $this->getMock ( "bcGen\MainBundle\Entity\GeneCondition" );
+		$this->geneCondition = null;
+		$this->condition = null;
+		$this->gene = null;
+	}
+	
+	
+	/**
+	 * Test the getExpressionRatio() method from the GeneCondition class
+	 *
+	 * @uses \bcGen\MainBundle\Entity\GeneCondition::getExpressionRatio()
+	 */
+	public function testGetExpressionRatio() {
+		echo ("\n********************Test GetExpressionRatio()************************************************\n");
+	
+		$this->stubedGeneCondition->method ( 'getExpressionRatio' )->willReturn ( 1 );
+		$this->assertEquals ( 1, $this->stubedGeneCondition->getExpressionRatio() );
+	}
+	
+	/**
+	 * Test the getExpressionValue() method from the GeneCondition class
+	 *
+	 * @uses \bcGen\MainBundle\Entity\GeneCondition::getExpressionValue()
+	 */
+	public function testGetExpressionValue() {
+		echo ("\n********************Test GetExpressionValue()************************************************\n");
+	
+		$this->stubedGeneCondition->method ( 'getExpressionValue' )->willReturn ( 1 );
+		$this->assertEquals ( 1, $this->stubedGeneCondition->getExpressionValue() );
+	}
+	
+	/**
+	 * Test the getGeneConditionFKGene() method from the GeneCondition class
+	 *
+	 * @uses \bcGen\MainBundle\Entity\GeneCondition::getGeneConditionFKGene()
+	 */
+	public function testGetGeneConditionFKGene() {
+		echo ("\n********************Test GetGeneConditionFKGene()********************************************\n");
+	
+		$this->stubedGeneCondition->method ( 'getGeneConditionFKGene' )->willReturn ( $this->gene );
+		$this->assertEquals ( $this->gene, $this->stubedGeneCondition->getGeneConditionFKGene() );
+	}
+	
+	/**
+	 * Test the getGeneConditionFkCondition() method from the GeneCondition class
+	 *
+	 * @uses \bcGen\MainBundle\Entity\GeneCondition::getGeneConditionFkCondition()
+	 */
+	public function testGetGeneConditionFkCondition() {
+		echo ("\n********************Test GetGeneConditionFkCondition()***************************************\n");
+	
+		$this->stubedGeneCondition->method ( 'getGeneConditionFkCondition' )->willReturn ( $this->condition );
+		$this->assertEquals ( $this->condition, $this->stubedGeneCondition->getGeneConditionFkCondition() );
+	}
+	
+	/**
+	 * Test the setExpressionRatio method from the GeneCondition class
+	 *
+	 * @uses \bcGen\MainBundle\Entity\GeneCondition::setExpressionRatio()
+	 */
+	public function testSetExpressionRatio() {
+		echo ("\n********************Test SetExpressionRatio()************************************************\n");
+	
+		$this->geneCondition->setExpressionRatio( 1 );
+		$this->assertEquals ( 1, $this->geneCondition->getExpressionRatio() );
+	}
+	
+	/**
+	 * Test the setExpressionValue method from the GeneCondition class
+	 *
+	 * @uses \bcGen\MainBundle\Entity\GeneCondition::setExpressionValue()
+	 */
+	public function testSetExpressionValue() {
+		echo ("\n********************Test SetExpressionValue()************************************************\n");
+	
+		$this->geneCondition->setExpressionValue ( 1 );
+		$this->assertEquals ( 1, $this->geneCondition->getExpressionValue() );
+	}
+	
+	/**
+	 * Test the setGeneConditionFKGene method from the GeneCondition class
+	 *
+	 * @uses \bcGen\MainBundle\Entity\GeneCondition::setGeneConditionFKGene()
+	 */
+	public function testSetGeneConditionFKGene() {
+		echo ("\n********************Test SetGeneConditionFKGene()********************************************\n");
+	
+		$this->geneCondition->setGeneConditionFKGene( $this->gene );
+		$this->assertEquals ( $this->gene, $this->geneCondition->getGeneConditionFKGene() );
+	}
+	
+	/**
+	 * Test the setGeneConditionFkCondition method from the Gene class
+	 *
+	 * @uses \bcGen\MainBundle\Entity\GeneCondition::setGeneConditionFkCondition()
+	 */
+	public function testSetGeneConditionFkCondition() {
+		echo ("\n********************Test SetGeneConditionFkCondition()***************************************\n");
+	
+		$this->geneCondition->setGeneConditionFkCondition( $this->condition );
+		$this->assertEquals ( $this->condition, $this->geneCondition->getGeneConditionFkCondition() );
+	}
+	
+	
+	
+}//CLASS END
+?>

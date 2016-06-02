@@ -1,0 +1,151 @@
+<?php
+
+/**
+ * ProteinAnnotation.php
+ * 
+ * @copyright --------
+ * @license   --------
+ * @link      --------
+ * 
+ */
+namespace bcGen\MainBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ *
+ * ProteinAnnotation class allows the creation of ProteinAnnotation object and correponds to a table
+ * in the database : bc_gen_db.
+ * It ensures the link between Annotation and Protein entities.
+ *
+ * @see \bcGen\MainBundle\Entity\Protein Class Protein
+ * @see \bcGen\MainBundle\Entity\Annotation Class Annotation
+ *     
+ * @author Isabelle Gonçalves
+ * @author Xavier Sottiaux
+ *        
+ *         @ORM\Table(name="protein_annotation")
+ *         @ORM\Entity(repositoryClass="bcGen\MainBundle\Entity\ProteinAnnotationRepository")
+ */
+class ProteinAnnotation {
+	/**
+	 * proteinAnnotationFkProtein contains the Protein object reference associated to the current
+	 * ProteinAnnotation object
+	 *
+	 * @see \bcGen\MainBundle\Entity\Protein Class Protein
+	 * @var integer @ORM\Id
+	 *      @ORM\ManyToOne( targetEntity="bcGen\MainBundle\Entity\Protein" )
+	 *      @ORM\JoinColumn( name="protein_annotation_fk_protein", nullable=FALSE )
+	 */
+	private $proteinAnnotationFkProtein;
+	
+	/**
+	 * proteinAnnotationFkAnnotation contains the Annotation object reference associated to the current
+	 * ProteinAnnotation object
+	 *
+	 * @see \bcGen\MainBundle\Entity\Annotation Class Annotation
+	 * @var integer @ORM\Id
+	 *      @ORM\ManyToOne( targetEntity="bcGen\MainBundle\Entity\Condition" )
+	 *      @ORM\JoinColumn( name="protein_annotation_fk_annotation", nullable=FALSE )
+	 */
+	private $proteinAnnotationFkAnnotation;
+	
+	/**
+	 * startPosition indicates the position where begins a protein feature or domain on the amino acid sequence
+	 *
+	 * @var integer @ORM\Column(name="startPosition", type="integer", nullable=TRUE)
+	 */
+	private $startPosition;
+	
+	/**
+	 * endPosition indicates the position where ends a protein feature or domain on the amino acid sequence
+	 *
+	 * @var integer @ORM\Column(name="endPosition", type="integer", nullable=TRUE)
+	 */
+	private $endPosition;
+	
+	/**
+	 * Set the startPosition value of ProteinAnnotation object
+	 *
+	 * @param integer $startPosition        	
+	 * @return ProteinAnnotation
+	 */
+	public function setStartPosition($startPosition) {
+		$this->startPosition = $startPosition;
+		
+		return $this;
+	}
+	
+	/**
+	 * Get the startPosition value of ProteinAnnotation object
+	 *
+	 * @return integer
+	 */
+	public function getStartPosition() {
+		return $this->startPosition;
+	}
+	
+	/**
+	 * Set the endPosition value of ProteinAnnotation object
+	 *
+	 * @param integer $endPosition        	
+	 * @return ProteinAnnotation
+	 */
+	public function setEndPosition($endPosition) {
+		$this->endPosition = $endPosition;
+		
+		return $this;
+	}
+	
+	/**
+	 * Get the endPosition value of ProteinAnnotation object
+	 *
+	 * @return integer
+	 */
+	public function getEndPosition() {
+		return $this->endPosition;
+	}
+	
+	/**
+	 * Set the proteinAnnotationFkProtein value of ProteinAnnotation object
+	 *
+	 * @param \bcGen\MainBundle\Entity\Protein $protein        	
+	 * @return ProteinAnnotation
+	 */
+	public function setProteinAnnotationFkProtein(\bcGen\MainBundle\Entity\Protein $protein) {
+		$this->proteinAnnotationFkProtein = $protein;
+		
+		return $this;
+	}
+	
+	/**
+	 * Get the proteinAnnotationFkProtein value of ProteinAnnotation object
+	 *
+	 * @return \bcGen\MainBundle\Entity\Protein
+	 */
+	public function getProteinAnnotationFkProtein() {
+		return $this->proteinAnnotationFkProtein;
+	}
+	
+	/**
+	 * Set the proteinAnnotationFkAnnotation value of ProteinAnnotation object
+	 *
+	 * @param \bcGen\MainBundle\Entity\Annotation $annotation        	
+	 * @return ProteinAnnotation
+	 */
+	public function setProteinAnnotationFkAnnotation(\bcGen\MainBundle\Entity\Annotation $annotation) {
+		$this->proteinAnnotationFkAnnotation = $annotation;
+		
+		return $this;
+	}
+	
+	/**
+	 * Get the proteinAnnotationFkAnnotation value of ProteinAnnotation object
+	 *
+	 * @return \bcGen\MainBundle\Entity\Annotation
+	 */
+	public function getProteinAnnotationFkAnnotation() {
+		return $this->proteinAnnotationFkAnnotation;
+	}
+}// CLASS END
+

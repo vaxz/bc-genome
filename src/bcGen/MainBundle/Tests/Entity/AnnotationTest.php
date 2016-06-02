@@ -1,4 +1,5 @@
 <?php
+
 /**
  * AnnotationTest.php
  * 
@@ -6,241 +7,288 @@
  * @license   --------
  * @link      --------
  * 
- */  
+ */
 namespace bcGen\MainBundle\Tests\Entity;
 
-
 use bcGen\MainBundle\Entity\Annotation;
-use bcGen\MainBundle\Entity\Source;
+use bcGen\MainBundle\Entity\Publication;
+
 /**
  * AnnotationTest class gathers all the unit tests linked to the Annotation class.
+ *
+ * @link https://phpunit.de/manual/current/en/index.html This link gives details on how to use PHPunit
  * 
- * @see https://phpunit.de/manual/current/en/test-doubles.html
- * This link gives details on the Class mock
- * @see \bcGen\MainBundle\Entity\Annotation Class Annotation
- * * @see \bcGen\MainBundle\Entity\Source Class Source
- * 
- * @author Xavier Sottiaux  
+ * @see \bcGen\MainBundle\Entity\Annotation       Class Annotation
+ * @see \bcGen\MainBundle\Entity\Publication      Class Publication
+ *     
+ * @author Xavier Sottiaux
  * @version 0.1.0 0.1.0
- * 
- */ 
-class AnnotationTest extends \PHPUnit_Framework_TestCase
-{
+ *         
+ */
+class AnnotationTest extends \PHPUnit_Framework_TestCase {
+	
 	/**
-	 *  Test the getId() method from the Annotation class
+	 *
+	 * @var PHPUnit_Framework_MockObject_MockObject $stubedAnnotation
 	 */
-	public function testGetId()
-	{
+	private $stubedAnnotation;
+	
+	/**
+	 *
+	 * @var \bcGen\MainBundle\Entity\Annotation $annotation
+	 */
+	private $annotation;
+	
+	/**
+	 *
+	 * @var \bcGen\MainBundle\Entity\Publication $publication
+	 */
+	private $publication;
+	
+	/**
+	 *
+	 * {@inheritDoc}
+	 *
+	 * @uses PHPUnit_Framework_TestCase::setUp()
+	 * @uses PHPUnit_Framework_TestCase::getMock()
+	 */
+	public function setUp() {
+		$this->annotation = new Annotation ();
+		$this->publication = new Publication();
+		
+		$this->stubedAnnotation = $this->getMock ( "bcGen\MainBundle\Entity\Annotation" );
+	}
+	
+	/**
+	 *
+	 * {@inheritDoc}
+	 *
+	 * @uses PHPUnit_Framework_TestCase::tearDown()
+	 */
+	public function tearDown() {
+		$this->stubedAnnotation = null;
+		$this->annotation = null;
+		$this->publication = null;
+	}
+	
+	/**
+	 * Test the getId() method from the Annotation class
+	 * 
+	 * @uses \bcGen\MainBundle\Entity\Annotation::getId()
+	 */
+	public function testGetId() {
 		echo ("\n********************Test GetId()**********************************************************\n");
 		
-		$stubedAnnotation = $this->getMock("bcGen\MainBundle\Entity\Annotation");
-		$stubedAnnotation->method('getId')->willReturn(1);
-		
-		$this->assertEquals( 1, $stubedAnnotation->getId() );
+		$this->stubedAnnotation->method ( 'getId' )->willReturn ( 1 );
+		$this->assertEquals ( 1, $this->stubedAnnotation->getId () );
 	}
 	
 	/**
 	 * Test the getAnnotationTitle() method from the Annotation class
+	 * 
+	 * @uses \bcGen\MainBundle\Entity\Annotation::getTitle()
 	 */
-	public function testGetAnnotationTitle()
-	{
+	public function testGetAnnotationTitle() {
 		echo ("\n********************Test GetAnnotationTitle()*********************************************\n");
 		
-		$stubedAnnotation = $this->getMock("bcGen\MainBundle\Entity\Annotation");
-		$stubedAnnotation->method('getAnnotationTitle')->willReturn("Title");
-		
-		$this->assertEquals( "Title", $stubedAnnotation->getAnnotationTitle() );
+		$this->stubedAnnotation->method ( 'getAnnotationTitle' )->willReturn ( "Title" );
+		$this->assertEquals ( "Title", $this->stubedAnnotation->getAnnotationTitle () );
 	}
 	
 	/**
 	 * Test the getAnnotationDesc() method from the Annotation class
+	 * 
+	 * @uses \bcGen\MainBundle\Entity\Annotation::getDesc()
 	 */
-	public function testGetAnnotationDesc()
-	{
+	public function testGetAnnotationDesc() {
 		echo ("\n********************Test GetAnnotationDesc()**********************************************\n");
-		$stubedAnnotation = $this->getMock("bcGen\MainBundle\Entity\Annotation");
-		$stubedAnnotation->method('getAnnotationDesc')->willReturn("Desc");
 		
-		$this->assertEquals( "Desc", $stubedAnnotation->getAnnotationDesc() );
+		$this->stubedAnnotation->method ( 'getAnnotationDesc' )->willReturn ( "Desc" );
+		$this->assertEquals ( "Desc", $this->stubedAnnotation->getAnnotationDesc () );
 	}
 	
 	/**
 	 * Test the getAnnotationPublic() method from the Annotation class
+	 * 
+	 * @uses \bcGen\MainBundle\Entity\Annotation::getAnnotationPublic()
 	 */
-	public function testGetAnnotationPublic()
-	{
+	public function testGetAnnotationPublic() {
 		echo ("\n********************Test GetAnnotationPublic()********************************************\n");
-		$stubedAnnotation = $this->getMock("bcGen\MainBundle\Entity\Annotation");
-		$stubedAnnotation->method('getAnnotationPublic')->willReturn(0);
 		
-		$this->assertEquals( 0, $stubedAnnotation->getAnnotationPublic() );
-	
+		$this->stubedAnnotation->method ( 'getAnnotationPublic' )->willReturn ( TRUE );
+		$this->assertTrue( $this->stubedAnnotation->getAnnotationPublic () );
 	}
 	
 	/**
 	 * Test the getAnnotationType() method from the Annotation class
+	 * 
+	 * @uses \bcGen\MainBundle\Entity\Annotation::getAnnotationType()
 	 */
-	public function testGetAnnotationType()
-	{
+	public function testGetAnnotationType() {
 		echo ("\n********************Test GetAnnotationType()**********************************************\n");
-		$stubedAnnotation = $this->getMock("bcGen\MainBundle\Entity\Annotation");
-		$stubedAnnotation->method('getAnnotationType')->willReturn("Protein");
 		
-		$this->assertEquals( "Protein", $stubedAnnotation->getAnnotationType() );
+		$this->stubedAnnotation->method ( 'getAnnotationType' )->willReturn ( "Protein" );
+		$this->assertEquals ( "Protein", $this->stubedAnnotation->getAnnotationType () );
 	}
-
+	
 	/**
 	 * Test the getAnnotationSources() method from the Annotation class
+	 * 
+	 * @uses \bcGen\MainBundle\Entity\Annotation::getAnnotationSources()
 	 */
-	public function testGetAnnotationSources()
-	{
+	public function testGetAnnotationSources() {
 		echo ("\n********************Test GetAnnotationSources()*******************************************\n");
-	
-		$annotation = new Annotation();
-		$tmp= get_class($annotation->getAnnotationSources());
-			
-		$this->assertEquals($tmp, "Doctrine\Common\Collections\ArrayCollection");
+		
+		$tmp = get_class ( $this->annotation->getAnnotationSources () );
+		$this->assertEquals ( $tmp, "Doctrine\Common\Collections\ArrayCollection" );
 	}
 	
 	/**
 	 * Test the setAnnotationTitle() method from the Annotation class
+	 * 
+	 * @uses \bcGen\MainBundle\Entity\Annotation::setAnnotationTitle()
 	 */
-	public function testSetAnnotationTitle() 
-	{
+	public function testSetAnnotationTitle() {
 		echo ("\n********************Test SetAnnotationTitle()*********************************************\n");
 		
-		$annotation = new Annotation();
-		$annotation->setAnnotationTitle( "Test setAnnotationTitle()" );
-		$this->assertEquals("Test setAnnotationTitle()", $annotation->getAnnotationTitle()  );
+		$this->annotation->setAnnotationTitle ( "Test setAnnotationTitle()" );
+		$this->assertEquals ( "Test setAnnotationTitle()", $this->annotation->getAnnotationTitle() );
 	}
 	
 	/**
 	 * Test the setAnnotationDesc() method from the Annotation class
+	 * 
+	 * @uses \bcGen\MainBundle\Entity\Annotation::setAnnotationDesc()
 	 */
-	public function testSetAnnotationDesc()
-	{
+	public function testSetAnnotationDesc() {
 		echo ("\n********************Test SetAnnotationDesc()**********************************************\n");
-	
-		$annotation = new Annotation();
-		$annotation->setAnnotationDesc( "Test setAnnotationDesc()" );
-		$this->assertEquals("Test setAnnotationDesc()", $annotation->getAnnotationDesc()  );
+		
+		$this->annotation->setAnnotationDesc ( "Test setAnnotationDesc()" );
+		$this->assertEquals ( "Test setAnnotationDesc()", $this->annotation->getAnnotationDesc () );
 	}
 	
 	/**
 	 * Test the setAnnotationPublic() method from the Annotation class
+	 * 
+	 * @uses \bcGen\MainBundle\Entity\Annotation::setAnnotationPublic()
 	 */
-	public function testSetAnnotationPublic()
-	{
-		echo ("\n********************Test SetAnnotationPublic()********************************************\n");
+	public function testSetAnnotationPublic1() {
+		echo ("\n********************Test SetAnnotationPublic1()********************************************\n");
+		
+		$this->annotation->setAnnotationPublic ( TRUE );
+		$this->assertTRUE ( $this->annotation->getAnnotationPublic () );
+	}
 	
-		$annotation = new Annotation();
-		$annotation->setAnnotationPublic( 1 );
-		$this->assertEquals( 1, $annotation->getAnnotationPublic()  );
+	/**
+	 * Test the setAnnotationPublic() method from the Annotation class
+	 * 
+	 * @uses \bcGen\MainBundle\Entity\Annotation::setAnnotationPublic()
+	 */
+	public function testSetAnnotationPublic2() {
+		echo ("\n********************Test SetAnnotationPublic2()********************************************\n");
+		
+		$this->annotation->setAnnotationPublic ( FALSE );
+		$this->assertFALSE ( $this->annotation->getAnnotationPublic () );
 	}
 	
 	/**
 	 * Test the setAnnotationType() method from the Annotation class
 	 * with the following string : "PROTEIN"
+	 * 
+	 * @uses \bcGen\MainBundle\Entity\Annotation::setAnnotationType()
 	 */
-	public function testSetAnnotationType1()
-	{
-		echo ("\n********************Test SetAnnotationType1() protein*************************************\n");
+	public function testSetAnnotationType1() {
+		echo ("\n********************Test SetAnnotationType1()*********************************************\n");
 		
-		$annotation = new Annotation();
-		$tmp='';
+		$tmp = '';
 		
 		try {
-			$annotation->setAnnotationType( "PROTEIN" );
-			//setAnnotationType() method uses strtolower() method
-		}
-		catch (\Exception $e){
-			$tmp = $e->getMessage();
-			echo("tmp : ".$tmp);
+			$this->annotation->setAnnotationType ( "PROTEIN" );
+			// setAnnotationType() method uses strtolower() method
+		} catch ( \Exception $e ) {
+			$tmp = $e->getMessage ();
+			echo ("tmp : " . $tmp);
 		}
 		
-		$this->assertEquals("protein", $annotation->getAnnotationType()  );
+		$this->assertEquals ( "protein", $this->annotation->getAnnotationType () );
 	}
 	
 	/**
 	 * Test the setAnnotationDesc() method from the Annotation class
 	 * with the following string : "GENE"
+	 * 
+	 * @uses \bcGen\MainBundle\Entity\Annotation::setAnnotationType()
 	 */
-	public function testSetAnnotationType2()
-	{
-		echo ("\n********************Test SetAnnotationType2() gene****************************************\n");
-	
-		$annotation = new Annotation();
-		$tmp='';
+	public function testSetAnnotationType2() {
+		echo ("\n********************Test SetAnnotationType2()*********************************************\n");
+		
+		$tmp = '';
 		
 		try {
-			$annotation->setAnnotationType( "GENE" );
-			//setAnnotationType() method uses strtolower() method
+			$this->annotation->setAnnotationType ( "GENE" );
+			// setAnnotationType() method uses strtolower() method
+		} catch ( \Exception $e ) {
+			$tmp = $e->getMessage ();
+			echo ("tmp : " . $tmp);
 		}
-		catch (\Exception $e){
-			$tmp = $e->getMessage();
-			echo("tmp : ".$tmp);
-		}		
 		
-		$this->assertEquals("gene", $annotation->getAnnotationType()  );
+		$this->assertEquals ( "gene", $this->annotation->getAnnotationType () );
 	}
 	
 	/**
 	 * Test the setAnnotationDesc() method from the Annotation class
 	 * with the following string : "other"
+	 * 
+	 * @uses \bcGen\MainBundle\Entity\Annotation::setAnnotationType()
 	 */
-	public function testSetAnnotationType3()
-	{
-		echo ("\n********************Test SetAnnotationType3() other***************************************\n");
-	
-		$annotation = new Annotation();
-		$tmp='';
+	public function testSetAnnotationType3() {
+		echo ("\n********************Test SetAnnotationType3()*********************************************\n");
+		
+		$tmp = "other";
+		$message = '$annotationtype must be one of these types : ';
+		$message .= 'gene or protein, not ' . $tmp;
 		
 		try {
-			$annotation->setAnnotationType( "other" );
+			$this->annotation->setAnnotationType ( $tmp );
+		} catch ( \Exception $e ) {
+			$tmp = $e->getMessage ();
 		}
-		catch (\Exception $e){
-			$tmp = $e->getMessage();
-		}		
-			
-		$this->assertEquals($tmp, '$annotationtype must be one of these types : 
-												gene or protein, not other'  );
+		
+		$this->assertEquals ( $message, $tmp );
 	}
 	
 	/**
-	 * Test the setAnnotationDesc() method from the Annotation class
+	 * Test the addAnnotationSources() method from the Annotation class
+	 * 
+	 * @uses \bcGen\MainBundle\Entity\Annotation::addAnnotationSource()
 	 */
-	public function testAddAnnotationSource()
-	{
+	public function testAddAnnotationSource() {
 		echo ("\n********************Test AddAnnotationSource()********************************************\n");
-	
-		$source = new Source();
-		$annotation = new Annotation();
-		$expectedResult = -1;
 		
-		$annotation->addAnnotationSources($source);
-		$expectedResult = $annotation->getAnnotationSources()->count(); 
-			
-		$this->assertEquals(1, $expectedResult);
+		$expectedResult = - 1;
+		
+		$this->annotation->addAnnotationSources ( $this->publication );
+		$expectedResult = $this->annotation->getAnnotationSources ()->count ();
+		
+		$this->assertEquals ( 1, $expectedResult );
 	}
-
+	
 	/**
-	 * Test the setAnnotationDesc() method from the Annotation class
+	 * Test the removeAnnotationSources() method from the Annotation class
+	 * 
+	 * @uses \bcGen\MainBundle\Entity\Annotation::removeAnnotationSource()
 	 */
-	public function testRemoveAnnotationSource()
-	{
-		echo ("\n********************Test RemoveAnnotationSource()*****************************************\n");
-	
-		$source = new Source();
-		$annotation = new Annotation();
-		$expectedResult = -1;
+	public function testRemoveAnnotationSource() {
+		echo ("\n********************Test RemoveAnnotationSources()*****************************************\n");
 		
-		$annotation->addAnnotationSources($source);
-		$annotation->removeAnnotationSources($source);		
+		$expectedResult = - 1;
 		
-		$expectedResult = $annotation->getAnnotationSources()->count();
-			
-		$this->assertEquals(0, $expectedResult);
+		$this->annotation->addAnnotationSources ( $this->publication );
+		$this->annotation->removeAnnotationSources ( $this->publication );
+		
+		$expectedResult = $this->annotation->getAnnotationSources ()->count ();
+		
+		$this->assertEquals ( 0, $expectedResult );
 	}
-	
-}//CLASS END
+} // CLASS END
 ?>
