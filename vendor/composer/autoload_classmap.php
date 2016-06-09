@@ -7,7 +7,6 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'Collator' => $vendorDir . '/symfony/symfony/src/Symfony/Component/Intl/Resources/stubs/Collator.php',
-    'ConfigurationGenerator' => $vendorDir . '/phpunit/phpunit/src/Util/ConfigurationGenerator.php',
     'File_Iterator' => $vendorDir . '/phpunit/php-file-iterator/src/Iterator.php',
     'File_Iterator_Facade' => $vendorDir . '/phpunit/php-file-iterator/src/Facade.php',
     'File_Iterator_Factory' => $vendorDir . '/phpunit/php-file-iterator/src/Factory.php',
@@ -158,6 +157,7 @@ return array(
     'PHPUnit_TextUI_TestRunner' => $vendorDir . '/phpunit/phpunit/src/TextUI/TestRunner.php',
     'PHPUnit_Util_Blacklist' => $vendorDir . '/phpunit/phpunit/src/Util/Blacklist.php',
     'PHPUnit_Util_Configuration' => $vendorDir . '/phpunit/phpunit/src/Util/Configuration.php',
+    'PHPUnit_Util_ConfigurationGenerator' => $vendorDir . '/phpunit/phpunit/src/Util/ConfigurationGenerator.php',
     'PHPUnit_Util_ErrorHandler' => $vendorDir . '/phpunit/phpunit/src/Util/ErrorHandler.php',
     'PHPUnit_Util_Fileloader' => $vendorDir . '/phpunit/phpunit/src/Util/Fileloader.php',
     'PHPUnit_Util_Filesystem' => $vendorDir . '/phpunit/phpunit/src/Util/Filesystem.php',

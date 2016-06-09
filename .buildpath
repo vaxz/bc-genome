@@ -20,6 +20,7 @@
 	<buildpathentry kind="src" path="vendor/sebastian/version/src"/>
 	<buildpathentry kind="src" path="vendor/zendframework/zend-i18n/src"/>
 	<buildpathentry kind="src" path="vendor/psr/log"/>
+	<buildpathentry kind="src" path="vendor/doctrine/data-fixtures/lib"/>
 	<buildpathentry kind="src" path="vendor/phpdocumentor/fileset/src"/>
 	<buildpathentry kind="src" path="vendor/sebastian/diff/src"/>
 	<buildpathentry kind="src" path="vendor/symfony/polyfill-mbstring"/>
@@ -43,6 +44,7 @@
 	<buildpathentry kind="src" path="vendor/phpunit/phpunit-mock-objects/src"/>
 	<buildpathentry kind="src" path="vendor/doctrine/common/lib/Doctrine/Common"/>
 	<buildpathentry kind="src" path="vendor/doctrine/lexer/lib"/>
+	<buildpathentry kind="src" path="vendor/doctrine/doctrine-fixtures-bundle"/>
 	<buildpathentry kind="src" path="vendor/phpdocumentor/fileset/tests/unit"/>
 	<buildpathentry kind="src" path="vendor/zendframework/zend-hydrator/src"/>
 	<buildpathentry kind="src" path="vendor/phpdocumentor/graphviz/src"/>

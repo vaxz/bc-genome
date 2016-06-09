@@ -11,7 +11,6 @@
 namespace bcGen\MainBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use InvalidArgumentException;
 
 /**
  * Condition class allows the creation of Condition object and correponds to a table in the database : bc_gen_db.
