@@ -13,7 +13,7 @@ namespace bcGen\MainBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
-// Add the namespace for the array collection
+use Doctrine\Common\Collections\ArrayCollection;
 use bcGen\MainBundle\Entity\Gene;
 use bcGen\MainBundle\Entity\GeneRepository;
 use bcGen\MainBundle\Entity\Locus;
@@ -56,6 +56,7 @@ use bcGen\MainBundle\Form\SearchGenesType;
  * @version 0.1.0 0.1.0
  */
 class MainController extends Controller {
+	
 	/**
 	 * This method ensures the homepage display
 	 *
@@ -82,30 +83,34 @@ class MainController extends Controller {
 		$tmp = '';
 		$result = array ();
 		
-		if ($request->getMethod () != "POST") {
-			throw $this->createNotFoundException ( "The seeked page does not exist" );
-		} else {
+		if ($request->getMethod() != "POST")
+		{
+			throw $this->createNotFoundException( "The seeked page does not exist" );
+		}
+		else
+		{
 			
-			$form = $this->createForm ( new SearchGeneType () );
+			$form = $this->createForm ( new SearchGeneType() );
 			// $form->bind($request); deprecated method
-			$form->handleRequest ( $request );
+			$form->handleRequest( $request );
 			// The test to check the form validity is useless. There is only one text field : search
-			$tmp = $form ['search']->getData ();
+			$tmp = $form['search']->getData();
 			
 			if ( empty ( $tmp )
-			     && empty ( $tmp = $request->request->get ( 'geneNum' ) ) )
+			     && empty ( $tmp = $request->request->get( 'geneNum' ) ) 
+			   )
 			{
-				throw $this->createNotFoundException ( "The seeked page does not exist" );
+				throw $this->createNotFoundException( "The seeked page does not exist" );
 			}
 			
-			$result = $this->databaseDetailedSearch ( $tmp );
+			$result = $this->databaseDetailedSearch( $tmp );
 			return $this->render ( 'bcGenMainBundle:Main:page_detailed.html.twig',
 					               array ( 'result' => $result,
 					                       'detailed' => 0,
 					               		   'neighborhood' => 1
 					               		  )
 					              );
-		}
+		}// IF END
 	} // FUNCTION END
 	
 	/**
@@ -125,34 +130,33 @@ class MainController extends Controller {
 		$tmp = '';
 		$i = 0; // loop index
 		$accessionNumArray = array ();
-		$tmpCollection = new \Doctrine\Common\Collections\ArrayCollection ();
-		$paginator = $this->get ( 'knp_paginator' );
-		$nbLocusPerPage = 4;
+		$tmpCollection = new \Doctrine\Common\Collections\ArrayCollection();
+		$paginator = $this->get( 'knp_paginator' );
+		$NBLOCUSPERPAGE = 4;
 		$resultCollection = null;
 		
-		if ( $request->getMethod () == "GET"
-			 && ! empty ( $request->query->get ( 'bcgen_mainbundle_search_genes' ) ['search'] ) 
+		if ( $request->getMethod() == "GET"
+			 && !empty( $request->query->get( 'bcgen_mainbundle_search_genes' )['search'] ) 
 		    ) 
 		{
 			
-			$charArray = str_split ( $request->query->get ( 'bcgen_mainbundle_search_genes' ) ['search'] );
-			$arraySize = sizeof ( $charArray );
+			$charArray = str_split( $request->query->get( 'bcgen_mainbundle_search_genes' )['search'] );
+			$arraySize = sizeof( $charArray );
 			
-			for($i = 0; $i < $arraySize; $i ++) {
+			for( $i = 0; $i < $arraySize; $i ++ )
+			{
 				
-				if (preg_match ( '#[\n\r]#', $charArray [$i] )) {
-					
+				if (preg_match ( '#[\n\r]#', $charArray[$i] ) )
+				{					
 					$accessionNumArray [] = $tmp;
 					$tmp = '';
 					
-					if ( preg_match ( '#[\n\r]#', $charArray [$i + 1] ) ) 	$i ++;
-					
+					if ( preg_match ( '#[\n\r]#', $charArray[$i + 1] ) ) $i++;	
 				}
-				else if (preg_match ( '#[\s]#', $charArray [$i] ))
+				else if ( preg_match ( '#[\s]#', $charArray[$i] ) )
 				{
 					$accessionNumArray [] = $tmp;
 					$tmp = '';
-					
 				}
 				else
 				{
@@ -160,18 +164,18 @@ class MainController extends Controller {
 				}
 			} // FOR LOOP END
 			
-			if (! empty ( $tmp ))  $accessionNumArray [] = $tmp;
+			if ( !empty( $tmp ) ) $accessionNumArray[] = $tmp;
 			
 			foreach ( $accessionNumArray as $num )
-			{
-				
-				$tmp = $this->databaseLocusSearch ( $num );
-				$tmpCollection->add ( $tmp );
+			{				
+				$tmp = $this->databaseLocusSearch( $num );
+				$tmpCollection->add( $tmp );
 			}
 			
-			$resultCollection = $paginator->paginate ( $tmpCollection,
-					                                   $request->query->get ( 'page', 1 ),
-					                                   $nbLocusPerPage
+			$resultCollection = $paginator->paginate (
+					                                   $tmpCollection,
+					                                   $request->query->get( 'page', 1 ),
+					                                   $NBLOCUSPERPAGE
 					                                  );
 			
 			return $this->render ( 'bcGenMainBundle:Main:page_locusList.html.twig',
@@ -187,45 +191,40 @@ class MainController extends Controller {
 	/**
 	 * This method ensures the display of a searchGeneForm
 	 *
-	 * @see \bcGen\MainBundle\Form\SearchGeneType Class SearchGeneType
+	 * @see    \bcGen\MainBundle\Form\SearchGeneType        Class SearchGeneType
 	 *     
 	 * @return Symfony\Component\HttpFoundation\Response
 	 */
 	public function searchGeneAction()
 	{
-		
-		$form = $this->createForm ( new SearchGeneType () );
-		return $this->render ( 'bcGenMainBundle:Main:form_searchGene.html.twig',
+		$form = $this->createForm ( new SearchGeneType() );
+		return $this->render( 'bcGenMainBundle:Main:form_searchGene.html.twig',
 				               array ( 'form' => $form->createView ()
 				               		  )
-				              );
-		
+				             );
 	}
 	
 	/**
 	 * This method ensures the display of a searchGenesForm
 	 *
-	 * @see \bcGen\MainBundle\Form\SearchGenesType Class SearchGenesType
+	 * @see    \bcGen\MainBundle\Form\SearchGenesType     Class SearchGenesType
 	 *     
 	 * @return Symfony\Component\HttpFoundation\Response
 	 */
 	public function searchGenesAction()
 	{
-		
-		$form = $this->createForm ( new SearchGenesType () );
-		return $this->render ( 'bcGenMainBundle:Main:form_searchGenes.html.twig',
+		$form = $this->createForm( new SearchGenesType () );
+		return $this->render( 'bcGenMainBundle:Main:form_searchGenes.html.twig',
 				               array ( 'form' => $form->createView ()
 				               		  )
-				              );
-		
+				              );		
 	}
 	
 	/**
 	 * This method ensures the display of the gene neighborhood
 	 * 
-	 * @todo Verify the 
 	 *
-	 * @see \bcGen\MainBundle\Entity\Locus             Class Locus
+	 * @see  \bcGen\MainBundle\Entity\Locus             Class Locus
 	 *     
 	 * @uses \bcGen\MainBundle\Entity\LocusRepository::findAllLocusFromChromosomeId()
 	 * @uses \bcGen\MainBundle\Entity\LocusRepository::countLocus()
@@ -243,31 +242,31 @@ class MainController extends Controller {
 		$request = Request::createFromGlobals ();
 		$chromosomeId = 0;
 		$locusId = 0;
-		$locusRepository = $this->recoverRepository ( 'bcGenMainBundle:Locus' );
+		$locusRepository = $this->recoverRepository( 'bcGenMainBundle:Locus' );
 		$tmpArray = null;
 		$locusCount = 0;
 		$defaultpage = 0;
-		$nbLocusPerPage = 5;
-		$paginator = $this->get ( 'knp_paginator' );
+		$NBLOCUSPERPAGE = 5;
+		$paginator = $this->get( 'knp_paginator' );
 		$resultArray = null;
 		$message ='';
 				
 		if ( $request->getMethod () != "GET"
-			 || empty ( $request->query->get ( 'chromosomeId' ) ) 
-			 || empty ( $request->query->get ( 'locusId' ) )
+			 || empty ( $request->query->get( 'chromosomeId' ) ) 
+			 || empty ( $request->query->get( 'locusId' ) )
 		   ) 
 		{
-			throw $this->createNotFoundException ( "There's a problem with \$_GET[]" );
+			throw $this->createNotFoundException( "There's a problem with \$_GET[]" );
 		}
 		else
 		{
-			$chromosomeId = ( integer ) ($request->query->get ( 'chromosomeId' ));
-			$locusId = ( integer ) ($request->query->get ( 'locusId' ));
+			$chromosomeId = ( integer ) ( $request->query->get( 'chromosomeId' ) );
+			$locusId = ( integer ) ( $request->query->get( 'locusId' ) );
 			
-			if ($chromosomeId == 0 || $locusId == 0)
+			if ( $chromosomeId == 0 || $locusId == 0 )
 			{
 				$message = "The \$_GET['chromosomeId'], \$_GET['locusId'] or both are not numerics.";
-				throw $this->createNotFoundException ( $message );
+				throw $this->createNotFoundException( $message );
 			}
 			else
 			{
@@ -278,16 +277,16 @@ class MainController extends Controller {
 				{
 					$message = "The chromosome Id is not in the database : " . $chromosomeId;
 					$message .= "\n or the locus Id is not in the database : " . $locusId ;
-					throw $this->createNotFoundException ( $message );
+					throw $this->createNotFoundException( $message );
 				}
 				else
 				{
-					$defaultpage = ceil ( $locusCount / $nbLocusPerPage );
+					$defaultpage = ceil( $locusCount / $NBLOCUSPERPAGE );
 					
-					$resultArray = $paginator->paginate ( $tmpArray,
-							                              $request->query->get ( 'page', $defaultpage ),
-							                              $nbLocusPerPage
-							                             );
+					$resultArray = $paginator->paginate( $tmpArray,
+							                             $request->query->get ( 'page', $defaultpage ),
+							                             $$NBLOCUSPERPAGE
+							                            );
 					
 					return $this->render ( 'bcGenMainBundle:Main:page_neighborhood.html.twig',
 							               array ( 'resultArray' => $resultArray,
@@ -314,8 +313,8 @@ class MainController extends Controller {
 	}
 	
 	/**
-	 * This method to gather all the information from a string supposed to be the accession number
-	 * of defined Gene object
+	 * From a string which supposed to be the accession number of defined Gene object,
+	 * the method gathers all the gene information. 
 	 * 
 	 * @todo Remove the dump() methods
 	 *
@@ -327,46 +326,46 @@ class MainController extends Controller {
 	 * 
 	 * @param  string The supposed accession number
 	 * 
-	 * @return array
+	 * @return array It contains the data linked to a Gene object.
 	 */
 	private function databaseDetailedSearch($accessionNum) 
 	{
 		$result = array ();
-		$result ['accessionNum'] = $accessionNum;
-		$result ['onlyOneGene'] = new Gene ();
-		$result ['locus'] = new Locus ();
-		$result ['locusChromosome'] = new LocusChromosome ();
-		$result ['chromosome'] = new Chromosome ();
+		$result['accessionNum'] = $accessionNum;
+		$result['onlyOneGene'] = new Gene ();
+		$result['locus'] = new Locus ();
+		$result['locusChromosome'] = new LocusChromosome ();
+		$result['chromosome'] = new Chromosome ();
 		$message = '';
 		
-		$result ['onlyOneGene'] = $this->recoverRepository ( 'bcGenMainBundle:Gene' )
-		                               ->findOneByGeneAccession ( $accessionNum );
+		$result['onlyOneGene'] = $this->recoverRepository( 'bcGenMainBundle:Gene' )
+		                              ->findOneByGeneAccession( $accessionNum );
 		
-		if ( empty ( $result ['onlyOneGene'] ) )
+		if ( empty( $result['onlyOneGene'] ) )
 		{
-			$message = "There is no gene with the following accession number : " . $accessionNum;
-			throw $this->createNotFoundException ( $message );
+			$message = "There is no gene with the following accession number : ".$accessionNum;
+			throw $this->createNotFoundException( $message );
 		}
 		else 
 		{
-			$result ['locus'] = $this->recoverRepository ( 'bcGenMainBundle:Locus' )
-			                         ->findOneLocusFromAccessionNum ( $accessionNum );
+			$result['locus'] = $this->recoverRepository( 'bcGenMainBundle:Locus' )
+			                        ->findOneLocusFromAccessionNum( $accessionNum );
 			
-			if ( ! empty ( $result ['locus'] ) ) 
+			if ( !empty( $result['locus'] ) ) 
 			{
 				
-				$result ['locus']->getLocusGenes ()
-				                 ->getIterator ()
-				                 ->uasort ( array ( 'bcGen\MainBundle\Entity\Gene',
-				                 		            'self::geneAccessionComp'
-				                 		           )
-				                 		   );
+				$result['locus']->getLocusGenes()
+				                ->getIterator()
+				                ->uasort( array ( 'bcGen\MainBundle\Entity\Gene',
+				                 		          'self::geneAccessionComp'
+				                 		         )
+				                 		 );
 			}
 			
-			$result ['locusChromosome'] = $this->recoverRepository( 'bcGenMainBundle:LocusChromosome' )
-			                                   ->findOneLocusChromosomeFromAccessionNum ( $accessionNum );
-			$result ['chromosome'] = $this->recoverRepository ( 'bcGenMainBundle:Chromosome' )
-			                              ->findOneChromosomeFromAccessionNum ( $accessionNum );
+			$result['locusChromosome'] = $this->recoverRepository( 'bcGenMainBundle:LocusChromosome' )
+			                                  ->findOneLocusChromosomeFromAccessionNum( $accessionNum );
+			$result['chromosome'] = $this->recoverRepository( 'bcGenMainBundle:Chromosome' )
+			                             ->findOneChromosomeFromAccessionNum( $accessionNum );
 			
 			return $result;
 			
@@ -374,8 +373,8 @@ class MainController extends Controller {
 	} // FUNCTION END
 	
 	/**
-	 * This method to gather all the information from a string supposed to be the accession number
-	 * of defined Gene object
+	 * From a string which is supposed to be the accession number of defined Gene object, 
+	 * the method gathers all locus the information.
 	 *
 	 * @uses \bcGen\MainBundle\Entity\GeneRepository::findOneLocusFromAccessionNum()
 	 * @uses \bcGen\MainBundle\Entity\GeneRepository::findOneLocusChromosomeFromAccessionNum()
@@ -385,7 +384,7 @@ class MainController extends Controller {
 	 * 
 	 * @param  string The supposed accession number
 	 * 
-	 * @return array It contains the results of the
+	 * @return array It contains the data linked to a Locus object.
 	 */
 	private function databaseLocusSearch($accessionNum)
 	{
@@ -417,8 +416,7 @@ class MainController extends Controller {
 				                 		   );
 			}
 			
-			if ( ! empty ( $tmp ) ) $result ['chromosomeId'] = $tmp [0] ['id'];
-			
+			if ( ! empty ( $tmp ) ) $result ['chromosomeId'] = $tmp [0] ['id'];			
 		}
 		else
 		{

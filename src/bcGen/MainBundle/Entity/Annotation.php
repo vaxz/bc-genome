@@ -15,15 +15,15 @@ use InvalidArgumentException;
 
 /**
  * Annotation class allows the creation of Annotation object and correponds to a table in the database : bc_gen_db.
- * It's related to features and functions linked to genes or proteins.
  *
  * @author Isabelle Gonçalves
  * @author Xavier Sottiaux
  * @version 0.1.0 0.1.0
  *         
- * @see \bcGen\MainBundle\Entity\Source     Class Source
- * @see http://www.doctrine-project.org/api/common/2.5/class-Doctrine.Common.Collections.ArrayCollection.html
- *                                          Doctrine documentation on class ArrayCollection
+ * @see  \bcGen\MainBundle\Entity\Source     Class Source
+ * 
+ * @link http://www.doctrine-project.org/api/common/2.5/class-Doctrine.Common.Collections.ArrayCollection.html
+ *                                           Doctrine documentation on class ArrayCollection
  *     
  * @ORM\Table(name="annotation")
  * @ORM\Entity(repositoryClass="bcGen\MainBundle\Entity\AnnotationRepository")
@@ -93,7 +93,8 @@ class Annotation {
 	/**
 	 * Constructor of the class Annotation initializes the ArrayCollection : annotationSources.
 	 */
-	public function __construct() {
+	public function __construct()
+	{
 		$this->annotationSources = new \Doctrine\Common\Collections\ArrayCollection ();
 	}
 	
@@ -102,7 +103,8 @@ class Annotation {
 	 *
 	 * @return integer
 	 */
-	public function getId() {
+	public function getId()
+	{
 		return $this->id;
 	}
 	
@@ -113,9 +115,9 @@ class Annotation {
 	 *         	
 	 * @return Annotation
 	 */
-	public function setAnnotationTitle($annotationTitle) {
-		$this->annotationTitle = $annotationTitle;
-		
+	public function setAnnotationTitle($annotationTitle)
+	{
+		$this->annotationTitle = $annotationTitle;		
 		return $this;
 	}
 	
@@ -124,7 +126,8 @@ class Annotation {
 	 *
 	 * @return string
 	 */
-	public function getAnnotationTitle() {
+	public function getAnnotationTitle()
+	{
 		return $this->annotationTitle;
 	}
 	
@@ -135,9 +138,9 @@ class Annotation {
 	 *         	
 	 * @return Annotation
 	 */
-	public function setAnnotationDesc($annotationDesc) {
-		$this->annotationDesc = $annotationDesc;
-		
+	public function setAnnotationDesc($annotationDesc)
+	{
+		$this->annotationDesc = $annotationDesc;		
 		return $this;
 	}
 	
@@ -146,7 +149,8 @@ class Annotation {
 	 *
 	 * @return string
 	 */
-	public function getAnnotationDesc() {
+	public function getAnnotationDesc()
+	{
 		return $this->annotationDesc;
 	}
 	
@@ -157,8 +161,8 @@ class Annotation {
 	 * 
 	 * @return Annotation
 	 */
-	public function setAnnotationPublic($annotationPublic) {
-		
+	public function setAnnotationPublic($annotationPublic)
+	{
 		$this->annotationPublic = $annotationPublic;
 		return $this;
 	}
@@ -166,10 +170,11 @@ class Annotation {
 	/**
 	 * Get the annotationPublic value of an Annotation object
 	 *
-	 * @return boolean O if the Annotation object is available only for the registered users
-	 *         1 if the Annotation object is available for everyone
+	 * @return boolean  O if the Annotation object is available only for the registered users
+	 *                  1 if the Annotation object is available for everyone
 	 */
-	public function getAnnotationPublic() {
+	public function getAnnotationPublic()
+	{
 		return $this->annotationPublic;
 	}
 	
@@ -182,15 +187,18 @@ class Annotation {
 	 * 
 	 * @return Annotation
 	 */
-	public function setAnnotationType($annotationType) {
-		$tmp = strtolower ( $annotationType );
+	public function setAnnotationType($annotationType)
+	{
+		$tmp = strtolower( $annotationType );
 		$message = '';
 		
-		if (preg_match ( '#^protein$#', $tmp ) || preg_match ( '#^gene$#', $tmp )) {
+		if ( preg_match ( '#^protein$#', $tmp ) || preg_match ( '#^gene$#', $tmp ) )
+		{
 			$this->annotationType = $tmp;
-			return $this;
-		} else {
-			
+			return $this;			
+		}
+		else
+		{	
 			$message = '$annotationtype must be one of these types : ';
 			$message .= 'gene or protein, not ' . $annotationType;
 			throw new InvalidArgumentException ( $message );

@@ -15,7 +15,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 use bcGen\MainBundle\Entity\Publication;
 
 /**
- * GeneTest class gathers all the unit tests linked to the Gene class.
+ * This class load data in the database equivalent to 2 Publication objects.
  *
  * @link http://symfony.com/doc/current/bundles/DoctrineFixturesBundle/index.html
  *                                            This link gives details on how to use the Doctrine fixture bundle
@@ -43,19 +43,20 @@ class LoadPublicationData extends AbstractFixture implements OrderedFixtureInter
 	    $publicationTU1->setPubHref('URLTU1');
 	    $publicationTU1->setSourceAuthor('AuthorTU1');
 	    $publicationTU1->setSourceTitle('TitleTU1');
-	    $publicationTU1->setSourceYear( new \DateTime() );
+	    $publicationTU1->setSourceYear( new \DateTime() );	    
 	    $manager->persist($publicationTU1);
+	    $this->addReference('PublicationTU1', $publicationTU1);
 	    
 	    $publicationTU2 = new Publication();
 	    $publicationTU2->setPubHref('URLTU2');
 	    $publicationTU2->setSourceAuthor('AuthorTU2');
 	    $publicationTU2->setSourceTitle('TitleTU2');
-	    $publicationTU2->setSourceYear( new \DateTime() );
+	    $publicationTU2->setSourceYear( new \DateTime() );	    
 	    $manager->persist($publicationTU2);
+	    $this->addReference('PublicationTU2', $publicationTU2);	    
 	    
 	    $manager->flush();	    
-	}
-	
+	}	
 	
 	/**
 	 * {@inheritDoc}

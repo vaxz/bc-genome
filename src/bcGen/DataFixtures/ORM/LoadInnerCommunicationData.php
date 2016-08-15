@@ -15,7 +15,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 use bcGen\MainBundle\Entity\InnerCommunication;
 
 /**
- * GeneTest class gathers all the unit tests linked to the Gene class.
+ * This class load data in the database equivalent to 2 InnerCommunication objects.
  *
  * @link http://symfony.com/doc/current/bundles/DoctrineFixturesBundle/index.html
  *                                            This link gives details on how to use the Doctrine fixture bundle
@@ -38,30 +38,34 @@ class LoadInnerCommunicationData extends AbstractFixture implements OrderedFixtu
 	 * 
 	 * @param Doctrine\Common\Persistence\ObjectManager $manager
 	 * 
-	 */
+	 */	
 	public function load(ObjectManager $manager)
 	{
-		$innercommunicationTU1 = new InnerCommunication();
-		$innercommunicationTU1->setInnerComDesc('InnerComDescTU1');
-		$innercommunicationTU1->setSourceAuthor('AuthorTU1');
-		$innercommunicationTU1->setSourceTitle('TitleTU1');
-		$innercommunicationTU1->setSourceYear( new \DateTime() );
-		$manager->persist($innercommunicationTU1);
+		$innerCommunicationTU1 = new InnerCommunication();
+		$innerCommunicationTU1->setInnerComDesc('InnerComDescTU1');
+		$innerCommunicationTU1->setSourceAuthor('AuthorTU1');
+		$innerCommunicationTU1->setSourceTitle('TitleTU1');
+		$innerCommunicationTU1->setSourceYear( new \DateTime() );		
+		$manager->persist($innerCommunicationTU1);
+		$this->addReference('InnerCommunicationTU1', $innerCommunicationTU1);
 		 
 		$innerCommunicationTU2 = new InnerCommunication();
 		$innerCommunicationTU2->setInnerComDesc('InnerComDescTU2');
 		$innerCommunicationTU2->setSourceAuthor('AuthorTU2');
 		$innerCommunicationTU2->setSourceTitle('TitleTU2');
-		$innerCommunicationTU2->setSourceYear( new \DateTime() );
+		$innerCommunicationTU2->setSourceYear( new \DateTime() );		
 		$manager->persist($innerCommunicationTU2);
+		$this->addReference('InnerCommunicationTU2', $innerCommunicationTU2);
 		 
-		$manager->flush();
+		$manager->flush();		
 	}	
 	
 	/**
 	 * {@inheritDoc}
 	 * 
 	 * @see \Doctrine\Common\DataFixtures\OrderedFixtureInterface::getOrder()
+	 * 
+	 * @return integer 1
 	 * 
 	 */
 	public function getOrder() {
