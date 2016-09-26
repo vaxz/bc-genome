@@ -15,7 +15,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 use bcGen\MainBundle\Entity\LocusChromosome;
 
 /**
- * This class load data in the database equivalent to 2 LocusChromsome objects.
+ * This class load data in the database equivalent to 10 LocusChromsome objects.
  *
  * @link http://symfony.com/doc/current/bundles/DoctrineFixturesBundle/index.html
  *                                            This link gives details on how to use the Doctrine fixture bundle
