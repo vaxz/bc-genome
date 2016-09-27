@@ -53,9 +53,8 @@ class LocusRepository extends EntityRepository {
 	 */
 	public function findAllLocusFromChromosomeId($chromosomeId) {
 		
-		/**
 		$query = $this->createQueryBuilder ( 'l' )
-		              ->from ( 'bcGen\MainBundle\Entity\LocusChromosome', 'lc' )
+					  ->from ( 'bcGen\MainBundle\Entity\LocusChromosome', 'lc' )
 		              ->from ( 'bcGen\MainBundle\Entity\Gene', 'g' );
 		
 		$query->Where ( 'l.id = lc.locusChromosomeFkLocus' )
@@ -63,19 +62,6 @@ class LocusRepository extends EntityRepository {
 		      ->andWhere ( 'lc.locusChromosomeFkChromosome = :chromosomeId' )
 		      ->setParameter ( 'chromosomeId', $chromosomeId )
 		      ->orderBy ( 'l.id', 'ASC' );
-		
-		return $query->getQuery ()->getResult();
-		**/
-		
-		$query = $this->createQueryBuilder ( 'l' )
-		->from ( 'bcGen\MainBundle\Entity\LocusChromosome', 'lc' )
-		->from ( 'bcGen\MainBundle\Entity\Gene', 'g' );
-		
-		$query->Where ( 'l.id = lc.locusChromosomeFkLocus' )
-		->andwhere ( 'l.id = g.geneLocus' )
-		->andWhere ( 'lc.locusChromosomeFkChromosome = :chromosomeId' )
-		->setParameter ( 'chromosomeId', $chromosomeId )
-		->orderBy ( 'l.id', 'ASC' );
 		
 		return $query->getQuery ()->getResult();
 		

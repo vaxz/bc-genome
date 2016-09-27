@@ -2,7 +2,7 @@
 parameters:
     database_host: localhost
     database_port: null
-    database_name: bc_gen_db
+    database_name: bc_gen_db_test
     database_user: root
     database_password: root
     mailer_transport: smtp

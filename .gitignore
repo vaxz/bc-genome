@@ -1,4 +1,4 @@
-/app/
-/bin/
-/vendor/
-/web/
+app/*
+bin/*
+vendor/*
+web/*

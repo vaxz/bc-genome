@@ -414,7 +414,7 @@ class Gene {
 	 */
 	public static function geneAccessionComp(Gene $gene1 = null, Gene $gene2 = null)
 	{
-		$tmp = null;
+		$tmp = 0;
 		
 		if ( empty ( $gene1 ) or empty ( $gene2 ) ) $tmp = 0;
 		else
@@ -428,7 +428,7 @@ class Gene {
 			}
 			else if (substr_compare ( $accessionNum1, "BCIN", 0, 4, true ) == 0)
 			{
-				$tmp = - 1;
+				$tmp = -1;
 			} 
 			else if (substr_compare ( $accessionNum1, "B0510", 0, 4, true ) == 0) 
 			{
@@ -439,8 +439,7 @@ class Gene {
 				else
 				{
 					$tmp = -1;
-				}
-					
+				}					
 			}
 			else if (substr_compare ( $accessionNum1, "BC1G", 0, 4, true ) == 0)
 			{

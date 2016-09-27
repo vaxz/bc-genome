@@ -1,8 +1,0 @@
-bootstrap=
-eclipse.preferences.version=1
-pear_library=<Internal>
-php_executable=PHP 7.0.6 (CLI) [1]
-source_file_pattern_folder=
-test_file_pattern_file=%fTest.%e
-test_file_pattern_folder=/%p/tests/%d
-test_file_super_class=PHPUnit_Framework_TestCase

@@ -547,7 +547,7 @@ EOF;
 
     /**
      * @expectedException \Symfony\Component\Yaml\Exception\ParseException
-     * @expectedExceptionMessage Multiple documents are not supported.
+     * @expectedExceptionMessageRegExp /^Multiple documents are not supported.+/
      */
     public function testMultipleDocumentsNotSupportedException()
     {
@@ -577,6 +577,53 @@ yaml:
   - array stuff
 EOF
         );
+    }
+
+    public function testSequenceInMappingStartedBySingleDashLine()
+    {
+        $yaml = <<<EOT
+a:
+-
+  b:
+  -
+    bar: baz
+- foo
+d: e
+EOT;
+        $expected = array(
+            'a' => array(
+                array(
+                    'b' => array(
+                        array(
+                            'bar' => 'baz',
+                        ),
+                    ),
+                ),
+                'foo',
+            ),
+            'd' => 'e',
+        );
+
+        $this->assertSame($expected, $this->parser->parse($yaml));
+    }
+
+    public function testSequenceFollowedByCommentEmbeddedInMapping()
+    {
+        $yaml = <<<EOT
+a:
+    b:
+        - c
+# comment
+    d: e
+EOT;
+        $expected = array(
+            'a' => array(
+                'b' => array('c'),
+                'd' => 'e',
+            ),
+        );
+
+        $this->assertSame($expected, $this->parser->parse($yaml));
     }
 
     /**
@@ -905,6 +952,7 @@ EOT
 foo
 # bar
 baz
+
 EOT
                     ,
                 ),
@@ -933,7 +981,7 @@ EOT;
         $expected = array(
             'foo' => array(
                 'bar' => array(
-                    'scalar-block' => 'line1 line2>',
+                    'scalar-block' => "line1 line2>\n",
                 ),
                 'baz' => array(
                     'foobar' => null,
@@ -1009,6 +1057,74 @@ EOT
                 ,
             ),
             $this->parser->parse($yaml)
+        );
+    }
+
+    /**
+     * @param $lineNumber
+     * @param $yaml
+     * @dataProvider parserThrowsExceptionWithCorrectLineNumberProvider
+     */
+    public function testParserThrowsExceptionWithCorrectLineNumber($lineNumber, $yaml)
+    {
+        $this->setExpectedException(
+            '\Symfony\Component\Yaml\Exception\ParseException',
+            sprintf('Unexpected characters near "," at line %d (near "bar: "123",").', $lineNumber)
+        );
+
+        $this->parser->parse($yaml);
+    }
+
+    public function parserThrowsExceptionWithCorrectLineNumberProvider()
+    {
+        return array(
+            array(
+                4,
+                <<<YAML
+foo:
+    -
+        # bar
+        bar: "123",
+YAML
+            ),
+            array(
+                5,
+                <<<YAML
+foo:
+    -
+        # bar
+        # bar
+        bar: "123",
+YAML
+            ),
+            array(
+                8,
+                <<<YAML
+foo:
+    -
+        # foobar
+        baz: 123
+bar:
+    -
+        # bar
+        bar: "123",
+YAML
+            ),
+            array(
+                10,
+                <<<YAML
+foo:
+    -
+        # foobar
+        # foobar
+        baz: 123
+bar:
+    -
+        # bar
+        # bar
+        bar: "123",
+YAML
+            ),
         );
     }
 }
