@@ -1,11 +1,17 @@
-{% extends "bcGenMainBundle:Main:layout.html.twig" %} {% block title %}
-{{ parent() }} - Homepage {% endblock %} {% block bcGenBundleHeader %}
-{{ parent () }}
-<h2>Homepage</h2>
-{% endblock %} {% block bcGenBundleBody %}
+{% extends "bcGenMainBundle:Main:layout.html.twig" %}
 
-<div class="form">{{ render(controller(
-	'bcGenMainBundle:Main:searchGene' )) }} {{ render(controller(
-	'bcGenMainBundle:Main:searchGenes' )) }}</div>
+{% block title %}
+    {{ parent() }} - Homepage
+{% endblock %}
 
+{% block bcGenBundleHeader %}
+    {{ parent () }}
+    <h2>Homepage</h2>
+{% endblock %}
+
+{% block bcGenBundleBody %}
+    <div class="form">
+        {{ render(controller('bcGenMainBundle:Main:searchGene' )) }}
+        {{ render(controller('bcGenMainBundle:Main:searchGenes' )) }}
+    </div>
 {% endblock %}

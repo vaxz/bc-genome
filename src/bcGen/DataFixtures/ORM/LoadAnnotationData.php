@@ -41,7 +41,7 @@ class LoadAnnotationData extends AbstractFixture implements OrderedFixtureInterf
 		$annotation1 = new Annotation();
 		$annotation1->setAnnotationTitle('AnnotationTitleTU1');
 		$annotation1->setAnnotationDesc('AnnotationDescTU1');
-		$annotation1->setPublic(1);
+		$annotation1->setAnnotationPublic(1);
 		$annotation1->setAnnotationType('Protein');
 		$annotation1->addAnnotationSources( $this->getReference('InnerCommunicationTU1') );
 		$this->addReference('AnnotationTU1', $annotation1);
@@ -50,7 +50,7 @@ class LoadAnnotationData extends AbstractFixture implements OrderedFixtureInterf
 		$annotation2 = new Annotation();
 		$annotation2->setAnnotationTitle('AnnotationTitleTU2');
 		$annotation2->setAnnotationDesc('AnnotationDescTU2');
-		$annotation2->setPublic(1);
+		$annotation2->setAnnotationPublic(1);
 		$annotation2->setAnnotationType('Gene');
 		$annotation2->addAnnotationSources( $this->getReference('PublicationTU1') );
 		$this->addReference('AnnotationTU2', $annotation2);
@@ -59,7 +59,7 @@ class LoadAnnotationData extends AbstractFixture implements OrderedFixtureInterf
 		$annotation3 = new Annotation();
 		$annotation3->setAnnotationTitle('AnnotationTitleTU3');
 		$annotation3->setAnnotationDesc('AnnotationDescTU3');
-		$annotation3->setPublic(0);
+		$annotation3->setAnnotationPublic(0);
 		$annotation3->setAnnotationType('Protein');
 		$annotation3->addAnnotationSources( $this->getReference('InnerCommunicationTU2') );
 		$this->addReference('AnnotationTU3', $annotation3);
@@ -68,13 +68,13 @@ class LoadAnnotationData extends AbstractFixture implements OrderedFixtureInterf
 		$annotation4 = new Annotation();
 		$annotation4->setAnnotationTitle('AnnotationTitleTU4');
 		$annotation4->setAnnotationDesc('AnnotationDescTU4');
-		$annotation4->setPublic(0);
+		$annotation4->setAnnotationPublic(0);
 		$annotation4->setAnnotationType('Gene');
 		$annotation4->addAnnotationSources( $this->getReference('PublicationTU2') );
 		$this->addReference('AnnotationTU4', $annotation4);
 		$manager->persist($annotation4);
 		
-		$manager->flush();			
+		$manager->flush();	
 	}	
 	
 	/**

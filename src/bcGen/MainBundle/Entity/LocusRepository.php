@@ -48,8 +48,8 @@ class LocusRepository extends EntityRepository {
 	 *
 	 * @param  integer The chromosome id
 	 * 
-	 * @return \bcGen\MainBundle\Entity\Locus|null The reference of a Locus object
-	 *                                             or null if the query gets nothing from the database
+	 * @return array   This array contains several Locus object references
+	 *                 or is empty
 	 */
 	public function findAllLocusFromChromosomeId($chromosomeId) {
 		
@@ -63,7 +63,7 @@ class LocusRepository extends EntityRepository {
 		      ->setParameter ( 'chromosomeId', $chromosomeId )
 		      ->orderBy ( 'l.id', 'ASC' );
 		
-		return $query->getQuery ()->getResult();
+		return $query->getQuery()->getResult();
 		
 	}
 	

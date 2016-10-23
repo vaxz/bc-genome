@@ -51,7 +51,7 @@ class ProteinAnnotation {
 	 * @var integer
 	 * 
 	 * @ORM\Id
-	 * @ORM\ManyToOne( targetEntity="bcGen\MainBundle\Entity\Condition" )
+	 * @ORM\ManyToOne( targetEntity="bcGen\MainBundle\Entity\Annotation" )
 	 * @ORM\JoinColumn( name="protein_annotation_fk_annotation", nullable=FALSE )
 	 */
 	private $proteinAnnotationFkAnnotation;

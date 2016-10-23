@@ -24,7 +24,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @author Xavier Sottiaux
  * @version 0.1.0 0.1.0
  *         
- * @ORM\Table(name="condition")
+ * @ORM\Table( name="condition_T" )
  * @ORM\Entity(repositoryClass="bcGen\MainBundle\Entity\ConditionRepository")
  */
 class Condition {

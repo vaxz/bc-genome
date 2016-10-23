@@ -1,12 +1,20 @@
-{% extends "bcGenMainBundle:Main:layout.html.twig" %} {% block title %}
-{{ parent() }} - Neighborhood display {% endblock %} {% block header %}
-{{ parent () }}
-<h2>Neighborhood display</h2>
-{% endblock %} {% block bcGenBundleBody %} {% for locus in resultArray
-%} {% set locus = locus %} {% set onlyOneGene = '' %} {% set geneNum =
-'' %} {% include( 'bcGenMainBundle:Main:module_locus.html.twig' ) %} {%
-endfor %}
+{% extends "bcGenMainBundle:Main:layout.html.twig" %}
 
-<div class="navigation">{{ knp_pagination_render(resultArray) }}</div>
+{% block title %}
+    {{ parent() }} - Neighborhood display
+{% endblock %}
 
+{% block header %}
+    {{ parent () }}
+    <h2>Neighborhood display</h2>
+{% endblock %}
+
+{% block bcGenBundleBody %}
+    {% for locus in resultArray %}
+        {% set locus = locus %}
+        {% set onlyOneGene = '' %}
+        {% set geneNum = '' %}
+        {% include( 'bcGenMainBundle:Main:module_locus.html.twig' ) %}
+    {% endfor %}    
+    <div class="navigation">{{ knp_pagination_render(resultArray) }}</div>
 {% endblock %}

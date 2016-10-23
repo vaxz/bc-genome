@@ -39,12 +39,14 @@ class LoadChromosomeData extends AbstractFixture implements OrderedFixtureInterf
 	public function load(ObjectManager $manager)
 	{
 		$chromosome1 = new Chromosome();
+		$chromosome1->setId(1);
 		$chromosome1->setChromosomeSeq('ChromosomeSeqTU1');
 		$chromosome1->setChromosomeSource( $this->getReference('PublicationTU1') );
 		$this->addReference('ChromosomeTU1', $chromosome1);
 		$manager->persist($chromosome1);
 		
 		$chromosome2 = new Chromosome();
+		$chromosome2->setId(2);
 		$chromosome2->setChromosomeSeq('ChromosomeSeqTU2');
 		$chromosome2->setChromosomeSource( $this->getReference('PublicationTU2') );
 		$this->addReference('ChromosomeTU2', $chromosome2);

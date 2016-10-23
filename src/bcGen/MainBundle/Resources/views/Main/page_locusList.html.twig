@@ -1,19 +1,26 @@
-{% extends "bcGenMainBundle:Main:layout.html.twig" %} {% block title %}
-{{ parent() }} - Locus list display {% endblock %} {% block header %} {{
-parent () }}
-<h2>List Locus display</h2>
-{% endblock %} {% block bcGenBundleBody %} {% for result in
-resultCollection %}
+{% extends "bcGenMainBundle:Main:layout.html.twig" %}
 
-<p>Searched gene : {{ result['accessionNum'] }}</p>
-{% if result['geneId'] is empty %}
-<h3 class="title">No Gene found</h3>
-{% else %} {% set chromosomeId=result['chromosomeId'] %} {% set
-locus=result['locus'] %} {% set locusId=locus.id %} {% set
-onlyOneGene='' %} {% include(
-'bcGenMainBundle:Main:module_locus.html.twig' ) %} {% endif %} {% endfor
-%}
+{% block title %}
+   {{ parent() }} - Locus list display
+{% endblock %}
 
-<div class="navigation">{{ knp_pagination_render(resultCollection) }}</div>
+{% block header %}
+   {{ parent () }}
+   <h2>List Locus display</h2>
+{% endblock %}
 
+{% block bcGenBundleBody %}
+   {% for result in resultCollection %}
+       <p>Searched gene : {{ result['accessionNum'] }}</p>
+       {% if result['geneId'] is empty %}
+           <h3 class="title">No Gene found</h3>
+       {% else %}
+           {% set chromosomeId=result['chromosomeId'] %}
+           {% set locus=result['locus'] %}
+           {% set locusId=locus.id %}
+           {% set onlyOneGene='' %}
+           {% include('bcGenMainBundle:Main:module_locus.html.twig' ) %}
+       {% endif %}
+   {% endfor %}
+   <div class="navigation">{{ knp_pagination_render(resultCollection) }}</div>
 {% endblock %}

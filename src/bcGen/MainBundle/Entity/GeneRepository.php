@@ -39,6 +39,8 @@ class GeneRepository extends EntityRepository {
 		      ->Where ( 'g.geneAccession = :geneAccession' )
 		      ->setParameter ( 'geneAccession', $geneAccession );
 		
-		return $query->getQuery ()->getSingleScalarResult ();
+		
+		return $query->getQuery()->getSingleScalarResult ();
+		//return $query->getQuery()->getOneOrNullResult();
 	}
 }// CLASS END

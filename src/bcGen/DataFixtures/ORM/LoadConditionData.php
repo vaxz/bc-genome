@@ -67,6 +67,13 @@ class LoadConditionData extends AbstractFixture implements OrderedFixtureInterfa
 	    $manager->persist($condition4);
 	    $this->addReference( 'ConditionTU4', $condition4 );
 	    
+	    $condition5 = new Condition();
+	    $condition5->setConditionDesc( 'ConditionDescTU5' );
+	    $condition5->setPublicCond( 'PublicCondTU5' );
+	    $condition5->addConditionSources( $this->getReference('PublicationTU2') );
+	    $manager->persist($condition5);
+	    $this->addReference( 'ConditionTU5', $condition5 );
+	    
 	    $manager->flush();	    
 	}	
 	
