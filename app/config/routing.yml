@@ -1,0 +1,7 @@
+bc_gen_main:
+    resource: "@bcGenMainBundle/Resources/config/routing.yml"
+    prefix:   /bcgen
+
+app:
+    resource: "@AppBundle/Controller/"
+    type:     annotation
