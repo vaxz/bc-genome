@@ -10,8 +10,21 @@
 {% endblock %}
 
 {% block bcGenBundleBody %}
-    <div class="form">
-        {{ render(controller('bcGenMainBundle:Main:searchGene' )) }}
-        {{ render(controller('bcGenMainBundle:Main:searchGenes' )) }}
-    </div>
+    
+    <div class = "w3-row" >
+        <div id = "searchOneGene" class ="w3-half"> 
+            <section>
+                <p>Research of one gene</p>
+            </section>
+            {{ render(controller('bcGenMainBundle:Main:searchGene' )) }}
+        </div>
+        
+        <div id = "searchGeneList" class ="w3-half">
+            <section>
+                <p>Research from a gene list</p>
+            </section>
+            {{ render(controller('bcGenMainBundle:Main:searchGenes' )) }}
+        </div>
+    </div>    
+        
 {% endblock %}

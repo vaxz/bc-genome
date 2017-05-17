@@ -10,11 +10,12 @@
        {# A new block is defined in order to fill it in #}
        {% block bcGenBundleHeader %}
        {% endblock %}
-       
-       <nav id="menu">
-	         <a href="">Connexion</a> <a href="">Accueil</a> <a href="">Fichier CSV</a>
-	         <a href="">Upstream</a>
-       </nav>
+{% endblock %}
+
+{% block menu %}
+       {{ parent() }}
+       {% block bcGenBundleMenu %}
+       {% endblock %}
 {% endblock %}
 
 {% block body %}
@@ -30,4 +31,18 @@
 {% block rightside %}
     {% block bcGenBundleRSide %}
     {% endblock %}
+{% endblock %}
+
+{% block footer %}
+	<ul>
+	   <li>About</li>
+	   <li>Website designed in the research unit : UMR 5240.
+	   <li>Team : Génomique fonctionnelle des phytopathogènes fongiques</li>
+       <li>Web site version : 0.1.0</li>	
+	</ul>	
+	<ul>
+	   <li>Authors</li>
+       <li>Isabelle Gonçalves</li>
+       <li>Xavier Sottiaux</li>
+	</ul>    
 {% endblock %}
